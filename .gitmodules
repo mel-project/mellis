@@ -1,0 +1,3 @@
+[submodule "ginkou-loader"]
+	path = ginkou-loader
+	url = https://github.com/themeliolabs/ginkou-loader.git

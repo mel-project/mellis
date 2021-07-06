@@ -1,3 +1,12 @@
 [submodule "ginkou-loader"]
 	path = ginkou-loader
 	url = https://github.com/themeliolabs/ginkou-loader.git
+[submodule "ginkou"]
+	path = ginkou
+	url = https://github.com/themeliolabs/ginkou.git
+[submodule "shared-modules"]
+	path = shared-modules
+	url = https://github.com/flathub/shared-modules.git
+[submodule "melwalletd"]
+	path = melwalletd
+	url = https://github.com/themeliolabs/melwalletd.git

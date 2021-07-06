@@ -1,0 +1,56 @@
+app-id: org.themelio.Wallet
+runtime: org.gnome.Platform
+runtime-version: "40"
+sdk: org.gnome.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+  - org.freedesktop.Sdk.Extension.node14
+command: "ginkou-loader-wrapper"
+modules:
+  # - "shared-modules/libappindicator/libappindicator-gtk3-12.10.json"
+  - name: ginkou-files
+    sources:
+      - type: dir
+        path: ginkou
+      - "npm-lock.json"
+    buildsystem: "simple"
+    build-commands:
+      - "pwd"
+      - "npm ci --cache=$FLATPAK_BUILDER_BUILDDIR/flatpak-node/npm-cache"
+      - "npm run build"
+      - "npm run smui-theme-light"
+      - "mv public /app/ginkou-files"
+  - name: melwalletd
+    sources:
+      - type: dir
+        path: melwalletd
+      - "melwalletd-cargo-lock.json"
+    buildsystem: "simple"
+    build-commands:
+      - "env CARGO_HOME=/run/build/melwalletd/cargo cargo --offline fetch --manifest-path Cargo.toml --verbose"
+      - "env CARGO_HOME=/run/build/melwalletd/cargo cargo --offline build --release --verbose"
+      - "install -D ./target/release/melwalletd -t /app/bin/"
+  - name: ginkou-loader
+    sources:
+      - type: dir
+        path: ginkou-loader
+      - "loader-cargo-lock.json"
+    buildsystem: "simple"
+    build-commands:
+      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo --offline fetch --manifest-path Cargo.toml --verbose"
+      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo --offline build --verbose"
+      - "install -D ./target/debug/ginkou-loader -t /app/bin/"
+      - "echo '#!/bin/sh' >> /app/bin/ginkou-loader-wrapper"
+      - "echo 'ginkou-loader --html-path /app/ginkou-files' >> /app/bin/ginkou-loader-wrapper"
+      - "chmod +x /app/bin/ginkou-loader-wrapper"
+# Rust build options
+build-options:
+  append-path: "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/node14/bin"
+finish-args:
+  # X11 + XShm access
+  - --share=ipc
+  - --socket=x11
+  # Wayland access
+  - --socket=wayland
+  # Needs to talk to the network:
+  - --share=network

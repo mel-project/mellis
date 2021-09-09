@@ -10,7 +10,6 @@ modules:
   - name: ginkou
     buildsystem: "simple"
     build-commands:
-      - "pwd"
       - "npm ci --cache=$FLATPAK_BUILDER_BUILDDIR/flatpak-node/npm-cache"
       - "npm run build"
       - "npm run smui-theme-light"

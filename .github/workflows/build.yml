@@ -12,35 +12,46 @@ jobs:
 
     runs-on: ubuntu-latest
 
+#    steps:
+#      - uses: actions/checkout@v2
+
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:gnome-40
+      options: --privileged
     steps:
       - uses: actions/checkout@v2
-
-      - name: Cache Flatpak
-        id: flatpak-cache
-        uses: actions/cache@v2
+      - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
         with:
-          path: |
-            ~/.flatpak-builder/cache
-          key: ${{ runner.os }}-flatpak-${{ hashFiles('**/org.themelio.Wallet-dev.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-flatpak-
+          bundle: palette.flatpak
+          manifest-path: org.themelio.Wallet-dev.yml
+          cache-key: flatpak-builder-${{ github.sha }}
 
-#      - name: List A File
-#        run: ls -la /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache
-
-      - name: Update Apt
-        run: sudo apt update
-
-      - name: Install Dependencies
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: sudo apt -y install flatpak flatpak-builder libgtk-3-dev libwebkit2gtk-4.0-dev
-
-      - name: Add Flathub Repository
-        run: sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-
-      - name: Install Flatpak Dependencies
-        run: sudo flatpak install -y flathub org.gnome.Sdk/x86_64/40 org.gnome.Platform/x86_64/40 org.freedesktop.Sdk.Extension.rust-stable//20.08 org.freedesktop.Sdk.Extension.node14//20.08
-
-      - name: Build
-        run: flatpak-builder build org.themelio.Wallet-dev.yml --force-clean --user
+#      - name: Cache Flatpak
+#        id: flatpak-cache
+#        uses: actions/cache@v2
+#        with:
+#          path: |
+#            ~/.flatpak-builder/cache
+#          key: ${{ runner.os }}-flatpak-${{ hashFiles('**/org.themelio.Wallet-dev.yml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-flatpak-
+#
+##      - name: List A File
+##        run: ls -la /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache
+#
+#      - name: Update Apt
+#        run: sudo apt update
+#
+#      - name: Install Dependencies
+#        env:
+#          DEBIAN_FRONTEND: noninteractive
+#        run: sudo apt -y install flatpak flatpak-builder libgtk-3-dev libwebkit2gtk-4.0-dev
+#
+#      - name: Add Flathub Repository
+#        run: sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+#
+#      - name: Install Flatpak Dependencies
+#        run: sudo flatpak install -y flathub org.gnome.Sdk/x86_64/40 org.gnome.Platform/x86_64/40 org.freedesktop.Sdk.Extension.rust-stable//20.08 org.freedesktop.Sdk.Extension.node14//20.08
+#
+#      - name: Build
+#        run: flatpak-builder build org.themelio.Wallet-dev.yml --force-clean --user

@@ -51,4 +51,5 @@ finish-args:
   - --socket=wayland
   # Needs to talk to the network:
   - --share=network
+  # Needed for OpenGL
   - --device=dri

@@ -23,7 +23,7 @@ jobs:
           key: ${{ runner.os }}-flatpak
 
       - name: List Cache
-        run: ls -la ~/.flatpak-builder/cache
+        run: ls -la /home/runner/work/ginkou-flatpak/ginkou-flatpak
 
 #      - name: Update Apt
 #        run: sudo apt update

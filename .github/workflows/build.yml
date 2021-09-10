@@ -15,6 +15,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Cache Flatpak
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.flatpak-builder/cache
+
       - name: Update Apt
         run: sudo apt update
 

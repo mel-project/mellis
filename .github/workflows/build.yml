@@ -23,7 +23,7 @@ jobs:
         with:
           path: |
             /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache
-          key: ${{ runner.os }}-flatpak
+          key: flatpak-builder-${{ github.sha }}
 
       - name: Create Cache
         run: mkdir -p /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache

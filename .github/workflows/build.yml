@@ -15,9 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: List Cache
-        run: ls -la ~/.flatpak-builder/cache
-
       - name: Cache Flatpak
         uses: actions/cache@v2
         with:

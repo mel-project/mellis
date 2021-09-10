@@ -15,9 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: PWD
-        run: cd ~ && pwd
-
       - name: Cache Flatpak
         uses: actions/cache@v2
         with:
@@ -25,11 +22,8 @@ jobs:
             /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache
           key: flatpak-builder-${{ github.sha }}
 
-      - name: Create Cache
-        run: mkdir -p /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache
-
-      - name: Create A File
-        run: touch /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache/testing
+      - name: List A File
+        run: ls -la /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache/testing
 
 #      - name: Update Apt
 #        run: sudo apt update

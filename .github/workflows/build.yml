@@ -25,8 +25,11 @@ jobs:
             /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache
           key: ${{ runner.os }}-flatpak
 
-      - name: List Cache
-        run: ls -la /home/runner/work/ginkou-flatpak/ginkou-flatpak
+      - name: Create Cache
+        run: mkdir -p /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache
+
+      - name: Create A File
+        run: touch /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache/testing
 
 #      - name: Update Apt
 #        run: sudo apt update

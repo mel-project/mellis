@@ -48,3 +48,4 @@ finish-args:
   - --socket=wayland
   # Needs to talk to the network:
   - --share=network
+  - --device=dri

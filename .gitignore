@@ -3,3 +3,4 @@ build-dir
 output-build-dir
 output-repo
 repo
+build/

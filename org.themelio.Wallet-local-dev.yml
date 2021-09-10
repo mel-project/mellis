@@ -12,7 +12,7 @@ modules:
     build-commands:
       - "git checkout development-branch-goes-here"
       - "npm ci --cache=$FLATPAK_BUILDER_BUILDDIR/flatpak-node/npm-cache"
-      - "npm run dev"
+      - "npm run build"
       - "npm run smui-theme-light"
       - "mv public /app/ginkou-files"
     sources:

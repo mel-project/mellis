@@ -4,10 +4,6 @@ on:
   pull_request:
     branches: [ master ]
 
-#on:
-#  push:
-#    branches: [ meade-ci ]
-
 env:
   CARGO_TERM_COLOR: always
 

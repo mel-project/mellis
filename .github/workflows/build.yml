@@ -20,7 +20,7 @@ jobs:
         with:
           path: |
             /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache
-          key: flatpak-builder-${{ github.sha }}
+          key: ${{ runner.os }}-flatpak
 
       - name: List A File
         run: ls -la /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache/testing

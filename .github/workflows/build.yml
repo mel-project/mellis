@@ -22,7 +22,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~/.flatpak-builder/cache
+            /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache
           key: ${{ runner.os }}-flatpak
 
       - name: List Cache

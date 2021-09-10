@@ -10,7 +10,6 @@ modules:
   - name: ginkou
     buildsystem: "simple"
     build-commands:
-      - "git checkout development-branch-goes-here"
       - "npm ci --cache=$FLATPAK_BUILDER_BUILDDIR/flatpak-node/npm-cache"
       - "npm run build"
       - "npm run smui-theme-light"
@@ -21,7 +20,6 @@ modules:
   - name: melwalletd
     buildsystem: "simple"
     build-commands:
-      - "git checkout development-branch-goes-here"
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose"
       - "install -D ./target/debug/melwalletd -t /app/bin/"
     sources:
@@ -30,7 +28,6 @@ modules:
   - name: ginkou-loader
     buildsystem: "simple"
     build-commands:
-      - "git checkout development-branch-goes-here"
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose"
       - "install -D ./target/debug/ginkou-loader -t /app/bin/"
       - "echo '#!/bin/sh' >> /app/bin/ginkou-loader-wrapper"

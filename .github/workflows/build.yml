@@ -34,4 +34,4 @@ jobs:
         run: sudo flatpak install -y flathub org.gnome.Sdk/x86_64/40 org.gnome.Platform/x86_64/40 org.freedesktop.Sdk.Extension.rust-stable//20.08 org.freedesktop.Sdk.Extension.node14//20.08
 
       - name: Build
-        run: flatpak-builder build org.themelio.Wallet.yml --force-clean --user
+        run: flatpak-builder build org.themelio.Wallet-dev.yml --force-clean --user

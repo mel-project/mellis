@@ -16,11 +16,14 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Cache Flatpak
+        id: flatpak-cache
         uses: actions/cache@v2
         with:
           path: |
-            /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache
-          key: ${{ runner.os }}-flatpak
+            ~/.flatpak-builder/cache
+          key: ${{ runner.os }}-flatpak-${{ hashFiles('**/org.themelio.Wallet-dev.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-flatpak-
 
       - name: List A File
         run: ls -la /home/runner/work/ginkou-flatpak/ginkou-flatpak/.flatpak-builder/cache

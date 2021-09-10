@@ -25,7 +25,7 @@ jobs:
       - name: Install Dependencies
         env:
           DEBIAN_FRONTEND: noninteractive
-        run: apt -y install flatpak flatpak-builder libgtk-3-dev libwebkit2gtk-4.0-dev
+        run: sudo apt -y install flatpak flatpak-builder libgtk-3-dev libwebkit2gtk-4.0-dev
 
       - name: Add Flathub Repository
         run: flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo

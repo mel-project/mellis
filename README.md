@@ -8,6 +8,7 @@ To install, simply clone this repository and run the build script.
 
 ```bash
 git clone https://github.com/themeliolabs/ginkou-flatpak
+cd ginkou-flatpak
 sh build-local.sh
 ```
 

@@ -22,7 +22,7 @@ modules:
     buildsystem: "simple"
     build-commands:
 #      - "git checkout DEVELOPMENT-BRANCH-GOES-HERE"
-      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose"
+      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --locked --verbose"
       - "install -D ./target/debug/melwalletd -t /app/bin/"
     sources:
       - type: git
@@ -31,7 +31,7 @@ modules:
     buildsystem: "simple"
     build-commands:
 #      - "git checkout DEVELOPMENT-BRANCH-GOES-HERE"
-      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose"
+      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --locked --verbose"
       - "install -D ./target/debug/ginkou-loader -t /app/bin/"
       - "echo '#!/bin/sh' >> /app/bin/ginkou-loader-wrapper"
       - "echo 'ginkou-loader --html-path /app/ginkou-files' >> /app/bin/ginkou-loader-wrapper"

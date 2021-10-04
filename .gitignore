@@ -4,3 +4,7 @@ output-build-dir
 output-repo
 repo
 build/
+
+# Added by cargo
+
+/target

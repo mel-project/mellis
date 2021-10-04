@@ -9,33 +9,44 @@ command: "ginkou-loader-wrapper"
 modules:
   - name: ginkou
     buildsystem: "simple"
+    sources:
+      - type: git
+        url: https://github.com/themeliolabs/ginkou
+        branch: master
     build-commands:
       - "npm ci --cache=$FLATPAK_BUILDER_BUILDDIR/flatpak-node/npm-cache"
       - "npm run build"
       - "npm run smui-theme-light"
       - "mv public /app/ginkou-files"
-    sources:
-      - type: git
-        url: https://github.com/themeliolabs/ginkou
+
   - name: melwalletd
     buildsystem: "simple"
+    sources:
+      - type: git
+        branch: "master"
+        url: https://github.com/themeliolabs/melwalletd
     build-commands:
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --release --verbose"
       - "install -D ./target/release/melwalletd -t /app/bin/"
-    sources:
-      - type: git
-        url: https://github.com/themeliolabs/melwalletd
+
   - name: ginkou-loader
     buildsystem: "simple"
-    build-commands:
-      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --release --verbose"
-      - "install -D ./target/release/ginkou-loader -t /app/bin/"
-      - "echo '#!/bin/sh' >> /app/bin/ginkou-loader-wrapper"
-      - "echo 'ginkou-loader --html-path /app/ginkou-files' >> /app/bin/ginkou-loader-wrapper"
-      - "chmod +x /app/bin/ginkou-loader-wrapper"
     sources:
       - type: git
         url: https://github.com/themeliolabs/ginkou-loader
+        # path: ~/themelio/ginkou-loader # Uncomment if you have a local path to ginkou-loader you want to test
+        branch: "master"
+    build-commands:
+      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --release --verbose"
+      - "install -D ./target/release/ginkou-loader -t /app/bin/ "
+
+  - name: ginkou-loader-wrapper
+    buildsystem: "simple"
+    build-commands:
+      - "echo '#!/bin/sh' >> /app/bin/ginkou-loader-wrapper"
+      - "echo 'ginkou-loader --html-path /app/ginkou-files --data-path $XDG_DATA_HOME/ginkou-storage --wallet-dir $XDG_DATA_HOME/themelio-wallets;'  >> /app/bin/ginkou-loader-wrapper"
+      - "chmod +x /app/bin/ginkou-loader-wrapper"
+
 build-options:
   append-path: "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/node14/bin"
   build-args:

@@ -1,9 +1,10 @@
-#![allow(unused_imports, unused_variables,dead_code)]
+#![allow(unused_imports, unused_variables, dead_code)]
 use argh::FromArgs;
-use std::collections::BTreeMap as Map;
-use std::{path::PathBuf, process::Command,fmt::Error};
-use serde::{Serialize, Deserialize};
+use serde::{de::{Deserializer,value,IntoDeserializer}, Deserialize, Serialize};
 use serde_yaml::{Sequence, Value};
+use std::str::FromStr;
+use std::collections::BTreeMap as Map;
+use std::{fmt::Error, path::PathBuf, process::Command};
 #[derive(FromArgs)]
 /// Specify how to build flatpak
 struct Sources {
@@ -26,18 +27,7 @@ struct WalletConfig {
     other: Map<String, Value>,
 }
 #[derive(Debug, Serialize, Deserialize)]
-#[serde(tag="name")]
-enum Module {
-    #[serde(rename="ginkou")]
-    Ginkou(InnerModule),
-    #[serde(rename="ginkou-loader")]
-    GinkouLoader(InnerModule),
-    #[serde(rename="melwalletd")]
-    Melwalletd(InnerModule),
-
-}
-#[derive(Debug, Serialize, Deserialize)]
-struct InnerModule {
+struct Module {
     name: String,
     sources: Option<Vec<ModuleSource>>,
     #[serde(flatten)]
@@ -45,30 +35,23 @@ struct InnerModule {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-#[serde(tag="type")]
+#[serde(rename_all = "kebab-case")]
+#[serde(tag = "type")]
 enum ModuleSource {
-    #[serde(rename="dir")]
-    Dir {path: String},
-    #[serde(rename="git")]
-    Git {url: String, branch: String},
-    #[serde(rename="file")]
-    File {path: String},
-
+    Dir { path: String },
+    Git { url: String, branch: String },
+    File { path: String },
     // #[serde(other)]
     // Other,
 }
 
-
-
-
-
 fn main() -> Result<(), serde_yaml::Error> {
     let flatpak: WalletConfig = serde_yaml::from_str(include_str!("../org.themelio.Wallet.yml"))?;
-    let flatpak_local: WalletConfig = serde_yaml::from_str(include_str!("../org.themelio.Wallet-local-dev.yml"))?;
+    let flatpak_local: WalletConfig =
+        serde_yaml::from_str(include_str!("../org.themelio.Wallet-local-dev.yml"))?;
 
     // let flatpak_local = serde_yaml::from_str(include_str!("../org.themelio.Wallet-local-dev.yml"))
     // .expect("Check your yaml file for formatting errors")[0];
-
 
     // let mut flatpak_builder = flatpak.as_hash().unwrap().clone();
 
@@ -82,7 +65,7 @@ fn main() -> Result<(), serde_yaml::Error> {
     // let modules = flatpak_builder["modules".into()];
 
     // println!("{:?}", flatpak_builder[&Yaml::String("modules".into())][0]);
-    println!("{}", serde_yaml::to_string(&flatpak.modules[2]).unwrap());
+    println!("{:?}", &flatpak.modules[0]);
     println!("Done");
     Ok(())
 }

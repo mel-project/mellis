@@ -25,21 +25,39 @@ struct WalletConfig {
     #[serde(flatten)]
     other: Map<String, Value>,
 }
-
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(tag="name")]
-struct Module {
+enum Module {
+    #[serde(rename="ginkou")]
+    Ginkou(InnerModule),
+    #[serde(rename="ginkou-loader")]
+    GinkouLoader(InnerModule),
+    #[serde(rename="melwalletd")]
+    Melwalletd(InnerModule),
+
+}
+#[derive(Debug, Serialize, Deserialize)]
+struct InnerModule {
     name: String,
-    sources: Option<Sequence>,
+    sources: Option<Vec<ModuleSource>>,
     #[serde(flatten)]
     other: Map<String, Value>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-#[serde(tag="name")]
-enum SourceType {
-    Dir(Sequence),
+#[serde(tag="type")]
+enum ModuleSource {
+    #[serde(rename="dir")]
+    Dir {path: String},
+    #[serde(rename="git")]
+    Git {url: String, branch: String},
+    #[serde(rename="file")]
+    File {path: String},
+
+    // #[serde(other)]
+    // Other,
 }
+
 
 
 
@@ -64,7 +82,7 @@ fn main() -> Result<(), serde_yaml::Error> {
     // let modules = flatpak_builder["modules".into()];
 
     // println!("{:?}", flatpak_builder[&Yaml::String("modules".into())][0]);
-    println!("{}", serde_yaml::to_string(&flatpak.modules[0]).unwrap());
+    println!("{}", serde_yaml::to_string(&flatpak.modules[2]).unwrap());
     println!("Done");
     Ok(())
 }

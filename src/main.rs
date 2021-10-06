@@ -1,9 +1,15 @@
 #![allow(unused_imports, unused_variables, dead_code)]
 use argh::FromArgs;
-use serde::{de::{Deserializer,value,IntoDeserializer}, Deserialize, Serialize};
+use serde::{
+    de::{value, Deserializer, IntoDeserializer},
+    Deserialize, Serialize,
+};
 use serde_yaml::{Sequence, Value};
-use std::str::FromStr;
 use std::collections::BTreeMap as Map;
+use std::collections::HashSet as Set;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::{Hash, Hasher};
+use std::str::FromStr;
 use std::{fmt::Error, path::PathBuf, process::Command};
 #[derive(FromArgs)]
 /// Specify how to build flatpak
@@ -20,52 +26,61 @@ struct Sources {
 }
 #[derive(Debug, Serialize, Deserialize)]
 struct WalletConfig {
-
     modules: Vec<Module>,
-
     #[serde(flatten)]
     other: Map<String, Value>,
 }
-#[derive(Debug, Serialize, Deserialize)]
+
+#[derive(Debug, Clone, Serialize, Deserialize, Eq)]
 struct Module {
     name: String,
-    sources: Option<Vec<ModuleSource>>,
+    sources: Option<Vec<Map<String, Value>>>,
     #[serde(flatten)]
     other: Map<String, Value>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "kebab-case")]
-#[serde(tag = "type")]
-enum ModuleSource {
-    Dir { path: String },
-    Git { url: String, branch: String },
-    File { path: String },
-    // #[serde(other)]
-    // Other,
+impl std::hash::Hash for Module {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        println!("{}", self.name);
+        self.name.hash(state);
+    }
 }
-
 fn main() -> Result<(), serde_yaml::Error> {
-    let flatpak: WalletConfig = serde_yaml::from_str(include_str!("../org.themelio.Wallet.yml"))?;
-    let flatpak_local: WalletConfig =
+    let mut flatpak_local: WalletConfig =
         serde_yaml::from_str(include_str!("../org.themelio.Wallet-local-dev.yml"))?;
+    let mut flatpak_master: WalletConfig =
+        serde_yaml::from_str(include_str!("../org.themelio.Wallet.yml"))?;
 
-    // let flatpak_local = serde_yaml::from_str(include_str!("../org.themelio.Wallet-local-dev.yml"))
-    // .expect("Check your yaml file for formatting errors")[0];
+    let mut set: Set<Module> = flatpak_master
+        .modules
+        .into_iter()
+        .chain(flatpak_local.modules.into_iter())
+        .collect();
 
-    // let mut flatpak_builder = flatpak.as_hash().unwrap().clone();
+    fn calculate_hash<T: Hash>(t: &T) -> u64 {
+        let mut s = DefaultHasher::new();
+        t.hash(&mut s);
+        s.finish()
+    }
+    let flatpak = WalletConfig {
+        modules: vec![],
+        other: flatpak_master.other,
+    };
 
-    // flatpak_builder.clone().into_iter().for_each(|x| {
-    //     println!("{:?}", x)
-    // });
+    println!(
+        "{:?}",
+        // calculate_hash(&set.take(&Module{name: "ginkou".into(), sources: None, other: Map::new()})),
+        {
+            let mut v: Vec<Module> = set.into_iter().collect();
 
-    // let mut modules = &flatpak_builder[&Yaml::String("modules".into())];
-    // modules.as_vec().insert();
-    // flatpak_builder.insert(Yaml::String("modules".into()), Yaml::String("modules".into()));
-    // let modules = flatpak_builder["modules".into()];
-
-    // println!("{:?}", flatpak_builder[&Yaml::String("modules".into())][0]);
-    println!("{:?}", &flatpak.modules[0]);
+            let a = v[1].clone();
+            let b = v[2].clone();
+            println!("#####Names: {}, {}#######", a.name, b.name);
+            println!("{}", a == b);
+            calculate_hash(&a) == calculate_hash(&b)
+        }
+    );
+    // println!("{}", serde_yaml::to_string(&set).unwrap());
     println!("Done");
     Ok(())
 }

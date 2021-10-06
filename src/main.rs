@@ -31,7 +31,7 @@ struct WalletConfig {
     other: Map<String, Value>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, Eq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 struct Module {
     name: String,
     sources: Option<Vec<Map<String, Value>>>,
@@ -51,11 +51,19 @@ fn main() -> Result<(), serde_yaml::Error> {
     let mut flatpak_master: WalletConfig =
         serde_yaml::from_str(include_str!("../org.themelio.Wallet.yml"))?;
 
-    let mut set: Set<Module> = flatpak_master
+    let mut all_modules: Vec<Module> = flatpak_master
         .modules
         .into_iter()
         .chain(flatpak_local.modules.into_iter())
         .collect();
+
+    let map  = {
+        let mut map: Map<String, Module> = Map::new();
+        all_modules.into_iter().for_each(|module|{
+            map.insert(module.name.clone(), module);
+        });
+        map
+    };
 
     fn calculate_hash<T: Hash>(t: &T) -> u64 {
         let mut s = DefaultHasher::new();
@@ -69,16 +77,17 @@ fn main() -> Result<(), serde_yaml::Error> {
 
     println!(
         "{:?}",
+        map
         // calculate_hash(&set.take(&Module{name: "ginkou".into(), sources: None, other: Map::new()})),
-        {
-            let mut v: Vec<Module> = set.into_iter().collect();
+        // {
+        //     let mut v: Vec<Module> = set.into_iter().collect();
 
-            let a = v[1].clone();
-            let b = v[2].clone();
-            println!("#####Names: {}, {}#######", a.name, b.name);
-            println!("{}", a == b);
-            calculate_hash(&a) == calculate_hash(&b)
-        }
+        //     let a = v[1].clone();
+        //     let b = v[2].clone();
+        //     println!("#####Names: {}, {}#######", a.name, b.name);
+        //     println!("{}", a == b);
+        //     calculate_hash(&a) == calculate_hash(&b)
+        // }
     );
     // println!("{}", serde_yaml::to_string(&set).unwrap());
     println!("Done");

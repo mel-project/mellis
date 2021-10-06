@@ -5,26 +5,29 @@ use serde::{
     Deserialize, Serialize,
 };
 use serde_yaml::{Sequence, Value};
+use std::collections::hash_map::DefaultHasher;
 use std::collections::BTreeMap as Map;
 use std::collections::HashSet as Set;
-use std::collections::hash_map::DefaultHasher;
+use std::fs::File;
 use std::hash::{Hash, Hasher};
+use std::io::prelude::*;
 use std::str::FromStr;
 use std::{fmt::Error, path::PathBuf, process::Command};
+
 #[derive(FromArgs)]
 /// Specify how to build flatpak
-struct Sources {
+struct Args {
     /// path to compiled ginkou html
-    #[argh(option)]
-    html_path: PathBuf,
+    #[argh(switch, short = 'i')]
+    install: bool,
     /// path to compiled a melwalletd
     #[argh(option)]
-    melwalletd_path: PathBuf,
+    melwalletd_path: Option<PathBuf>,
     /// path to compiled a ginkou-loader
     #[argh(option)]
-    ginkou_loader_path: PathBuf,
+    ginkou_loader_path: Option<PathBuf>,
 }
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 struct WalletConfig {
     modules: Vec<Module>,
     #[serde(flatten)]
@@ -45,51 +48,71 @@ impl std::hash::Hash for Module {
         self.name.hash(state);
     }
 }
+
+fn create_build(config: &WalletConfig, name: PathBuf) {
+    let mut file = File::create(name.clone())
+        .expect(&*format!("Failed to create file {:?}", name.as_os_str()));
+
+    file.write_all(
+        serde_yaml::to_string(config)
+            .expect("Unable to parse WalletConfig")
+            .as_bytes(),
+    )
+    .expect(&*format!("Failed to create file {:?}", name));
+}
+
 fn main() -> Result<(), serde_yaml::Error> {
-    let mut flatpak_local: WalletConfig =
+    let args: Args = argh::from_env();
+
+    let flatpak_local: WalletConfig =
         serde_yaml::from_str(include_str!("../org.themelio.Wallet-local-dev.yml"))?;
-    let mut flatpak_master: WalletConfig =
+
+    let flatpak_master: WalletConfig =
         serde_yaml::from_str(include_str!("../org.themelio.Wallet.yml"))?;
 
-    let mut all_modules: Vec<Module> = flatpak_master
+    let all_modules: Vec<Module> = flatpak_master
+        .clone()
         .modules
         .into_iter()
         .chain(flatpak_local.modules.into_iter())
         .collect();
 
-    let map  = {
+    let shrunk_modules = {
         let mut map: Map<String, Module> = Map::new();
-        all_modules.into_iter().for_each(|module|{
+        all_modules.into_iter().for_each(|module| {
             map.insert(module.name.clone(), module);
         });
         map
     };
 
-    fn calculate_hash<T: Hash>(t: &T) -> u64 {
-        let mut s = DefaultHasher::new();
-        t.hash(&mut s);
-        s.finish()
-    }
     let flatpak = WalletConfig {
-        modules: vec![],
-        other: flatpak_master.other,
+        modules: flatpak_master
+            .modules
+            .into_iter()
+            .map(|module| shrunk_modules[&module.name.clone()].clone())
+            .collect(),
+        other: flatpak_master.other.clone(),
     };
 
-    println!(
-        "{:?}",
-        map
-        // calculate_hash(&set.take(&Module{name: "ginkou".into(), sources: None, other: Map::new()})),
-        // {
-        //     let mut v: Vec<Module> = set.into_iter().collect();
+    let flatpak_build_file = "org.themelio.Wallet-build.yml";
+    create_build(&flatpak, flatpak_build_file.into());
 
-        //     let a = v[1].clone();
-        //     let b = v[2].clone();
-        //     println!("#####Names: {}, {}#######", a.name, b.name);
-        //     println!("{}", a == b);
-        //     calculate_hash(&a) == calculate_hash(&b)
-        // }
-    );
-    // println!("{}", serde_yaml::to_string(&set).unwrap());
+    let mut flatpak_build = {
+        let mut command = Command::new("flatpak-builder");
+        command.args(["build", flatpak_build_file,  "--force-clean", "--user"]);
+        if args.install { 
+            command.arg("--install");
+        };
+        command.spawn().unwrap()
+    };
+    flatpak_build.wait().unwrap();
+    // println!("{}", String::from_utf8_lossy(&flatpak_build.stdout));
+    
+    // shrunk_modules.into_iter().for_each(|module| {
+    //     println!("{:?}", module.name.clone())
+    // });
+
+    println!("{}", serde_yaml::to_string(&flatpak.modules).unwrap());
     println!("Done");
     Ok(())
 }

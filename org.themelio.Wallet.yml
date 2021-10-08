@@ -18,6 +18,16 @@ modules:
       - "npm run build"
       - "npm run smui-theme-light"
       - "mv public /app/ginkou-files"
+  ## uncomment these lines and comment the modules with that same name
+  # - name: ginkou
+  #   buildsystem: "simple"
+  #   sources:
+  #     - type: dir # keep in mind that paths don't expand. ~/ doesn't work
+  #       path: /themeliolabs/ginkou/public # path to ginkou compiled ginkou `public` dir
+  #       branch: master
+  #   build-commands:
+  #     - "mkdir /app/ginkou-files"
+  #     - "mv * /app/ginkou-files"
 
   - name: melwalletd
     buildsystem: "simple"
@@ -29,16 +39,32 @@ modules:
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --release --verbose"
       - "install -D ./target/release/melwalletd -t /app/bin/"
 
+  # - name: melwalletd
+  #   buildsystem: "simple"
+  #   sources:
+  #     - type: file
+  #       path:  /home/shmendez/themeliolabs/melwalletd/target/debug/melwalletd # path to binary
+  #   build-commands:
+  #     - "install -D melwalletd -t /app/bin/"
+
   - name: ginkou-loader
     buildsystem: "simple"
     sources:
       - type: git
         url: https://github.com/themeliolabs/ginkou-loader
-        # path: ~/themelio/ginkou-loader # Uncomment if you have a local path to ginkou-loader you want to test
+        # path: /themelio/ginkou-loader 
         branch: "master"
     build-commands:
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --release --verbose"
       - "install -D ./target/release/ginkou-loader -t /app/bin/ "
+
+  # - name: ginkou-loader
+  #   buildsystem: "simple"
+  #   sources:
+  #     - type: file
+  #       path: /themeliolabs/ginkou-loader/target/debug/ginkou-loader
+  #   build-commands:
+  #     - "install -D ginkou-loader -t /app/bin/ "
 
   - name: ginkou-loader-wrapper
     buildsystem: "simple"

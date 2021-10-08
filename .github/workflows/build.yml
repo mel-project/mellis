@@ -20,5 +20,5 @@ jobs:
       - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
         with:
           bundle: ginkou.flatpak
-          manifest-path: org.themelio.Wallet-dev.yml
+          manifest-path: org.themelio.Wallet.yml
           cache-key: flatpak-builder-${{ github.sha }}

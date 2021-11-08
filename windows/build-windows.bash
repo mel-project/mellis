@@ -5,12 +5,13 @@ cd `dirname "$(readlink -f "$0")"`
 
 
 ISCC="./iscc/ISCC.exe"
-mkdir iscc
+rm -rfv iscc
+mkdir -p iscc
 unzip IS6.zip -d iscc
-cargo install --locked --path ../gephgui-wry
-cargo install --locked --path ../geph4-vpn-helper
+cargo install --locked --path ../ginkou-loader
+cargo install --locked --path ../melwalletd
 
-curl https://f001.backblazeb2.com/file/geph-dl/geph4-binaries/$VERSION/geph4-client-windows-i386.exe > ../blobs/win-ia32/geph4-client.exe
-cp $(which gephgui-wry) ../blobs/win-ia32/
-cp $(which geph4-vpn-helper) ../blobs/win-ia32/
+mkdir -p dir
+cp $(which melwalletd) dir
+cp $(which ginkou-loader) dir
 sh -c "$ISCC setup.iss"

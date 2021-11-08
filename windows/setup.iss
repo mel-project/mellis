@@ -3,7 +3,7 @@
 #define MyAppVersion "1.0"
 #define MyAppPublisher "Themelio Labs"
 #define MyAppURL "https://themelio.org/"
-#define MyAppExeName "gephgui-wry.exe"
+#define MyAppExeName "ginkou-loader.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -42,9 +42,9 @@ Source: "dir\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createall
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\{cm:MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{group}\{cm:MyAppName}"; Filename: "{app}\{#MyAppExeName}"; WorkingDir: "{app}"
 Name: "{group}\{cm:UninstallProgram,{cm:MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\{cm:MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{commondesktop}\{cm:MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; Parameters: "--html-path ginkou-files"; WorkingDir: "{app}"
 
 [Run]
 Filename: "{app}\MicrosoftEdgeWebview2Setup"; StatusMsg: "Installing WebView2..."; Parameters: "/install"; Check: WebView2IsNotInstalled

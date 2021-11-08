@@ -2,14 +2,13 @@ name: Build
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     container:
@@ -17,8 +16,9 @@ jobs:
       options: --privileged
     steps:
       - uses: actions/checkout@v2
+      - run: git submodule update --init --recursive
       - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
         with:
           bundle: ginkou.flatpak
-          manifest-path: org.themelio.Wallet-dev.yml
+          manifest-path: org.themelio.Wallet.yml
           cache-key: flatpak-builder-${{ github.sha }}

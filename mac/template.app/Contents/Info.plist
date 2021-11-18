@@ -17,7 +17,7 @@
 	<key>CFBundleExecutable</key>
 	<string>ginkou-loader-wrapper</string>
 	<key>CFBundleIconFile</key>
-	<string>themelio.icns</string>
+	<string>ginkou.icns</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>LSApplicationCategoryType</key>

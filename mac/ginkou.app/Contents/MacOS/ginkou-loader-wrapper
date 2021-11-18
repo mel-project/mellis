@@ -1,7 +1,0 @@
-#!/bin/bash
-logger "running"
-echo "====running====" | logger
-./ginkou-loader --html-path ginkou-public --melwalletd-path ./melwalletd --wallet-dir ./wallets --data-path data | logger
-echo `ls` | logger
-date +%s | logger
-echo "=====done=====" | logger

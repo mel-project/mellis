@@ -12,17 +12,29 @@ rm -rf ginkou.app
 cp -r template.app ginkou.app
 mkdir $RES/tmp
 
-cargo install --path $PROJECT_ROOT/ginkou-loader/ --root $RES/tmp
-cargo install --path $PROJECT_ROOT/melwalletd --root $RES/tmp
+cargo install --locked --path $PROJECT_ROOT/ginkou-loader/ --root $RES/tmp
+echo =======================
+cargo install --locked --path $PROJECT_ROOT/melwalletd --root $RES/tmp
 mv $RES/tmp/bin/* $RES
+echo =======================
+echo "Building ginkou"
+if [[ ! -d $PROJECT_ROOT/ginkou-public ]]
+then 
+    cd $RES/tmp
+    git clone $PROJECT_ROOT/ginkou 
+    cd ginkou
+    npm install
+    npm run build
+    npm run smui-theme-light
+    mv public $PROJECT_ROOT/ginkou-public
+else 
+    echo "\`ginkou-public\` is available..."
+    echo "not rebuilding ginkou and using \`ginkou-public\` instead"
+fi
 
-cd $RES/tmp
-git clone $PROJECT_ROOT/ginkou 
-cd ginkou
-npm install
-npm run build
-npm run smui-theme-light
-mv public $RES/ginkou-public
+cp -r $PROJECT_ROOT/ginkou-public $RES/ginkou-public
+
+
 
 cd $MAC_ROOT
 rm -rf dmg_setup
@@ -33,8 +45,10 @@ cd dmg_setup
 ln -s /Applications
 
 cd $MAC_ROOT
-create-dmg $PROJECT_ROOT/builds/ginkou.dmg dmg_setup
+rm -rf ginkou.dmg
+create-dmg ginkou.dmg dmg_setup
 
+rm -rf dmg_setup
 rm -rf $RES/tmp
 
 

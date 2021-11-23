@@ -14,4 +14,9 @@ elif [ -n "${NIXOS_FIRST_RUN}" ]; then
   sudo flatpak install -y flathub org.gnome.Sdk/x86_64/40 org.gnome.Platform/x86_64/40 flathub org.freedesktop.Sdk.Extension.rust-stable//20.08 flathub org.freedesktop.Sdk.Extension.node14//20.08
 fi
 
+
+GINKOU_BRANCH=$(git checkout `(cd ../ginkou && git log --format='%H' -n 1)`)
+WALLET_BRANCH=$(git checkout `(cd ../melwalletd && git log --format='%H' -n 1)`)
+LOADER_BRANCH=$(git checkout `(cd ../ginkou-loader && git log --format='%H' -n 1)`)
+e
 flatpak-builder build org.themelio.Wallet-dev.yml --force-clean --user --install

@@ -29,6 +29,7 @@ modules:
     sources:
       - type: git
         path: ../melwalletd
+        
   - name: ginkou-loader
     buildsystem: "simple"
     build-commands:

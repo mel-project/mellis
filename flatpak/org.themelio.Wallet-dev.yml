@@ -12,7 +12,8 @@ modules:
     sources:
       - type: git
         path: ../ginkou
-        branch: master
+        branch: $GINKOU_BRANCH
+        
     build-commands:
       - "git checkout `(cd ../ginkou && git log --format='%H' -n 1)`"
       - "npm ci --cache=$FLATPAK_BUILDER_BUILDDIR/flatpak-node/npm-cache"
@@ -35,8 +36,8 @@ modules:
     sources:
       - type: git
         path: ../melwalletd
+        branch: $WALLET_BRANCH
     build-commands:
-      - "git checkout `(cd ../melwalletd && git log --format='%H' -n 1)`"
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose"
       - "install -D ./target/debug/melwalletd -t /app/bin/"
 
@@ -53,8 +54,8 @@ modules:
     sources:
       - type: git
         path: ../ginkou-loader 
+        branch: $LOADER_BRANCH
     build-commands:
-      - "git checkout `(cd ../ginkou-loader && git log --format='%H' -n 1)`"
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose"
       - "install -D ./target/debug/ginkou-loader -t /app/bin/ "
 

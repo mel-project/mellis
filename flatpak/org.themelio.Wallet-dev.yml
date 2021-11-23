@@ -11,9 +11,10 @@ modules:
     buildsystem: "simple"
     sources:
       - type: git
-        url: https://github.com/themeliolabs/ginkou
+        path: ../ginkou
         branch: master
     build-commands:
+      - "git checkout `(cd ../ginkou && git log --format='%H' -n 1)`"
       - "npm ci --cache=$FLATPAK_BUILDER_BUILDDIR/flatpak-node/npm-cache"
       - "npm run build"
       - "npm run smui-theme-light"
@@ -33,11 +34,11 @@ modules:
     buildsystem: "simple"
     sources:
       - type: git
-        branch: "master"
-        url: https://github.com/themeliolabs/melwalletd
+        path: ../melwalletd
     build-commands:
+      - "git checkout `(cd ../melwalletd && git log --format='%H' -n 1)`"
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose"
-      - "install -D ./target/release/melwalletd -t /app/bin/"
+      - "install -D ./target/debug/melwalletd -t /app/bin/"
 
   # - name: melwalletd
   #   buildsystem: "simple"
@@ -51,12 +52,11 @@ modules:
     buildsystem: "simple"
     sources:
       - type: git
-        url: https://github.com/themeliolabs/ginkou-loader
-        # path: /themelio/ginkou-loader 
-        branch: "master"
+        path: ../ginkou-loader 
     build-commands:
+      - "git checkout `(cd ../ginkou-loader && git log --format='%H' -n 1)`"
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose"
-      - "install -D ./target/release/ginkou-loader -t /app/bin/ "
+      - "install -D ./target/debug/ginkou-loader -t /app/bin/ "
 
   # - name: ginkou-loader
   #   buildsystem: "simple"

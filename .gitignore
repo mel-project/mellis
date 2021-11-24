@@ -1,6 +1,3 @@
-.flatpak-builder
-build-dir
-output-build-dir
-output-repo
-repo
-build/
+.DS_Store
+wallet
+ginkou.app

@@ -1,0 +1,89 @@
+app-id: org.themelio.Wallet
+runtime: org.gnome.Platform
+runtime-version: "40"
+sdk: org.gnome.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+  - org.freedesktop.Sdk.Extension.node14
+command: "ginkou-loader-wrapper"
+modules:
+  - name: ginkou
+    buildsystem: "simple"
+    sources:
+      - type: git
+        path: ../ginkou
+        branch: "${GINKOU_BRANCH}"
+        
+    build-commands:
+      - "npm ci --cache=$FLATPAK_BUILDER_BUILDDIR/flatpak-node/npm-cache"
+      - "npm run build"
+      - "npm run smui-theme-light"
+      - "mv public /app/ginkou-files"
+  ## uncomment these lines and comment the modules with that same name
+  # - name: ginkou
+  #   buildsystem: "simple"
+  #   sources:
+  #     - type: dir # keep in mind that paths don't expand. ~/ doesn't work
+  #       path: /themeliolabs/ginkou/public # path to ginkou compiled ginkou `public` dir
+  #       branch: master
+  #   build-commands:
+  #     - "mkdir /app/ginkou-files"
+  #     - "mv * /app/ginkou-files"
+
+  - name: melwalletd
+    buildsystem: "simple"
+    sources:
+      - type: git
+        path: ../melwalletd
+        branch: "${WALLET_BRANCH}"
+    build-commands:
+      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose ${RELEASE_FLAG}"
+      - "install -D ./target/${TARGET}/melwalletd -t /app/bin/"
+
+  # - name: melwalletd
+  #   buildsystem: "simple"
+  #   sources:
+  #     - type: file
+  #       path:  /home/shmendez/themeliolabs/melwalletd/target/debug/melwalletd # path to binary
+  #   build-commands:
+  #     - "install -D melwalletd -t /app/bin/"
+
+  - name: ginkou-loader
+    buildsystem: "simple"
+    sources:
+      - type: git
+        path: ../ginkou-loader 
+        branch: "${LOADER_BRANCH}"
+    build-commands:
+      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose ${RELEASE_FLAG}"
+      - "install -D ./target/${TARGET}/ginkou-loader -t /app/bin/ "
+
+  # - name: ginkou-loader
+  #   buildsystem: "simple"
+  #   sources:
+  #     - type: file
+  #       path: /themeliolabs/ginkou-loader/target/debug/ginkou-loader
+  #   build-commands:
+  #     - "install -D ginkou-loader -t /app/bin/ "
+
+  - name: ginkou-loader-wrapper
+    buildsystem: "simple"
+    build-commands:
+      - "echo '#!/bin/sh' >> /app/bin/ginkou-loader-wrapper"
+      - "echo 'ginkou-loader --html-path /app/ginkou-files --data-path $XDG_DATA_HOME/ginkou-storage --wallet-dir $XDG_DATA_HOME/themelio-wallets;'  >> /app/bin/ginkou-loader-wrapper"
+      - "chmod +x /app/bin/ginkou-loader-wrapper"
+
+build-options:
+  append-path: "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/node14/bin"
+  build-args:
+    - --share=network
+finish-args:
+  # X11 + XShm access
+  - --share=ipc
+  - --socket=x11
+  # Wayland access
+  - --socket=wayland
+  # Needs to talk to the network:
+  - --share=network
+  # Needed for OpenGL
+  - --device=dri

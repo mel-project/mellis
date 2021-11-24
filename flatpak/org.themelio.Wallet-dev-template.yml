@@ -12,10 +12,9 @@ modules:
     sources:
       - type: git
         path: ../ginkou
-        branch: "$GINKOU_BRANCH"
+        branch: "${GINKOU_BRANCH}"
         
     build-commands:
-      - "git checkout `(cd ../ginkou && git log --format='%H' -n 1)`"
       - "npm ci --cache=$FLATPAK_BUILDER_BUILDDIR/flatpak-node/npm-cache"
       - "npm run build"
       - "npm run smui-theme-light"
@@ -36,10 +35,10 @@ modules:
     sources:
       - type: git
         path: ../melwalletd
-        branch: "$WALLET_BRANCH"
+        branch: "${WALLET_BRANCH}"
     build-commands:
-      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose $RELEASE"
-      - "install -D ./target/$TARGET/melwalletd -t /app/bin/"
+      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose ${RELEASE_FLAG}"
+      - "install -D ./target/${TARGET}/melwalletd -t /app/bin/"
 
   # - name: melwalletd
   #   buildsystem: "simple"
@@ -54,10 +53,10 @@ modules:
     sources:
       - type: git
         path: ../ginkou-loader 
-        branch: "$LOADER_BRANCH"
+        branch: "${LOADER_BRANCH}"
     build-commands:
-      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose $RELEASE"
-      - "install -D ./target/$TARGET/ginkou-loader -t /app/bin/ "
+      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose ${RELEASE_FLAG}"
+      - "install -D ./target/${TARGET}/ginkou-loader -t /app/bin/ "
 
   # - name: ginkou-loader
   #   buildsystem: "simple"

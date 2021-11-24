@@ -15,12 +15,44 @@ elif [ -n "${NIXOS_FIRST_RUN}" ]; then
 fi
 
 
+export RELEASE_FLAG=""
+export TARGET="debug"
+MANIFEST_FILE="org.themelio.Wallet-dev.yml"
+
+while getopts "irh" opt; do
+  case $opt in
+    i)
+      INSTALL_MANIFEST=1
+      ;;
+    r)
+      RELEASE_FLAG="--release"
+      TARGET="release"
+      MANIFEST_FILE="org.themelio.Wallet.yml"
+      ;;
+    h)
+      echo "By default the script generates org.themelio.Wallet-dev.yml, you can additionally specify: "
+      echo
+      echo "-i\t\t installs flatpak manifest, by default thats org.themelio.Wallet-dev.yml (changed by -r)"
+      echo "-r\t\t build rust as release, this also generates org.themelio.Wallet.yml"
+      echo "-h\t\t this help message"
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      exit 1
+      ;;
+  esac
+done
+
 export GINKOU_BRANCH=`(cd ../ginkou && git log --format='%H' -n 1)`
 export WALLET_BRANCH=`(cd ../melwalletd && git log --format='%H' -n 1)`
 export LOADER_BRANCH=`(cd ../ginkou-loader && git log --format='%H' -n 1)`
-export RELEASE=""
-export TARGET="debug"
 
-cat org.themelio.Wallet-dev-template.yml | envsubst '$GINKOU_BRANCH $WALLET_BRANCH $LOADER_BRANCH' > org.themelio.Wallet-dev.yml
+cat org.themelio.Wallet-dev-template.yml | 
+envsubst '$GINKOU_BRANCH $WALLET_BRANCH $LOADER_BRANCH $RELEASE_FLAG $TARGET' > $MANIFEST_FILE;
 
-flatpak-builder org.themelio.Wallet-dev.yml --force-clean --user --install
+if [ -n "${INSTALL_MANIFEST}" ]; then 
+  flatpak-builder build $MANIFEST_FILE --force-clean --user --install
+fi

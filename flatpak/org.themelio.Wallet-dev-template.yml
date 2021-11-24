@@ -12,7 +12,7 @@ modules:
     sources:
       - type: git
         path: ../ginkou
-        branch: "450ba8a6806d80a57225e77e8dd4818ada86becb"
+        branch: "$GINKOU_BRANCH"
         
     build-commands:
       - "git checkout `(cd ../ginkou && git log --format='%H' -n 1)`"
@@ -36,10 +36,10 @@ modules:
     sources:
       - type: git
         path: ../melwalletd
-        branch: "785ad1da7c5eff919dab4599f97856735c3a0c60"
+        branch: "$WALLET_BRANCH"
     build-commands:
-      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose"
-      - "install -D ./target/debug/melwalletd -t /app/bin/"
+      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose $RELEASE"
+      - "install -D ./target/$TARGET/melwalletd -t /app/bin/"
 
   # - name: melwalletd
   #   buildsystem: "simple"
@@ -54,10 +54,10 @@ modules:
     sources:
       - type: git
         path: ../ginkou-loader 
-        branch: "afc5d0d5ef100e697660edaef40095118c313833"
+        branch: "$LOADER_BRANCH"
     build-commands:
-      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose"
-      - "install -D ./target/debug/ginkou-loader -t /app/bin/ "
+      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose $RELEASE"
+      - "install -D ./target/$TARGET/ginkou-loader -t /app/bin/ "
 
   # - name: ginkou-loader
   #   buildsystem: "simple"

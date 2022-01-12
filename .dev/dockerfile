@@ -1,0 +1,13 @@
+# syntax=docker/dockerfile:1
+FROM ghcr.io/catthehacker/ubuntu:js-latest
+RUN apt update
+RUN apt-get install -y flatpak flatpak-builder
+RUN apt-get install -y gettext \
+    && mv /usr/bin/envsubst /usr/local/sbin/envsubst 
+RUN echo 3
+RUN git clone --recursive https://github.com/themeliolabs/ginkou-flatpak.git
+RUN flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+WORKDIR  ginkou-flatpak/flatpak
+RUN git checkout multiplatform
+RUN flatpak build-init
+RUN ./build-flatpak.sh

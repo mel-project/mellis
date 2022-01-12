@@ -16,10 +16,11 @@ fi
 
 
 export RELEASE_FLAG=""
+export USER_FLAG=""
 export TARGET="debug"
 MANIFEST_FILE="org.themelio.Wallet-dev.yml"
 
-while getopts "irh" opt; do
+while getopts "irhu" opt; do
   case $opt in
     i)
       INSTALL_MANIFEST=1
@@ -29,11 +30,15 @@ while getopts "irh" opt; do
       TARGET="release"
       MANIFEST_FILE="org.themelio.Wallet.yml"
       ;;
+    u)
+      USER_FLAG="--user"
+      ;;
     h)
       echo "By default the script generates org.themelio.Wallet-dev.yml, you can additionally specify: "
       echo
       echo "-i\t\t installs flatpak manifest, by default thats org.themelio.Wallet-dev.yml (changed by -r)"
       echo "-r\t\t build rust as release, this also generates org.themelio.Wallet.yml"
+      echo "-u\t\t adds --user flag to flatpak-builder"
       echo "-h\t\t this help message"
       ;;
     \?)
@@ -54,5 +59,5 @@ cat org.themelio.Wallet-dev-template.yml |
 envsubst '$GINKOU_BRANCH $WALLET_BRANCH $LOADER_BRANCH $RELEASE_FLAG $TARGET' > $MANIFEST_FILE;
 
 if [ -n "${INSTALL_MANIFEST}" ]; then 
-  flatpak-builder build $MANIFEST_FILE --force-clean --user --install
+  flatpak-builder build $MANIFEST_FILE --force-clean --install --install --install-deps-from flathub $USER_FLAG
 fi

@@ -27,13 +27,13 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    - name: Create Draft Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: 1.0.0-t
-        release_name: 1.0.0-t
-        draft: true
-        prerelease: false
+   `   - name: Create Draft Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: 1.0.0-t
+          release_name: 1.0.0-t
+          draft: true
+          pre`release: false

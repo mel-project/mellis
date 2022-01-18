@@ -33,7 +33,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: 1.0.0
+        tag_name: 1.0.0-t
         release_name: 1.0.0-t
         draft: true
         prerelease: false

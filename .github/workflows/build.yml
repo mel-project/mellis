@@ -38,14 +38,16 @@ jobs:
       steps:
         - uses: actions/download-artifact@v2
           with:
-            name: ginkou.flatpak
+            # not sure how this is created?
+            # have faith in the flatpak-github-actions gods
+            name: ginkou-x86_64 
+            
         - name: Release
           uses: softprops/action-gh-release@v1
           # if: startsWith(github.ref, 'refs/tags/')
           with:
             files: |
               ginkou.flatpak
-              flatpak_app
             draft: true
 
 

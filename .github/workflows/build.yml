@@ -29,9 +29,8 @@ jobs:
       - name: Upload flatpak artifact
         uses: actions/upload-artifact@v2
         with:
-          # pat
-          
-          h: ginkou.flatpak
+          # name: ginkou.flatpak
+          # path: ginkou.flatpak
           name: test-file
           path: flatpak/build-flatpak.sh
   release:

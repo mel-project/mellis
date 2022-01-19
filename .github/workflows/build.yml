@@ -1,43 +1,32 @@
-name: Build
+name: Test-Build-Release
 
 on:
   push:
-  pull_request:
-    branches: [master]
+  # pull_request:
+  #   branches: [master]
 
 env:
   CARGO_TERM_COLOR: always
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-
-#     container:
-#       image: bilelmoussaoui/flatpak-github-actions:gnome-40
-#       options: --privileged
-#     steps:
-#       - uses: actions/checkout@v2
-#       - run: git submodule update --init --recursive
-#       - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
-#         with:
-#           bundle: ginkou.flatpak
-#           manifest-path: flatpak/org.themelio.Wallet.yml
-#           cache-key: flatpak-builder-${{ github.sha }}
-
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
+
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:gnome-40
+      options: --privileged
     steps:
-    - name: Create Draft Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: 1.0.0-t
-        release_name: 1.0.0-t
-        draft: true
-        prerelease: false
+      - name: Checkout
+        uses: actions/checkout@v2
+        run: git submodule update --init --recursive
+      - name: Build
+        uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+        with:
+          bundle: ginkou.flatpak
+          manifest-path: flatpak/org.themelio.Wallet.yml
+          cache-key: flatpak-builder-${{ github.sha }}
+      - name: Show me the filesystem
+        run: ls     
 
 # This is a basic workflow to help you get started with Actions
 

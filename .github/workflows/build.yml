@@ -34,7 +34,7 @@ jobs:
       #     name: ginkou.flatpak
       #     path: ginkou-x86_64
   build-mac:
-    name: Deploying to Testflight
+    name: Build MacOS App
     runs-on: macos-latest
     steps:
       - name: Checkout repository
@@ -43,6 +43,14 @@ jobs:
         run: git submodule update --init --recursive
       - name: Install create-dmg
         run: brew install create-dmg
+      
+      - name: Cache Primes
+        id: cache-primes
+        uses: actions/cache@v2
+        with:
+          path: prime-numbers
+          key: ${{ runner.os }}-primes
+      
       - run: ./mac/build-mac.sh
       - name: Try to fail
         run: exit 1

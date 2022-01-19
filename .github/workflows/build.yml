@@ -25,7 +25,7 @@ jobs:
       #   with:
       #     bundle: ginkou.flatpak
       #     manifest-path: flatpak/org.themelio.Wallet.yml
-      #     cache-key: flatpak-builder-testing
+      #     cache-key: flatpak-builder-${{ github.sha }}
       - run: echo "0 bytes" > ginkou-x86_64
       - name: Upload flatpak artifact
         uses: actions/upload-artifact@v2
@@ -50,7 +50,7 @@ jobs:
           with:
             files: |
               ginkou-x86_64 
-            name: weirdly this wont update
+            name: Release-${{ github.sha }}
             draft: true
 
 

@@ -50,8 +50,7 @@ jobs:
           with:
             files: |
               ginkou-x86_64 
-
-            name: wtf
+            name: weirdly this won't change
             draft: true
 
 

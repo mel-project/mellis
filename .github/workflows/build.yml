@@ -26,7 +26,7 @@ jobs:
       #     bundle: ginkou.flatpak
       #     manifest-path: flatpak/org.themelio.Wallet.yml
       #     cache-key: flatpak-builder-testing
-      - run: echo "test" > ginkou-x86_64
+      - run: echo "0 bytes" > ginkou-x86_64
       - name: Upload flatpak artifact
         uses: actions/upload-artifact@v2
         with:
@@ -50,8 +50,9 @@ jobs:
           with:
             files: |
               ginkou-x86_64 
-            draft: true
+
             name: wtf
+            draft: true
 
 
 # This is a basic workflow to help you get started with Actions

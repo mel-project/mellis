@@ -12,14 +12,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-40
-      options: --privileged
+    # container:
+    #   image: bilelmoussaoui/flatpak-github-actions:gnome-40
+    #   options: --privileged
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Submodule Clone
-        run: git submodule update --init --recursive
+      # - name: Submodule Clone
+      #   run: git submodule update --init --recursive
       # - name: Build
       #   uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
       #   with:

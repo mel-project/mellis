@@ -25,7 +25,7 @@ jobs:
         with:
           bundle: ginkou.flatpak
           manifest-path: flatpak/org.themelio.Wallet.yml
-          cache-key: flatpak-builder-${{ github.sha }}
+          cache-key: flatpak-builder-testing
       - name: Show me the filesystem
         run: ls     
 

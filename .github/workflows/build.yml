@@ -47,7 +47,7 @@ jobs:
           # if: startsWith(github.ref, 'refs/tags/')
           with:
             files: |
-              ginkou.flatpak
+              ginkou.flatpak 
             draft: true
             name: testing
 

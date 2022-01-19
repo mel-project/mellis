@@ -26,11 +26,12 @@ jobs:
       #     bundle: ginkou.flatpak
       #     manifest-path: flatpak/org.themelio.Wallet.yml
       #     cache-key: flatpak-builder-testing
+      - run: echo "test" > ginkou-x86_64
       - name: Upload flatpak artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ginkou-x86_64
-          path: flatpak/build-flatpak.sh
+          name: ginkou.flatpak
+          path: ginkou-x86_64
   release:
       needs: build
       runs-on: ubuntu-latest
@@ -40,7 +41,7 @@ jobs:
           with:
             # not sure how this is created?
             # have faith in the flatpak-github-actions gods
-            name: ginkou-x86_64 
+            name: ginkou.flatpak
         - name: ls
           run: ls
         - name: Release

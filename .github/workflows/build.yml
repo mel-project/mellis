@@ -56,7 +56,7 @@ jobs:
             # files: |
             #   ginkou-x86_64 
             draft: true
-            tag_name: "release"
+            tag_name: "release testing"
 
 
 # This is a basic workflow to help you get started with Actions

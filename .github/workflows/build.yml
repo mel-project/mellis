@@ -29,9 +29,7 @@ jobs:
       - name: Upload flatpak artifact
         uses: actions/upload-artifact@v2
         with:
-          # name: ginkou.flatpak
-          # path: ginkou.flatpak
-          name: test-file
+          name: ginkou.x86_64
           path: flatpak/build-flatpak.sh
   release:
       needs: build
@@ -42,8 +40,7 @@ jobs:
           with:
             # not sure how this is created?
             # have faith in the flatpak-github-actions gods
-            # name: ginkou-x86_64 
-            name: test-file
+            name: ginkou-x86_64 
             
         - name: Release
           uses: softprops/action-gh-release@v1

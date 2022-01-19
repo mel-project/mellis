@@ -43,7 +43,7 @@ jobs:
             # not sure how this is created?
             # have faith in the flatpak-github-actions gods
             # name: ginkou-x86_64 
-            name: test-files
+            name: test-file
             
         - name: Release
           uses: softprops/action-gh-release@v1

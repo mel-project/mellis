@@ -29,6 +29,7 @@ jobs:
       - name: show me everying
         run: ls
   release:
+        needs: build
         runs-on: ubuntu-latest
         steps:
           - name: show me everying

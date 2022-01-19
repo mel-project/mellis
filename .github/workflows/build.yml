@@ -15,7 +15,8 @@ jobs:
     # container:
     #   image: bilelmoussaoui/flatpak-github-actions:gnome-40
     #   options: --privileged
-    # steps:
+    steps:
+      - run: ls
     #   - name: Checkout
     #     uses: actions/checkout@v2
       # - name: Submodule Clone

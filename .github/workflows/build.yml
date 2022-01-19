@@ -49,6 +49,7 @@ jobs:
             files: |
               ginkou.flatpak
             draft: true
+            tag: testing
 
 
 # This is a basic workflow to help you get started with Actions

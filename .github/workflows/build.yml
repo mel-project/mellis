@@ -54,7 +54,6 @@ jobs:
           with:
             # files: |
             #   ginkou-x86_64 
-            name: Release-${{github.ref}} 
             draft: true
 
 

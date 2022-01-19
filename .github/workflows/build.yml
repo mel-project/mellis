@@ -51,7 +51,7 @@ jobs:
             files: |
               ginkou-x86_64 
             draft: true
-            name: testing-once-more
+            name: wtf
 
 
 # This is a basic workflow to help you get started with Actions

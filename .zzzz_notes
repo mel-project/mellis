@@ -1,0 +1,12 @@
+There are 2 ways we can use this workflow
+
+we can 1: specify a release notes by file
+or 2: create a draft, work on body, then release
+
+if we want the workflow to include a draft release
+we can also use a file to specify the body
+
+
+the real benefit of creating a draft release is giving us the option
+to inspect the release before it goes out
+

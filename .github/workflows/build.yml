@@ -55,6 +55,7 @@ jobs:
             body: this is a test
             # files: |
             #   ginkou-x86_64 
+            draft: true
 
 
 # This is a basic workflow to help you get started with Actions

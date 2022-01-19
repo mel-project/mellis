@@ -43,7 +43,7 @@ jobs:
         run: git submodule update --init --recursive
       - name: Install create-dmg
         run: brew install create-dmg
-      - run: ls
+      - run: ./mac/build-mac.sh
       - name: Try to fail
         run: exit 1
 

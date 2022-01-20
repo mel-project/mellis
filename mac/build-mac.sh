@@ -14,7 +14,7 @@ mkdir -p $RES/tmp
 
 cargo install --locked --path $PROJECT_ROOT/ginkou-loader/ --root $RES/tmp
 echo =======================
-cargo install --locked --path $PROJECT_ROOT/melwalletd --root $RES/tmp
+# cargo install --locked --path $PROJECT_ROOT/melwalletd --root $RES/tmp
 mv $RES/tmp/bin/* $RES
 echo =======================
 echo "Building ginkou"

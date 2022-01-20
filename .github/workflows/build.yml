@@ -42,12 +42,12 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive
       - name: Install create-dmg
-        run: brew install create-dmg
+        run: test && brew install create-dmg
       
-      - uses: actions/cache@v2
-        with:
-          path: melwalletd/target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('melwalletd/Cargo.lock') }}
+      # - uses: actions/cache@v2
+      #   with:
+      #     path: melwalletd/target/
+      #     key: ${{ runner.os }}-cargo-${{ hashFiles('melwalletd/Cargo.lock') }}
       - uses: actions/cache@v2
         with:
           path: ginkou-loader/target/

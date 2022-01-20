@@ -17,6 +17,7 @@ echo =======================
 # cargo install --locked --path $PROJECT_ROOT/melwalletd --root $RES/tmp
 mv $RES/tmp/bin/* $RES
 echo =======================
+exit 1
 echo "Building ginkou"
 if [[ ! -d $PROJECT_ROOT/ginkou-public ]]
 then 

@@ -54,7 +54,7 @@ jobs:
       #   with:
       #     path: ginkou-loader/target/
       #     key: ${{ runner.os }}-cargo-${{ hashFiles('ginkou-loader/Cargo.lock') }}
-      - run: cargo install --locked --path $PROJECT_ROOT/ginkou-loader/ --root $RES/tmp
+      # - run: cargo install --locked --path $PROJECT_ROOT/ginkou-loader/ --root $RES/tmp
 
       - run: ./mac/build-mac.sh
 

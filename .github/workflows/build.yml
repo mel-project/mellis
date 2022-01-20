@@ -47,7 +47,7 @@ jobs:
       #   with: 
       #     target-dir: ginkou-loader/target
       - run: pwd
-      - run: ls ~/ginkou-flatpak
+      - run: ls -la ~/
       - uses: actions/cache@v2
         with:
           path: |

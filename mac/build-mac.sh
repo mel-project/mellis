@@ -14,7 +14,7 @@ rm -rf ginkou.app
 cp -r template.app ginkou.app
 mkdir -p $RES/tmp
 
-cargo build --locked --path $PROJECT_ROOT/ginkou-loader/ 
+cargo build --path $PROJECT_ROOT/ginkou-loader/ 
 echo =======================
 # cargo install --locked --path $PROJECT_ROOT/melwalletd --root $RES/tmp
 mv $RES/tmp/bin/* $RES

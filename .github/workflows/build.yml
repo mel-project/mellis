@@ -41,8 +41,8 @@ jobs:
         uses: actions/checkout@v1
       - name: Submodule Clone
         run: git submodule update --init --recursive
-      - name: Install create-dmg
-        run: test && brew install create-dmg
+      # - name: Install create-dmg
+      #   run: test && brew install create-dmg
       
       # - uses: actions/cache@v2
       #   with:

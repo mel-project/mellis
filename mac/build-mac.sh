@@ -1,6 +1,6 @@
 #!/bin/bash
 
-test ! `which create-dmg` && brew install create-dmg
+# test ! `which create-dmg` && brew install create-dmg
 
 MAC_ROOT=$( cd "$(dirname "$0")" ; pwd -P )
 PROJECT_ROOT=$( cd $MAC_ROOT/.. ; pwd -P )

@@ -16,7 +16,8 @@ mkdir -p $RES/tmp
 
 
 pushd $PROJECT_ROOT/ginkou-loader/ 
-    cargo build --locked
+    cargo build --locked 
+    mv $PROJECT_ROOT/ginkou-loader/target/debug/ginkou-loader $RES/
 popd 
 
 echo =======================
@@ -24,6 +25,7 @@ echo =======================
 # cargo install --locked --path $PROJECT_ROOT/melwalletd --root $RES/tmp
 # mv $RES/tmp/bin/* $RES
 ls -la $RES
+ls -la $PROJECT_ROOT/ginkou-loader/target
 echo =======================
 exit 0
 echo "Building ginkou"

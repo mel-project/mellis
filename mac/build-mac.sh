@@ -20,7 +20,7 @@ mkdir -p $RES/tmp
 
 pushd $PROJECT_ROOT/ginkou-loader/ 
     cargo build --locked 
-    mv $PROJECT_ROOT/ginkou-loader/target/debug/ginkou-loader $RES/
+    # mv $PROJECT_ROOT/ginkou-loader/target/debug/ginkou-loader $RES/
 popd 
 
 echo =======================

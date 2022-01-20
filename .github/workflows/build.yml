@@ -8,31 +8,31 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build-ubuntu:
-    needs: build-mac
-    runs-on: ubuntu-latest
+  # build-ubuntu:
+  #   needs: build-mac
+  #   runs-on: ubuntu-latest
 
-    # container:
-    #   image: bilelmoussaoui/flatpak-github-actions:gnome-40
-    #   options: --privileged
-    steps:
-      - run: ls
-    #   - name: Checkout
-    #     uses: actions/checkout@v2
-      # - name: Submodule Clone
-      #   run: git submodule update --init --recursive
-      # - name: Build
-      #   uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
-      #   with:
-      #     bundle: ginkou.flatpak
-      #     manifest-path: flatpak/org.themelio.Wallet.yml
-      #     cache-key: flatpak-builder-${{ github.sha }}
-      # - run: echo "0 bytes" > ginkou-x86_64
-      # - name: Upload flatpak artifact
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: ginkou.flatpak
-      #     path: ginkou-x86_64
+  #   # container:
+  #   #   image: bilelmoussaoui/flatpak-github-actions:gnome-40
+  #   #   options: --privileged
+  #   steps:
+  #     - run: ls
+  #   #   - name: Checkout
+  #   #     uses: actions/checkout@v2
+  #     # - name: Submodule Clone
+  #     #   run: git submodule update --init --recursive
+  #     # - name: Build
+  #     #   uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+  #     #   with:
+  #     #     bundle: ginkou.flatpak
+  #     #     manifest-path: flatpak/org.themelio.Wallet.yml
+  #     #     cache-key: flatpak-builder-${{ github.sha }}
+  #     # - run: echo "0 bytes" > ginkou-x86_64
+  #     # - name: Upload flatpak artifact
+  #     #   uses: actions/upload-artifact@v2
+  #     #   with:
+  #     #     name: ginkou.flatpak
+  #     #     path: ginkou-x86_64
   build-mac:
     name: Build MacOS App 
     runs-on: macos-latest
@@ -66,9 +66,10 @@ jobs:
       #     path: ginkou-loader/target/
       #     key: ${{ runner.os }}-cargo-${{ hashFiles('ginkou-loader/Cargo.lock') }}
       # - run: cargo install --locked --path $PROJECT_ROOT/ginkou-loader/ --root $RES/tmp
+      - run: ls -lah ginkou-loader/target/*
       - run: ./mac/build-mac.sh
+      - run: ls -lah ginkou-loader/target/*
       - run: ls -la ginkou-loader
-      - run: ls -la ginkou-loader/target/*
 
 
 

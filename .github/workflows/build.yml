@@ -46,6 +46,8 @@ jobs:
       # - uses: Swatinem/rust-cache@v1
       #   with: 
       #     target-dir: ginkou-loader/target
+      - run: pwd
+      - run: ls ~/ginkou-flatpak
       - uses: actions/cache@v2
         with:
           path: |

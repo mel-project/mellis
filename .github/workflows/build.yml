@@ -43,15 +43,15 @@ jobs:
         run: git submodule update --init --recursive
       # - name: Install create-dmg
       #   run: test && brew install create-dmg
-      
+      - uses: Swatinem/rust-cache@v1
       # - uses: actions/cache@v2
       #   with:
       #     path: melwalletd/target/
       #     key: ${{ runner.os }}-cargo-${{ hashFiles('melwalletd/Cargo.lock') }}
-      - uses: actions/cache@v2
-        with:
-          path: ginkou-loader/target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('ginkou-loader/Cargo.lock') }}
+      # - uses: actions/cache@v2
+      #   with:
+      #     path: ginkou-loader/target/
+      #     key: ${{ runner.os }}-cargo-${{ hashFiles('ginkou-loader/Cargo.lock') }}
              
       - run: ./mac/build-mac.sh
       - name: Try to fail

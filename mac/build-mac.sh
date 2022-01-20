@@ -39,18 +39,24 @@ cp -r $PROJECT_ROOT/ginkou-public $RES/ginkou-public
 
 
 
+
+# setup a directory with the ginkou app
 cd $MAC_ROOT
 rm -rf dmg_setup
 mkdir dmg_setup
 mv ginkou.app dmg_setup
 
+
+# add a sym link to applications users can drag ginkou into
 cd dmg_setup
 ln -s /Applications
 
+# create the dmg
 cd $MAC_ROOT
 rm -rf ginkou.dmg
 create-dmg ginkou.dmg dmg_setup
 
+# delete artifacts
 rm -rf dmg_setup
 rm -rf $RES/tmp
 

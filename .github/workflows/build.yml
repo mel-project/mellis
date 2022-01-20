@@ -55,7 +55,7 @@ jobs:
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
-            ~/ginkou-flatpak/ginkou-flatpak/ginkou-loader/target/
+            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/ginkou-loader/target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       # - uses: actions/cache@v2
       #   with:

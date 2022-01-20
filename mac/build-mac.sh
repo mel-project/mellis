@@ -1,6 +1,6 @@
 #!/bin/bash
 
-brew install create-dmg
+test ! `which create-dmg` && brew install create-dmg
 
 MAC_ROOT=$( cd "$(dirname "$0")" ; pwd -P )
 PROJECT_ROOT=$( cd $MAC_ROOT/.. ; pwd -P )
@@ -10,9 +10,8 @@ RES=$MAC_ROOT/ginkou.app/Contents/MacOS/res
 cd $MAC_ROOT
 rm -rf ginkou.app
 cp -r template.app ginkou.app
-mkdir $RES/tmp
+mkdir -p $RES/tmp
 
-exit 1 
 cargo install --locked --path $PROJECT_ROOT/ginkou-loader/ --root $RES/tmp
 echo =======================
 cargo install --locked --path $PROJECT_ROOT/melwalletd --root $RES/tmp

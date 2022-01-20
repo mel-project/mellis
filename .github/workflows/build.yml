@@ -44,13 +44,15 @@ jobs:
       - name: Install create-dmg
         run: brew install create-dmg
       
-      - name: Cache Primes
-        id: cache-primes
-        uses: actions/cache@v2
+      - uses: actions/cache@v2
         with:
-          path: prime-numbers
-          key: ${{ runner.os }}-primes
-      
+          path: melwalletd/target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('melwalletd/Cargo.lock') }}
+      - uses: actions/cache@v2
+        with:
+          path: ginkou-loader/target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('ginkou-loader/Cargo.lock') }}
+             
       - run: ./mac/build-mac.sh
       - name: Try to fail
         run: exit 1

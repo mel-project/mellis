@@ -34,7 +34,7 @@ jobs:
       #     name: ginkou.flatpak
       #     path: ginkou-x86_64
   build-mac:
-    name: Build MacOS App
+    name: Build MacOS App 
     runs-on: macos-latest
     steps:
       - name: Checkout repository

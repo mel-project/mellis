@@ -71,10 +71,10 @@ jobs:
       #       ~/.cargo/git/db/
       #       ginkou-loader/target
       #     key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
-      # # - uses: actions-rs/toolchain@v1
-      # #   with:
-      # #     toolchain: stable
-      # - run: env CARGO_HOME=`pwd`/ginkou-loader/cargo cargo build --verbose --release
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - run: env CARGO_HOME=`pwd`/ginkou-loader/cargo cargo build --verbose 
   build-mac:
     name: Build MacOS App 
     runs-on: macos-latest

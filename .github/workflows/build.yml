@@ -49,12 +49,9 @@ jobs:
   #         key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
 
   build-rust-artifacts:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-
-    runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }}-rust-build
+    
+    runs-on: macos-latest
+    name: Cache Rust
 
     steps: 
       - name: Checkout repository
@@ -62,19 +59,19 @@ jobs:
 
       - name: Submodule Clone
         run: git submodule update --init --recursive
-      # - uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       ~/.cargo/bin/
-      #       ~/.cargo/registry/index/
-      #       ~/.cargo/registry/cache/
-      #       ~/.cargo/git/db/
-      #       ginkou-loader/target
-      #     key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            ginkou-loader/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - run: env CARGO_HOME=`pwd`/ginkou-loader/cargo cargo build --verbose 
+      - run: cd ginkou-loader; cargo build --verbose 
   # build-mac:
   #   name: Build MacOS App 
   #   runs-on: macos-latest

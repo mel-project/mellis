@@ -54,7 +54,7 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }}-Rust-Build
+    name: ${{ matrix.os }}-rust-build
 
     steps: 
       - name: Checkout repository

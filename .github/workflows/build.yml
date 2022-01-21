@@ -33,19 +33,38 @@ jobs:
   #     #   with:
   #     #     name: ginkou.flatpak
   #     #     path: ginkou-x86_64
+
+  build-rust-artifacts:
+    name: Build Rust code and cache 
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ maxtrix.os }}
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Submodule Clone
+        run: git submodule update --init --recursive
+      - run: pwd
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/ginkou-loader/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
+      - run: ls *
   build-mac:
     name: Build MacOS App 
     runs-on: macos-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v1
-      - name: Submodule Clone
-        run: git submodule update --init --recursive
+     
       # - name: Install create-dmg
       #   run: test && brew install create-dmg
-      # - uses: Swatinem/rust-cache@v1
-      #   with: 
-      #     target-dir: ginkou-loader/target
+
       - run: pwd
       - run: ls -la ~/
       - uses: actions/cache@v2

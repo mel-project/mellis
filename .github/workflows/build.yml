@@ -33,20 +33,20 @@ jobs:
   #     #   with:
   #     #     name: ginkou.flatpak
   #     #     path: ginkou-x86_64
-  build-ginkou-artifacts: 
-    name: build Ginkou Wallet
-    runs-on: ubuntu-latest
-    steps:
+  # build-ginkou-artifacts: 
+  #   name: build Ginkou Wallet
+  #   runs-on: ubuntu-latest
+  #   steps:
 
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            ginkou-loader/target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
+  #     - uses: actions/cache@v2
+  #       with:
+  #         path: |
+  #           ~/.cargo/bin/
+  #           ~/.cargo/registry/index/
+  #           ~/.cargo/registry/cache/
+  #           ~/.cargo/git/db/
+  #           ginkou-loader/target
+  #         key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
 
   build-rust-artifacts:
     strategy:

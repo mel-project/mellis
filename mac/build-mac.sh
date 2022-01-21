@@ -2,9 +2,6 @@
 
 set -ex 
 
-pwd
-
-
 # test ! `which create-dmg` && brew install create-dmg
 
 MAC_ROOT=$( cd "$(dirname "$0")" ; pwd -P )
@@ -18,14 +15,13 @@ cp -r template.app ginkou.app
 mkdir -p $RES/tmp
 
 
-pushd $PROJECT_ROOT/ginkou-loader/ 
-    cargo build --locked 
-    cp $PROJECT_ROOT/ginkou-loader/target/debug/ginkou-loader $RES/
-popd 
+echo "Starting Rust installation"
+
+cargo install --locked --path $PROJECT_ROOT/ginkou-loader --root $RES/tmp
 
 echo =======================
 
-# cargo install --locked --path $PROJECT_ROOT/melwalletd --root $RES/tmp
+cargo install --locked --path $PROJECT_ROOT/melwalletd --root $RES/tmp
 # mv $RES/tmp/bin/* $RES
 ls -la $RES
 ls -la $PROJECT_ROOT/ginkou-loader/target

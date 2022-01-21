@@ -79,7 +79,7 @@ jobs:
   build-mac:
     name: Build MacOS App 
     runs-on: macos-latest
-    needs: macos-latest-rust-build
+    needs: rust-build-artifacts
     steps:
      
       # - name: Install create-dmg

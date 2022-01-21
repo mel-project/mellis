@@ -4,65 +4,73 @@ set -ex
 
 # test ! `which create-dmg` && brew install create-dmg
 
-MAC_ROOT=$( cd "$(dirname "$0")" ; pwd -P )
-PROJECT_ROOT=$( cd $MAC_ROOT/.. ; pwd -P )
-RES=$MAC_ROOT/ginkou.app/Contents/MacOS/res
+# setup global state
+MAC_ROOT=$( cd "$(dirname "$0")" ; pwd -P ) # The absolute path to this file
+PROJECT_ROOT=$( cd $MAC_ROOT/.. ; pwd -P ) # The absolute path to ginkou-flatpak
+RES=$MAC_ROOT/ginkou.app/Contents/MacOS/res # The absolue path to the (yet to be created) ginkou.app
 
 
+# initialize ginkou.app as a clone of the template
 cd $MAC_ROOT
 rm -rf ginkou.app
 cp -r template.app ginkou.app
 mkdir -p $RES/tmp
 
 
-echo "Starting Rust installation"
+# each of these build functions depends on the global state
 
-cargo install --locked --path $PROJECT_ROOT/ginkou-loader --root $RES/tmp
+build_rust () {
+    # using absolute paths so order doesn't matter
+    echo "Starting Rust installation"
 
-echo =======================
+    cargo install --locked --path $PROJECT_ROOT/ginkou-loader --root $RES/tmp
 
-cargo install --locked --path $PROJECT_ROOT/melwalletd --root $RES/tmp
-mv $RES/tmp/bin/* $RES
-echo =======================
-exit 0
-echo "Building ginkou"
-if [[ ! -d $PROJECT_ROOT/ginkou-public ]]
-then 
-    cd $RES/tmp
-    git clone $PROJECT_ROOT/ginkou 
-    cd ginkou
-    npm install
-    npm run build
-    npm run smui-theme-light
-    mv public $PROJECT_ROOT/ginkou-public
-else 
-    echo "\`ginkou-public\` is available..."
-    echo "not rebuilding ginkou and using \`ginkou-public\` instead"
-fi
+    echo =======================
 
-cp -r $PROJECT_ROOT/ginkou-public $RES/ginkou-public
+    cargo install --locked --path $PROJECT_ROOT/melwalletd --root $RES/tmp
 
+    echo =======================
 
+    echo "Moving binaries to" $RES
+    mv $RES/tmp/bin/* $RES
 
+}
 
-# setup a directory with the ginkou app
-cd $MAC_ROOT
-rm -rf dmg_setup
-mkdir dmg_setup
-mv ginkou.app dmg_setup
+build_ginkou () {
+
+    echo "Building ginkou"
+
+    pushd $RES/tmp
+        git clone $PROJECT_ROOT/ginkou 
+        cd ginkou
+        npm install
+        npm run build
+        npm run smui-theme-light
+        cp -r public $RES/ginkou-public
+    popd
+
+}
 
 
-# # add a sym link to applications users can drag ginkou into
-# cd dmg_setup
-# ln -s /Applications
-
-# # create the dmg
-# cd $MAC_ROOT
-# rm -rf ginkou.dmg
-# create-dmg ginkou.dmg dmg_setup
-
-# # delete artifacts
-# rm -rf dmg_setup
-# rm -rf $RES/tmp
 
 
+
+
+
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -ns|--no-sass) 
+            echo 'Skipping SASS build'
+            SASS=`false`
+            shift ;;
+        -np|--no-pug) 
+            echo 'Skipping pug build'
+            PUG=`false`
+            shift ;;
+        -nr|--no-racket)
+            echo 'Skipping racket build'
+            RACKET=`false`
+            shift ;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+done

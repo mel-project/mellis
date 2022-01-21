@@ -33,13 +33,27 @@ jobs:
   #     #   with:
   #     #     name: ginkou.flatpak
   #     #     path: ginkou-x86_64
+  build-ginkou-artifacts: 
+    name: build Ginkou Wallet
+    steps:
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            ginkou-loader/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
 
   build-rust-artifacts:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+
     runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }}, rust, build, cache
+    name: ${{ matrix.os }}-Rust-Build
 
     steps: 
       - name: Checkout repository
@@ -64,6 +78,7 @@ jobs:
   build-mac:
     name: Build MacOS App 
     runs-on: macos-latest
+    needs: macos-latest-rust-build
     steps:
      
       # - name: Install create-dmg

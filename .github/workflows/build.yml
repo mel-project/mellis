@@ -35,6 +35,7 @@ jobs:
   #     #     path: ginkou-x86_64
   build-ginkou-artifacts: 
     name: build Ginkou Wallet
+    runs-on: ubuntu-latest
     steps:
 
       - uses: actions/cache@v2

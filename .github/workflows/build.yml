@@ -60,10 +60,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - run: ls; cd ginkou-loader
-      - uses: actions-rs/cargo@v1
-        with:
-          command: build
+      - run: ls; cd ginkou-loader; cargo build --locked
   build-mac:
     name: Build MacOS App 
     runs-on: macos-latest

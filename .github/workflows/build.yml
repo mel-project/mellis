@@ -73,7 +73,7 @@ jobs:
       #     toolchain: stable
       - run: ls;
       - run: pwd;
-      
+      - run: ls ~/
       # - run: ./mac/build-mac.sh
 
   # build-mac:

@@ -62,20 +62,20 @@ jobs:
 
       - name: Submodule Clone
         run: git submodule update --init --recursive
-      - run: pwd
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            ginkou-loader/target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
-      # - uses: actions-rs/toolchain@v1
+      - run: (eval $(rustc --print cfg | grep target); echo $target_arch-$target_vendor-$target_os-$target_env)
+      # - uses: actions/cache@v2
       #   with:
-      #     toolchain: stable
-      - run: ls; cd ginkou-loader; cargo build --locked
+      #     path: |
+      #       ~/.cargo/bin/
+      #       ~/.cargo/registry/index/
+      #       ~/.cargo/registry/cache/
+      #       ~/.cargo/git/db/
+      #       ginkou-loader/target
+      #     key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
+      # # - uses: actions-rs/toolchain@v1
+      # #   with:
+      # #     toolchain: stable
+      # - run: env CARGO_HOME=`pwd`/ginkou-loader/cargo cargo build --verbose --release
   build-mac:
     name: Build MacOS App 
     runs-on: macos-latest

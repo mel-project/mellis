@@ -51,7 +51,7 @@ jobs:
   build-rust-artifacts:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        target: [ubuntu-latest, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }}-rust-build
@@ -62,7 +62,6 @@ jobs:
 
       - name: Submodule Clone
         run: git submodule update --init --recursive
-      - run: (eval $(rustc --print cfg | grep target); echo $target_arch-$target_vendor-$target_os-$target_env)
       # - uses: actions/cache@v2
       #   with:
       #     path: |

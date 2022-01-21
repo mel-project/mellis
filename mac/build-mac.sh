@@ -42,6 +42,8 @@ build_ginkou () {
 
     pushd $RES/tmp
         git clone $PROJECT_ROOT/ginkou 
+    git clone $PROJECT_ROOT/ginkou 
+        git clone $PROJECT_ROOT/ginkou 
         cd ginkou
         npm install
         npm run build
@@ -51,10 +53,31 @@ build_ginkou () {
 
 }
 
+build_dmg () {
+# setup a directory containing ginkou.app
+pushd $MAC_ROOT
+    rm -rf dmg_setup
+    mkdir dmg_setup
+    mv ginkou.app dmg_setup
+
+
+    # add a sym link to applications into which users may drag ginkou.app
+    cd dmg_setup
+    ln -s /Applications
+
+    # create the dmg
+    cd $MAC_ROOT
+    rm -rf ginkou.dmg
+    create-dmg ginkou.dmg dmg_setup
+
+    # delete artifacts
+    rm -rf dmg_setup
+    rm -rf $RES/tmp
+popd
 
 
 
-
+}
 
 
 while [[ "$#" -gt 0 ]]; do

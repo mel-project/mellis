@@ -127,7 +127,7 @@ rm -rf $TMP
 mkdir $TMP
 
 
-[[ -z $_GINKOU_LOADER ]] && echo 'true'
+[[ ! -z $_GINKOU_LOADER ]] && echo 'true'
 
 [[ -z $_MELWALLETD ]] && install_melwalletd
 [[ ! -z $_GINKOU ]] && echo true

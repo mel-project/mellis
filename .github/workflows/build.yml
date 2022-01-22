@@ -59,18 +59,18 @@ jobs:
 
       - name: Submodule Clone
         run: git submodule update --init --recursive
-      # - uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       ~/.cargo/bin/
-      #       ~/.cargo/registry/index/
-      #       ~/.cargo/registry/cache/
-      #       ~/.cargo/git/db/
-      #       /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac
-      #     key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
-      # - uses: actions-rs/toolchain@v1
-      #   with:
-      #     toolchain: stable
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
       - run: ls;
       - run: pwd;
       - run: ls ~/

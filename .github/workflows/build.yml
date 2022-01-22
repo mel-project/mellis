@@ -71,7 +71,10 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - run: ./mac/build-mac.sh --ginkou 
+        
+      - name: install ginkou
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: ./mac/build-mac.sh --ginkou 
 
   # build-mac:
   #   name: Build MacOS App 

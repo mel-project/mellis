@@ -120,6 +120,7 @@ done
 
 set -ex 
 
+
 # test ! `which create-dmg` && brew install create-dmg
 
 if [[ ! -z $(( $_GINKOU_LOADER | $_MELWALLETD | $_GINKOU )) ]]; then

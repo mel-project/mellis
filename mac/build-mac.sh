@@ -129,6 +129,9 @@ if [[ ! -z $(( $_GINKOU_LOADER | $_MELWALLETD | $_GINKOU )) ]]; then
 fi
 
 echo $_GINKOU_LOADER
+echo [[ ! -z $_GINKOU_LOADER ]]
+
+exit 1
 
 [[ ! -z $_GINKOU_LOADER ]] && install_ginkou_loader
 [[ ! -z $_MELWALLETD ]] && install_melwalletd

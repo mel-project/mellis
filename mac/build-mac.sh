@@ -111,7 +111,6 @@ while [[ "$#" -gt 0 ]]; do
 
         --clean)
             rm -rf $ARTIFACTS
-            mkdir $ARTIFACTS
             shift;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac

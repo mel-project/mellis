@@ -127,12 +127,12 @@ rm -rf $TMP
 mkdir $TMP
 
 
-[[ ! -z $_GINKOU_LOADER ]] && echo 'true'
+(( $_GINKOU_LOADER = 0 )) && echo 'true'
 
-[[ -z $_MELWALLETD ]] && install_melwalletd
-[[ ! -z $_GINKOU ]] && echo true
+(( $_MELWALLETD = 0 )) && install_melwalletd
+(( $_GINKOU = 0 )) && echo true
 rm -rf $TMP
-[[ -z $_APP ]] && build_app
-[[ -z $_DMG ]] && build_dmg
+(( $_APP = 0 )) && build_app
+(( $_DMG = 0 )) && build_dmg
 
 echo "DONE"

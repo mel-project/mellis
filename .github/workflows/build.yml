@@ -71,7 +71,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - run: ./mac/build-mac.sh--ginkou --melwalletd --app
+      - run: ./mac/build-mac.sh--ginkou 
 
   # build-mac:
   #   name: Build MacOS App 

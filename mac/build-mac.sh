@@ -1,99 +1,139 @@
 #!/bin/bash
 
-set -ex 
-
-# test ! `which create-dmg` && brew install create-dmg
 
 # setup global state
-MAC_ROOT=$( cd "$(dirname "$0")" ; pwd -P ) # The absolute path to this file
+MAC_ROOT=$( cd "$(dirname "$0")" ; pwd -P ) # The absolute path to this files parent
 PROJECT_ROOT=$( cd $MAC_ROOT/.. ; pwd -P ) # The absolute path to ginkou-flatpak
 RES=$MAC_ROOT/ginkou.app/Contents/MacOS/res # The absolue path to the (yet to be created) ginkou.app
+ARTIFACTS=$MAC_ROOT/artifacts
+TMP=$MAC_ROOT/tmp
+# each of these functions depends on global state 
 
+# the install functions build and install the artifacts into $ARTIFACTS
 
-# initialize ginkou.app as a clone of the template
-cd $MAC_ROOT
-rm -rf ginkou.app
-cp -r template.app ginkou.app
-mkdir -p $RES/tmp
-
-
-# each of these build functions depends on the global state
-
-build_rust () {
-    # using absolute paths so order doesn't matter
+install_ginkou_loader () {
     echo "Starting Rust installation"
-
-    cargo install --locked --path $PROJECT_ROOT/ginkou-loader --root $RES/tmp
-
+    cargo install --locked --path $PROJECT_ROOT/ginkou-loader --root $TMP
+    mv $TMP/bin/ginkou-loader $ARTIFACTS
     echo =======================
 
-    cargo install --locked --path $PROJECT_ROOT/melwalletd --root $RES/tmp
-
-    echo =======================
-
-    echo "Moving binaries to" $RES
-    mv $RES/tmp/bin/* $RES
 
 }
 
-build_ginkou () {
+
+install_melwalletd () {
+    cargo install --locked --path $PROJECT_ROOT/melwalletd --root $TMP
+    mv $TMP/bin/melwalletd $ARTIFACTS
+    echo =======================
+
+}
+
+
+
+install_ginkou () {
 
     echo "Building ginkou"
 
-    pushd $RES/tmp
-        git clone $PROJECT_ROOT/ginkou 
-    git clone $PROJECT_ROOT/ginkou 
+    pushd $TMP
         git clone $PROJECT_ROOT/ginkou 
         cd ginkou
         npm install
         npm run build
         npm run smui-theme-light
-        cp -r public $RES/ginkou-public
+        mv public $ARTIFACTS/ginkou-public
     popd
+
+}
+
+# clean up any old app, clone the temp app, and copy the artifacts to $RES
+build_app (){
+    
+    rm -rf ginkou.app
+    cp -r $MAC_ROOT/template.app ginkou.app
+    mkdir -p $RES
+    cp -r $ARTIFACTS/* $RES
 
 }
 
 build_dmg () {
 # setup a directory containing ginkou.app
-pushd $MAC_ROOT
-    rm -rf dmg_setup
-    mkdir dmg_setup
-    mv ginkou.app dmg_setup
+    pushd $MAC_ROOT
+        rm -rf dmg_setup
+        mkdir dmg_setup
+        mv ginkou.app dmg_setup
 
 
-    # add a sym link to applications into which users may drag ginkou.app
-    cd dmg_setup
-    ln -s /Applications
+        # add a sym link to applications into which users may drag ginkou.app
+        cd dmg_setup
+        ln -s /Applications
 
-    # create the dmg
-    cd $MAC_ROOT
-    rm -rf ginkou.dmg
-    create-dmg ginkou.dmg dmg_setup
+        # create the dmg
+        cd $MAC_ROOT
+        rm -rf ginkou.dmg
+        create-dmg ginkou.dmg dmg_setup
 
-    # delete artifacts
-    rm -rf dmg_setup
-    rm -rf $RES/tmp
-popd
+        # delete artifacts
+        rm -rf dmg_setup
+        rm -rf $RES/tmp
+    popd
 
 
 
 }
 
 
+_GINKOU_LOADER=0
+_MELWALLETD=0
+_GINKOU=0
+_APP=0
+_DMG=0
+
+
+
+# if any argument is specified then only that build process is run
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        -ns|--no-sass) 
-            echo 'Skipping SASS build'
-            SASS=`false`
+        -gl|--ginkou-loader) 
+            _GINKOU_LOADER=1
             shift ;;
-        -np|--no-pug) 
-            echo 'Skipping pug build'
-            PUG=`false`
+        -mwd|--melwalletd) 
+            _MELWALLETD=1
             shift ;;
-        -nr|--no-racket)
-            echo 'Skipping racket build'
-            RACKET=`false`
+        -g|--ginkou)
+            _GINKOU=1
             shift ;;
+        -A|--app)
+            _APP=1
+            shift ;;
+        -D|--dmg)
+            _DMG=1
+            shift;;
+
+        --clean)
+            rm -rf $ARTIFACTS
+            mkdir $ARTIFACTS
+            shift;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
 done
+
+
+set -ex 
+
+# test ! `which create-dmg` && brew install create-dmg
+
+if [[ ! -z $(( $_GINKOU_LOADER | $_MELWALLETD | $_GINKOU )) ]]; then
+    rm -rf $TMP
+    mkdir $TMP
+fi
+
+echo $_GINKOU_LOADER
+
+[[ ! -z $_GINKOU_LOADER ]] && install_ginkou_loader
+[[ ! -z $_MELWALLETD ]] && install_melwalletd
+[[ ! -z $_GINKOU ]] && install_ginkou
+rm -rf $TMP
+[[ ! -z $_APP ]] && build_app
+[[ ! -z $_DMG ]] && build_dmg
+
+echo "DONE"

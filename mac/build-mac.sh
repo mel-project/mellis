@@ -129,7 +129,7 @@ if [[ ! -z $(( $_GINKOU_LOADER | $_MELWALLETD | $_GINKOU )) ]]; then
 fi
 
 echo $_GINKOU_LOADER
-echo ` [[ ! -z $_GINKOU_LOADER ]] && echo test `
+echo ` [[ ! -z $_GINKOU_LOADER ]] `
 
 exit 1
 

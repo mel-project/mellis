@@ -120,7 +120,7 @@ done
 set -ex 
 
 [[ ! -d $ARTIFCACTS && mkdir $ARTIFACTS ]]
-
+ls
 # test ! `which create-dmg` && brew install create-dmg
 
 if [[ ! -z $(( $_GINKOU_LOADER | $_MELWALLETD | $_GINKOU )) ]]; then

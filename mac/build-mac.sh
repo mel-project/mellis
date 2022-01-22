@@ -130,7 +130,7 @@ mkdir $TMP
 
 [[ -z $_GINKOU_LOADER ]] && install_ginkou_loader
 [[ -z $_MELWALLETD ]] && install_melwalletd
-[[ -z $_GINKOU ]] && install_ginkou
+[[ ! -z $_GINKOU ]] && install_ginkou
 rm -rf $TMP
 [[ -z $_APP ]] && build_app
 [[ -z $_DMG ]] && build_dmg

@@ -128,16 +128,12 @@ if [[ ! -z $(( $_GINKOU_LOADER | $_MELWALLETD | $_GINKOU )) ]]; then
     mkdir $TMP
 fi
 
-echo $_GINKOU_LOADER
-[[ -z $_GINKOU_LOADER ]] && echo test
 
-exit 1
-
-[[ ! -z $_GINKOU_LOADER ]] && install_ginkou_loader
-[[ ! -z $_MELWALLETD ]] && install_melwalletd
-[[ ! -z $_GINKOU ]] && install_ginkou
+[[ -z $_GINKOU_LOADER ]] && install_ginkou_loader
+[[ -z $_MELWALLETD ]] && install_melwalletd
+[[ -z $_GINKOU ]] && install_ginkou
 rm -rf $TMP
-[[ ! -z $_APP ]] && build_app
-[[ ! -z $_DMG ]] && build_dmg
+[[ -z $_APP ]] && build_app
+[[ -z $_DMG ]] && build_dmg
 
 echo "DONE"

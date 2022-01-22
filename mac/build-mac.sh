@@ -126,14 +126,13 @@ ls
 rm -rf $TMP
 mkdir $TMP
 
-[[ ! -z $_GINKOU_LOADER ]] && echo 'true'
 
-[[ ! -z $_GINKOU_LOADER ]] && echo 'true'
+[[ -z $_GINKOU_LOADER ]] && echo 'true'
 
-[[ ! -z $_MELWALLETD ]] && install_melwalletd
-[[ ! -z $_GINKOU ]] && install_ginkou
+[[ -z $_MELWALLETD ]] && install_melwalletd
+[[ -z $_GINKOU ]] && install_ginkou
 rm -rf $TMP
-[[ ! -z $_APP ]] && build_app
-[[ ! -z $_DMG ]] && build_dmg
+[[ -z $_APP ]] && build_app
+[[ -z $_DMG ]] && build_dmg
 
 echo "DONE"

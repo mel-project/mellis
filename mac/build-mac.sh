@@ -123,10 +123,8 @@ set -ex
 ls
 # test ! `which create-dmg` && brew install create-dmg
 
-if [[ ! -z $(( $_GINKOU_LOADER | $_MELWALLETD | $_GINKOU )) ]]; then
-    rm -rf $TMP
-    mkdir $TMP
-fi
+rm -rf $TMP
+mkdir $TMP
 
 
 [[ -z $_GINKOU_LOADER ]] && install_ginkou_loader

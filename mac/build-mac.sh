@@ -119,7 +119,7 @@ done
 
 set -ex 
 
-[[ -d $ARTIFCACTS mkdir $ARTIFACTS
+[[ -d $ARTIFCACTS && mkdir $ARTIFACTS
 
 # test ! `which create-dmg` && brew install create-dmg
 

@@ -126,7 +126,7 @@ ls
 rm -rf $TMP
 mkdir $TMP
 
-[[ -z 1 ]] && echo it was
+[[ ! -z 1 ]] && echo it was
 
 [[ -z $_GINKOU_LOADER ]] && install_ginkou_loader
 [[ -z $_MELWALLETD ]] && install_melwalletd

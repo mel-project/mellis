@@ -78,7 +78,7 @@ jobs:
   cache-mac-ginkou-loader:
       
     runs-on: macos-latest
-    name: Cache ginkou.app
+    name: Build Macos Ginkou-loader
     steps: 
       - name: Checkout repository
         uses: actions/checkout@v1
@@ -109,7 +109,8 @@ jobs:
   cache-mac-melwalletd:
       
     runs-on: macos-latest
-    name: Cache ginkou.app
+    name: Build Macos melwalletd
+
     steps: 
       - name: Checkout repository
         uses: actions/checkout@v1

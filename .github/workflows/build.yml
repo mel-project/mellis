@@ -75,7 +75,7 @@ jobs:
           name: ginkou-public
           path: mac/artifacts/ginkou-public/
     
-  ginkou-loader:
+  mac-ginkou-loader:
       
     runs-on: macos-latest
     name: Build Macos Ginkou-loader
@@ -147,39 +147,30 @@ jobs:
         with:
           name: melwalletd
           path: mac/artifacts/melwalletd
-  # build-mac:
-  #   name: Build MacOS App 
-  #   runs-on: macos-latest
-  #   needs: build-rust-artifacts
-  #   steps:
-     
-  #     # - name: Install create-dmg
-  #     #   run: test && brew install create-dmg
 
-  #     - run: pwd
-  #     - run: ls -la ~/
-  #     - uses: actions/cache@v2
-  #       with:
-  #         path: |
-  #           ~/.cargo/bin/
-  #           ~/.cargo/registry/index/
-  #           ~/.cargo/registry/cache/
-  #           ~/.cargo/git/db/
-  #           /Users/runner/work/ginkou-flatpak/ginkou-flatpak/ginkou-loader/target
-  #         key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
-  #     # - uses: actions/cache@v2
-  #     #   with:
-  #     #     path: melwalletd/target/
-  #     #     key: ${{ runner.os }}-cargo-${{ hashFiles('melwalletd/Cargo.lock') }}
-  #     # - uses: actions/cache@v2
-  #     #   with:
-  #     #     path: ginkou-loader/target/
-  #     #     key: ${{ runner.os }}-cargo-${{ hashFiles('ginkou-loader/Cargo.lock') }}
-  #     # - run: cargo install --locked --path $PROJECT_ROOT/ginkou-loader/ --root $RES/tmp
-  #     - run: ls -lah ginkou-loader/target/*
-  #     - run: ./mac/build-mac.sh
-  #     - run: ls -lah ginkou-loader/target/*
-  #     - run: ls -la ginkou-loader
+  build-mac:
+    name: Build MacOS App 
+    needs: [ginkou-loader, mac-ginkou, mac-melwalletd]
+    runs-on: macos-latest
+    steps:
+     
+      - name: Install create-dmg
+        run: test && brew install create-dmg
+      - run: which create-dmg
+
+      # - uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       ~/.cargo/bin/
+      #       ~/.cargo/registry/index/
+      #       ~/.cargo/registry/cache/
+      #       ~/.cargo/git/db/
+      #       /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac
+      #     key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
+     
+     
+      - run: ./mac/build-mac.sh --app --dmg
+      
 
 
 

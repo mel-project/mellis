@@ -52,7 +52,6 @@ jobs:
     
     runs-on: macos-latest
     name: Cache Ginkou.app
-
     steps: 
       - name: Checkout repository
         uses: actions/checkout@v1
@@ -63,10 +62,6 @@ jobs:
         id: ginkou-cache
         with:
           path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/ginkou
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
       - name: Install rust toolchain
@@ -76,7 +71,7 @@ jobs:
           toolchain: stable
         
       - name: install ginkou
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.ginkou-cache.outputs.cache-hit != 'true'
         run: ./mac/build-mac.sh --ginkou 
 
   # build-mac:

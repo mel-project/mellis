@@ -68,7 +68,9 @@ jobs:
             ~/.cargo/git/db/
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/ginkou
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
-      - uses: actions-rs/toolchain@v1
+      - name: Install rust toolchain
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
         

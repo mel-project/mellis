@@ -166,6 +166,13 @@ jobs:
             /usr/local/bin/create-dmg
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/ginkou.dmg
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/*') }}-debug
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: 
+            /usr/local/bin/create-dmg
+            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/ginkou.dmg
+          key: ${{ runner.os }}-ginkou.app-${{ hashFiles('**/*') }}-debug
            
       - name: Install create-dmg
 

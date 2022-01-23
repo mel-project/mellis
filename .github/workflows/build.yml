@@ -68,26 +68,8 @@ jobs:
         
       - run: mkdir -p mac/artifacts
       - run: ls mac/artifacts
-        
-      - uses: actions/cache@v2
-        id: ginkou-loader-cache
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/artifacts/ginkou-loader
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
-      - name: install ginkou-loader
-        if: steps.ginkou-loader-cache.outputs.cache-hit != 'true'
-        run: ./mac/build-mac.sh --ginkou-loader 
-      - name: Install rust toolchain
-        if: steps.ginkou-cache.outputs.cache-hit != 'true'
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-        
+     
+
       - name: install ginkou
         if: steps.ginkou-cache.outputs.cache-hit != 'true'
         run: ./mac/build-mac.sh --ginkou 
@@ -103,20 +85,27 @@ jobs:
 
       - name: Submodule Clone
         run: git submodule update --init --recursive
+
       - uses: actions/cache@v2
-        id: melwalletd-cache
+        id: ginkou-loader-cache
         with:
           path: |
             ~/.cargo/bin/
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
-            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/artifacts/melwalletd
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/melwalletd/Cargo.lock') }}-debug
-      
-      - name: install melwalletd
-        if: steps.melwalletd-cache.outputs.cache-hit != 'true'
-        run: ./mac/build-mac.sh --melwalletd 
+            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/artifacts/ginkou-loader
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
+        
+      - name: Install rust toolchain
+        if: steps.ginkou-cache.outputs.cache-hit != 'true'
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+        
+      - name: install ginkou-loader
+        if: steps.ginkou-loader-cache.outputs.cache-hit != 'true'
+        run: ./mac/build-mac.sh --ginkou-loader 
   cache-mac-melwalletd:
       
     runs-on: macos-latest
@@ -127,6 +116,7 @@ jobs:
 
       - name: Submodule Clone
         run: git submodule update --init --recursive
+      
       - uses: actions/cache@v2
         id: melwalletd-cache
         with:
@@ -138,6 +128,12 @@ jobs:
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/artifacts/melwalletd
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/melwalletd/Cargo.lock') }}-debug
       
+      - name: Install rust toolchain
+        if: steps.ginkou-cache.outputs.cache-hit != 'true'
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+        
       - name: install melwalletd
         if: steps.melwalletd-cache.outputs.cache-hit != 'true'
         run: ./mac/build-mac.sh --melwalletd 

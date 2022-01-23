@@ -99,7 +99,7 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
         
       - name: Install rust toolchain
-        if: steps.ginkou-cache.outputs.cache-hit != 'true'
+        if: steps.ginkou-loader-cache.outputs.cache-hit != 'true'
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable

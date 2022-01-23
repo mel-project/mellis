@@ -95,7 +95,7 @@ jobs:
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
-            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/artifacts/
+            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/artifacts/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
         
       - name: Install rust toolchain
@@ -128,7 +128,7 @@ jobs:
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
-            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/artifacts/
+            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/artifacts/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/melwalletd/Cargo.lock') }}-debug
       
       - name: Install rust toolchain

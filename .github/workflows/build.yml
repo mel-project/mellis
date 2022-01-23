@@ -163,15 +163,11 @@ jobs:
         run: brew install create-dmg
       - run: which create-dmg
 
-      # - uses: actions/cache@v2
-      #   with:
-      #     path: |
-      #       ~/.cargo/bin/
-      #       ~/.cargo/registry/index/
-      #       ~/.cargo/registry/cache/
-      #       ~/.cargo/git/db/
-      #       /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac
-      #     key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
+      - uses: actions/cache@v2
+        with:
+          path: 
+            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/ginkou.dmg
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/*) }}-debug
      
      # download all artifacts
      # this will work until other artifacts are added

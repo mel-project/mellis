@@ -155,7 +155,7 @@ jobs:
     steps:
      
       - name: Install create-dmg
-        run: test && brew install create-dmg
+        run: brew install create-dmg
       - run: which create-dmg
 
       # - uses: actions/cache@v2

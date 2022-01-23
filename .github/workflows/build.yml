@@ -167,7 +167,7 @@ jobs:
         with:
           path: 
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/ginkou.dmg
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/*) }}-debug
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/*') }}-debug
      
      # download all artifacts
      # this will work until other artifacts are added

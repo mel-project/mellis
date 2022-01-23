@@ -159,7 +159,6 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive
 
-      - run: which create-dmg
       - uses: actions/cache@v2
         id: cache
         with:

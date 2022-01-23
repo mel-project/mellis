@@ -70,10 +70,10 @@ jobs:
         run: ./mac/build-mac.sh --ginkou
 
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/upload-artifact@v2
         with:
           name: ginkou-public
-          path: mac/artifacts/ginkou-public
+          path: mac/artifacts/ginkou-public/
     
   ginkou-loader:
       
@@ -106,7 +106,7 @@ jobs:
       - name: install ginkou-loader
         if: steps.ginkou-loader-cache.outputs.cache-hit != 'true'
         run: ./mac/build-mac.sh --ginkou-loader 
-      - uses: actions/download-artifact@v2
+      - uses: actions/upload-artifact@v2
         with:
           name: ginkou-loader
           path: mac/artifacts/ginkou-loader  
@@ -143,7 +143,7 @@ jobs:
         if: steps.melwalletd-cache.outputs.cache-hit != 'true'
         run: ./mac/build-mac.sh --melwalletd 
       
-      - uses: actions/download-artifact@v2
+      - uses: actions/upload-artifact@v2
         with:
           name: melwalletd
           path: mac/artifacts/melwalletd

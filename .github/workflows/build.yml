@@ -150,7 +150,7 @@ jobs:
 
   build-mac:
     name: Build MacOS App 
-    needs: [ginkou-loader, mac-ginkou, mac-melwalletd]
+    needs: [mac-ginkou-loader, build-ginkou, mac-melwalletd]
     runs-on: macos-latest
     steps:
      
@@ -168,6 +168,8 @@ jobs:
       #       /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac
       #     key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
      
+     # download all artifacts
+     # this will work until other artifacts are added
       - uses: actions/upload-artifact@v2
         with:
           path: mac/artifacts/

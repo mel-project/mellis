@@ -170,10 +170,11 @@ jobs:
      
      # download all artifacts
      # this will work until other artifacts are added
-      - uses: actions/upload-artifact@v2
+
+      - uses: actions/download-artifact@v2
         with:
           path: mac/artifacts/
-
+      - run: ls
       - run: ./mac/build-mac.sh --app --dmg
       
 

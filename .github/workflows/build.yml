@@ -168,7 +168,10 @@ jobs:
       #       /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac
       #     key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
      
-     
+      - uses: actions/upload-artifact@v2
+        with:
+          path: mac/artifacts/
+
       - run: ./mac/build-mac.sh --app --dmg
       
 

@@ -48,10 +48,9 @@ jobs:
   #           ginkou-loader/target
   #         key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
 
-  cache-mac-app:
-    
+
+  build-ginkou:
     runs-on: macos-latest
-    name: Cache ginkou.app
     steps: 
       - name: Checkout repository
         uses: actions/checkout@v1
@@ -65,18 +64,18 @@ jobs:
           path: |
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/artifacts/ginkou-public
           key: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-debug
-        
-      - run: mkdir -p mac/artifacts
-      - run: ls mac/artifacts
-     
 
       - name: install ginkou
         if: steps.ginkou-cache.outputs.cache-hit != 'true'
-        run: ./mac/build-mac.sh --ginkou 
-      - run: ls mac/artifacts;
+        run: ./mac/build-mac.sh --ginkou
 
 
-  cache-mac-ginkou-loader:
+      - uses: actions/download-artifact@v2
+        with:
+          name: ginkou-public
+          path: mac/artifacts/ginkou-public
+    
+  ginkou-loader:
       
     runs-on: macos-latest
     name: Build Macos Ginkou-loader
@@ -107,9 +106,12 @@ jobs:
       - name: install ginkou-loader
         if: steps.ginkou-loader-cache.outputs.cache-hit != 'true'
         run: ./mac/build-mac.sh --ginkou-loader 
-      - run: ls mac/artifacts;
-  cache-mac-melwalletd:
-      
+      - uses: actions/download-artifact@v2
+        with:
+          name: ginkou-loader
+          path: mac/artifacts/ginkou-loader  
+ 
+  mac-melwalletd:    
     runs-on: macos-latest
     name: Build Macos melwalletd
 
@@ -140,8 +142,11 @@ jobs:
       - name: install melwalletd
         if: steps.melwalletd-cache.outputs.cache-hit != 'true'
         run: ./mac/build-mac.sh --melwalletd 
-      - run: ls mac/artifacts;
-
+      
+      - uses: actions/download-artifact@v2
+        with:
+          name: melwalletd
+          path: mac/artifacts/ginkou-public
   # build-mac:
   #   name: Build MacOS App 
   #   runs-on: macos-latest

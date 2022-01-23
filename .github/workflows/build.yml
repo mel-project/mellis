@@ -70,13 +70,14 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
       - name: Install rust toolchain
         if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+        run: ls; ls mac; ls ginkou
+        # uses: actions-rs/toolchain@v1
+        # with:
+        #   toolchain: stable
         
-      - name: install ginkou
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: ./mac/build-mac.sh --ginkou 
+      # - name: install ginkou
+      #   if: steps.cache.outputs.cache-hit != 'true'
+      #   run: ./mac/build-mac.sh --ginkou 
 
   # build-mac:
   #   name: Build MacOS App 

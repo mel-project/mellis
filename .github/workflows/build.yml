@@ -146,7 +146,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: melwalletd
-          path: mac/artifacts/ginkou-public
+          path: mac/artifacts/melwalletd
   # build-mac:
   #   name: Build MacOS App 
   #   runs-on: macos-latest

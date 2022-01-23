@@ -153,7 +153,12 @@ jobs:
     needs: [mac-ginkou-loader, build-ginkou, mac-melwalletd]
     runs-on: macos-latest
     steps:
-     
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Submodule Clone
+        run: git submodule update --init --recursive
+      
       - name: Install create-dmg
         run: brew install create-dmg
       - run: which create-dmg

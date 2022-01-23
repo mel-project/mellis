@@ -73,6 +73,7 @@ jobs:
       - name: install ginkou
         if: steps.ginkou-cache.outputs.cache-hit != 'true'
         run: ./mac/build-mac.sh --ginkou 
+      - run: ls mac/artifacts;
 
 
   cache-mac-ginkou-loader:
@@ -106,6 +107,7 @@ jobs:
       - name: install ginkou-loader
         if: steps.ginkou-loader-cache.outputs.cache-hit != 'true'
         run: ./mac/build-mac.sh --ginkou-loader 
+      - run: ls mac/artifacts;
   cache-mac-melwalletd:
       
     runs-on: macos-latest
@@ -138,6 +140,8 @@ jobs:
       - name: install melwalletd
         if: steps.melwalletd-cache.outputs.cache-hit != 'true'
         run: ./mac/build-mac.sh --melwalletd 
+      - run: ls mac/artifacts;
+
   # build-mac:
   #   name: Build MacOS App 
   #   runs-on: macos-latest

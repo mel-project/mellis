@@ -158,25 +158,29 @@ jobs:
 
       - name: Submodule Clone
         run: git submodule update --init --recursive
-      
-      - name: Install create-dmg
-        run: brew install create-dmg
-      - run: which create-dmg
 
+      - run: which create-dmg
       - uses: actions/cache@v2
+        id: cache
         with:
           path: 
+            /usr/local/bin/create-dmg
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/ginkou.dmg
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/*') }}-debug
-     
+           
+      - name: Install create-dmg
+
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: brew install create-dmg
      # download all artifacts
      # this will work until other artifacts are added
-
       - uses: actions/download-artifact@v2
+        if: steps.cache.outputs.cache-hit != 'true'
         with:
           path: mac/artifacts/
-      - run: ls
-      - run: ./mac/build-mac.sh --app --dmg
+
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: ./mac/build-mac.sh --app --dmg
       
 
 

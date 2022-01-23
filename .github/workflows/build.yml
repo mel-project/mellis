@@ -65,9 +65,8 @@ jobs:
           path: |
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/artifacts/ginkou-public
           key: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-debug
-
-      - name: ls artifacts
-        if: steps.ginkou-cache.outputs.cache-hit == 'true'
+        
+        run: mkdir -p mac/artifacts
         run: ls mac/artifacts
         
       - uses: actions/cache@v2
@@ -80,6 +79,7 @@ jobs:
             ~/.cargo/git/db/
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/artifacts/ginkou-loader
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
+      
       - run: ls mac/artifacts
 
       - uses: actions/cache@v2

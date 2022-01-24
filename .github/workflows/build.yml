@@ -180,6 +180,10 @@ jobs:
       - if: steps.cache.outputs.cache-hit != 'true'
         run: ./mac/build-mac.sh --app --dmg
       
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ginkou
+          path: mac/ginkou.app
 
 
 

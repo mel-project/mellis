@@ -9,7 +9,6 @@ env:
 
 jobs:
   build-ubuntu:
-    needs: build-mac
     runs-on: ubuntu-latest
 
     container:

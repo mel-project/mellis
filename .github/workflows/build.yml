@@ -27,11 +27,11 @@ jobs:
           manifest-path: flatpak/org.themelio.Wallet.yml
           cache-key: flatpak-builder-${{  hashFiles('**/flatpak/org.themelio.Wallet.yml') }}
 
-      - name: Upload flatpak artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ginkou.flatpak
-          path: ginkou-x86_64
+      # - name: Upload flatpak artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: ginkou.flatpak
+      #     path: ginkou-x86_64
 
 
   build-ginkou:
@@ -158,15 +158,28 @@ jobs:
         run: brew install create-dmg
 
      # download all artifacts
-     # this will work until other artifacts are added
       - uses: actions/download-artifact@v2
         if: steps.cache.outputs.cache-hit != 'true'
         with:
+          name: mac-ginkou-loader
           path: mac/artifacts/
+          
+      - uses: actions/download-artifact@v2
+        if: steps.cache.outputs.cache-hit != 'true'
+        with:
+          name: ginkou-public
+          path: mac/artifacts/
+
+      - uses: actions/download-artifact@v2
+        if: steps.cache.outputs.cache-hit != 'true'
+        with:
+          name: mac-melwalletd
+          path: mac/artifacts/
+
       - run: ls
       - if: steps.cache.outputs.cache-hit != 'true'
         run: ./mac/build-mac.sh --app --dmg
-      - run: ls
+      - run: ls mac
       - uses: actions/upload-artifact@v2
         with:
           name: ginkou.append
@@ -187,15 +200,20 @@ jobs:
           with:
             # not sure how this is created?
             # have faith in the flatpak-github-actions gods
-            name: ginkou.flatpak
-
+            name: ginkou-x86_64
+        - uses: actions/download-artifact@v2
+          with:
+            # not sure how this is created?
+            # have faith in the flatpak-github-actions gods
+            name: ginkou.dmg
         - name: Release
           uses: softprops/action-gh-release@v1
           # if: startsWith(github.ref, 'refs/tags/')
           with:
             body: this is a test
-            # files: |
-            #   ginkou-x86_64 
+            files: |
+              ginkou-x86_64 
+
 
 
 # This is a basic workflow to help you get started with Actions

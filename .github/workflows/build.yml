@@ -41,7 +41,12 @@ jobs:
           manifest-path: flatpak/org.themelio.Wallet.yml
           cache-key: flatpak-builder-${{  hashFiles('**/flatpak/org.themelio.Wallet.yml') }}
 
-         
+      - uses: actions/upload-artifact@v2
+        if: steps.flatpak-cache.outputs.cache-hit == 'true'
+        with:
+          name: ginkou-x86_64
+          path: flatpak/ginkou-x86_64
+    
 
   build-ginkou:
     runs-on: macos-latest
@@ -59,7 +64,7 @@ jobs:
           path: |
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/artifacts/ginkou-public
           key: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-debug
-          restore-key∂: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-debug
+          restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-debug
 
       - name: install ginkou
         if: steps.ginkou-cache.outputs.cache-hit != 'true'
@@ -212,7 +217,7 @@ jobs:
           with:
             # not sure how this is created?
             # have faith in the flatpak-github-actions gods
-            name: ginkou-x86_64
+            name: ginkou-x86_64 
         - uses: actions/download-artifact@v2
           with:
             # not sure how this is created?

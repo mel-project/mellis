@@ -198,7 +198,7 @@ jobs:
       - run: ls
       - if: steps.cache.outputs.cache-hit != 'true'
         run: ./mac/build-mac.sh --app --dmg
-      - run: ls mac
+      - run: ls mac; ls mac/artifacts
       - uses: actions/upload-artifact@v2
         with:
           name: ginkou.dmg

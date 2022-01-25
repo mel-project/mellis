@@ -161,8 +161,7 @@ jobs:
         id: cache
         with:
           path: 
-            /usr/local/bin/create-dmg
-            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/ginkou.dmg
+            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/
           key: ${{ runner.os }}-ginkou.app-${{ hashFiles('**/mac') }}-debug-moss
       - run: ls mac;
       - run: ls ~/;

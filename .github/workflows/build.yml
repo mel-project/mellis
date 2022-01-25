@@ -33,7 +33,7 @@ jobs:
           key: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}-debug
           restore-keys: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}-debug
 
-      - name: Build
+      - name: Build Flatpak
         if: steps.flatpak-cache.outputs.cache-hit != 'true'
         uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
         with:

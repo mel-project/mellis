@@ -21,7 +21,7 @@ jobs:
 
       - name: Submodule Clone
         run: git submodule update --init --recursive
-        
+
       - name: Setup upterm session
         uses: lhotari/action-upterm@v1
 
@@ -231,7 +231,7 @@ jobs:
 
 
   release:
-      needs: [build-ubuntu, build-mac]
+      needs: [build-ubuntu, build-mac, build-windows]
       runs-on: ubuntu-latest
          
       steps:

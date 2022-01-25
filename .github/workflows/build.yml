@@ -100,7 +100,7 @@ jobs:
         run: ./mac/build-mac.sh --ginkou-loader 
       - uses: actions/upload-artifact@v2
         with:
-          name: ginkou-loader
+          name: mac-ginkou-loader
           path: mac/artifacts/ginkou-loader  
  
   mac-melwalletd:    
@@ -137,7 +137,7 @@ jobs:
       
       - uses: actions/upload-artifact@v2
         with:
-          name: melwalletd
+          name: mac-melwalletd
           path: mac/artifacts/melwalletd
 
   build-mac:

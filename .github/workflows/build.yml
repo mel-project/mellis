@@ -222,6 +222,7 @@ jobs:
           uses: softprops/action-gh-release@v1
           # if: startsWith(github.ref, 'refs/tags/')
           with:
+            draft: true
             body: this is a test
             files: |
               ginkou-x86_64 

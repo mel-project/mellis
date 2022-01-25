@@ -142,7 +142,7 @@ jobs:
 
   build-mac:
     name: Build MacOS App 
-    # needs: [mac-ginkou-loader, build-ginkou, mac-melwalletd]
+    needs: [mac-ginkou-loader, build-ginkou, mac-melwalletd]
     runs-on: macos-latest
     steps:
       - name: Checkout repository

@@ -165,6 +165,7 @@ jobs:
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/ginkou.dmg
           key: ${{ runner.os }}-ginkou.app-${{ hashFiles('**/mac') }}-debug-moss
       - run: ls mac;
+      - run: ls ~/;
       - name: Install create-dmg
         if: steps.cache.outputs.cache-hit != 'true'
         run: brew install create-dmg

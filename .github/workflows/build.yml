@@ -3,7 +3,8 @@ name: Test-Build-Release
 on:
   push: 
     tags: v[12].[0-9]+.[0-9]+
-    # branches: [master]
+    branches: ['**']
+
 
 env:
   CARGO_TERM_COLOR: always
@@ -29,7 +30,8 @@ jobs:
         with:
           path: |
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/flatpak
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/flatpak/') }}-debug
+          key: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}-debug
+          restore-keys: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}-debug
 
       - name: Build
         if: steps.cache.outputs.cache-hit != 'true'
@@ -57,6 +59,7 @@ jobs:
           path: |
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/artifacts/ginkou-public
           key: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-debug
+          restore-key∂: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-debug
 
       - name: install ginkou
         if: steps.ginkou-cache.outputs.cache-hit != 'true'
@@ -89,7 +92,8 @@ jobs:
             ~/.cargo/git/db/
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/artifacts/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
-        
+          restore-keys: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
+
       - name: Install rust toolchain
         if: steps.ginkou-loader-cache.outputs.cache-hit != 'true'
         uses: actions-rs/toolchain@v1
@@ -125,7 +129,8 @@ jobs:
             ~/.cargo/git/db/
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/artifacts/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/melwalletd/Cargo.lock') }}-debug
-      
+          restore-key: ${{ runner.os }}-cargo-${{ hashFiles('**/melwalletd/Cargo.lock') }}-debug
+
       - name: Install rust toolchain
         if: steps.melwalletd-cache.outputs.cache-hit != 'true'
         uses: actions-rs/toolchain@v1

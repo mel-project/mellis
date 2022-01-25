@@ -129,7 +129,7 @@ jobs:
             ~/.cargo/git/db/
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/artifacts/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/melwalletd/Cargo.lock') }}-debug
-          restore-key: ${{ runner.os }}-cargo-${{ hashFiles('**/melwalletd/Cargo.lock') }}-debug
+          restore-keys: ${{ runner.os }}-cargo-${{ hashFiles('**/melwalletd/Cargo.lock') }}-debug
 
       - name: Install rust toolchain
         if: steps.melwalletd-cache.outputs.cache-hit != 'true'

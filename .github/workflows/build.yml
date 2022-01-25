@@ -14,34 +14,35 @@ jobs:
     name: Build Flatpak Package
     runs-on: ubuntu-latest
 
-    container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-40
-      options: --privileged
+    # container:
+    #   image: bilelmoussaoui/flatpak-github-actions:gnome-40
+    #   options: --privileged
     steps:
 
 
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Submodule Clone
-        run: git submodule update --init --recursive
-      # - uses: actions/cache@v2
-      #   id: flatpak-cache
-      #   with:
-      #     path: |
-      #       /Users/runner/work/ginkou-flatpak/ginkou-flatpak/
-      #     key: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}
-      #     restore-keys: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}
+      # - name: Checkout
+      #   uses: actions/checkout@v2
+      # - name: Submodule Clone
+      #   run: git submodule update --init --recursive
+      # # - uses: actions/cache@v2
+      # #   id: flatpak-cache
+      # #   with:
+      # #     path: |
+      # #       /Users/runner/work/ginkou-flatpak/ginkou-flatpak/
+      # #     key: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}
+      # #     restore-keys: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}
 
-      - name: Build Flatpak
-        if: steps.flatpak-cache.outputs.cache-hit != 'true'
-        uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
-        with:
-          bundle: ginkou.flatpak
-          manifest-path: flatpak/org.themelio.Wallet.yml
-          cache-key: flatpak-builder-${{ hashFiles('**/flatpak/org.themelio.Wallet.yml')}}
+      # - name: Build Flatpak
+      #   if: steps.flatpak-cache.outputs.cache-hit != 'true'
+      #   uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+      #   with:
+      #     bundle: ginkou.flatpak
+      #     manifest-path: flatpak/org.themelio.Wallet.yml
+      #     cache-key: flatpak-builder-${{ hashFiles('**/flatpak/org.themelio.Wallet.yml')}}
       
       
-      - run: ls
+
+      - run: echo testing >ginkou.flatpak
 
       # - uses: actions/upload-artifact@v2
       #   if: steps.flatpak-cache.outputs.cache-hit == 'true'

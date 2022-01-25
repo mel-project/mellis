@@ -2,6 +2,7 @@ name: Test-Build-Release
 
 on:
   push: 
+    tags: ['**']
     # branches: [master]
 
 env:

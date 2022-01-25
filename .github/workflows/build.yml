@@ -45,7 +45,7 @@ jobs:
         if: steps.flatpak-cache.outputs.cache-hit == 'true'
         with:
           name: ginkou-x86_64
-          path: flatpak/ginkou-x86_64
+          path: ginkou-x86_64
     
 
   build-ginkou:

@@ -61,10 +61,10 @@ jobs:
         run: ./mac/build-mac.sh --ginkou
 
 
-      # - uses: actions/upload-artifact@v2
-      #   with:
-      #     name: ginkou-public
-      #     path: mac/artifacts/ginkou-public/
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ginkou-public
+          path: mac/artifacts/ginkou-public/
     
   mac-ginkou-loader:
       

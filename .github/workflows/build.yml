@@ -18,7 +18,6 @@ jobs:
       image: bilelmoussaoui/flatpak-github-actions:gnome-40
       options: --privileged
     steps:
-      - run: ls
 
 
       - name: Checkout
@@ -29,7 +28,7 @@ jobs:
         id: flatpak-cache
         with:
           path: |
-            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/flatpak
+            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/
           key: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}-debug
           restore-keys: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}-debug
 
@@ -40,6 +39,9 @@ jobs:
           bundle: ginkou.flatpak
           manifest-path: flatpak/org.themelio.Wallet.yml
           cache-key: flatpak-builder-${{  hashFiles('**/flatpak/org.themelio.Wallet.yml') }}
+      
+      
+      - run: ls
 
       - uses: actions/upload-artifact@v2
         if: steps.flatpak-cache.outputs.cache-hit == 'true'

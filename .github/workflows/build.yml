@@ -225,6 +225,7 @@ jobs:
             body: this is a test
             files: |
               ginkou-x86_64 
+              ginkou.dmg
 
 
 

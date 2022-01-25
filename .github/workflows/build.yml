@@ -225,7 +225,7 @@ jobs:
             # not sure how this is created?
             # have faith in the flatpak-github-actions gods
             name: ginkou.dmg
-          run: ls /*
+        - run: ls /*
         - name: Release
           uses: softprops/action-gh-release@v1
           # if: startsWith(github.ref, 'refs/tags/')

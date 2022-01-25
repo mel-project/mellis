@@ -29,8 +29,8 @@ jobs:
         with:
           path: |
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/
-          key: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}-debug
-          restore-keys: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}-debug
+          key: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}
+          restore-keys: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}
 
       - name: Build Flatpak
         if: steps.flatpak-cache.outputs.cache-hit != 'true'
@@ -38,7 +38,7 @@ jobs:
         with:
           bundle: ginkou.flatpak
           manifest-path: flatpak/org.themelio.Wallet.yml
-          cache-key: flatpak-builder-${{  hashFiles('**/flatpak/org.themelio.Wallet.yml') }}
+          cache-key: flatpak-builder-${{ hashFiles('**/flatpak/org.themelio.Wallet.yml')}}
       
       
       - run: ls
@@ -47,7 +47,7 @@ jobs:
         if: steps.flatpak-cache.outputs.cache-hit == 'true'
         with:
           name: ginkou-x86_64
-          path: ginkou-x86_64
+          path: ginkou.flatpak
     
 
   build-ginkou:

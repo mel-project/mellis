@@ -11,7 +11,7 @@ env:
 
 jobs:
   build-windows:
-    needs: [build-ginkou]
+    # needs: [build-ginkou]
     name: Build Windows App
     runs-on: windows-2019
     steps: 

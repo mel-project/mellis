@@ -144,7 +144,7 @@ jobs:
 
   build-mac:
     name: Build MacOS App 
-    needs: [mac-ginkou-loader, build-ginkou, mac-melwalletd]
+    # needs: [mac-ginkou-loader, build-ginkou, mac-melwalletd]
     runs-on: macos-latest
     steps:
       - name: Checkout repository
@@ -160,7 +160,7 @@ jobs:
             /usr/local/bin/create-dmg
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/ginkou.dmg
           key: ${{ runner.os }}-ginkou.app-${{ hashFiles('**/mac') }}-debug
-      - run: ls
+      - run: ls mac;
       - name: Install create-dmg
         if: steps.cache.outputs.cache-hit != 'true'
         run: brew install create-dmg

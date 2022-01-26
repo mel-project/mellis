@@ -21,10 +21,7 @@ jobs:
 
       - name: Submodule Clone
         run: git submodule update --init --recursive
-
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
-      - run:  ./windows/build-windows.bash
+      
       - uses: actions/cache@v2
         id: ginkou-cache
         with:
@@ -32,6 +29,10 @@ jobs:
             ginkou-flatpak/windows
           key: ${{ runner.os }}-npm-${{ hashFiles('**/windows') }}-debug
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/windows') }}-debug
+
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
+      - run:  ./windows/build-windows.bash
 
   build-ubuntu:
     name: Build Flatpak Package

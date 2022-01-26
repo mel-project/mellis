@@ -48,10 +48,12 @@ install_ginkou () {
 # clean up any old app, clone the temp app, and copy the artifacts to $RES
 build_app (){
     
-    rm -rf ginkou.app
-    cp -r $MAC_ROOT/template.app ginkou.app
-    mkdir -p $RES
-    cp -r $ARTIFACTS/* $RES
+    pushd $MAC_ROOT
+        rm -rf ginkou.app
+        cp -r $MAC_ROOT/template.app ginkou.app
+        mkdir -p $RES
+        cp -r $ARTIFACTS/* $RES
+    popd
 
 }
 

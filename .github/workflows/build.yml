@@ -27,14 +27,15 @@ jobs:
         id: ginkou-cache
         with:
           path: |
-            ginkou-flatpak/windows
+            D:\a\ginkou-flatpak\ginkou-flatpak\windows\
           key: ${{ runner.os }}-npm-${{ hashFiles('**/windows') }}-debug
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/windows') }}-debug
-          
+
       - if: steps.flatpak-cache.outputs.cache-hit != 'true'
         run: cd windows; bash build-windows.bash
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       - uses: actions/upload-artifact@v2
       

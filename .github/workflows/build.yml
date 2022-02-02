@@ -221,7 +221,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         with:
           name: ginkou-public
-          path: mac/artifacts/
+          path: mac/artifacts/ginkou-public
 
       - uses: actions/download-artifact@v2
         if: steps.cache.outputs.cache-hit != 'true'

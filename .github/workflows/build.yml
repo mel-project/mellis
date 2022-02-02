@@ -34,6 +34,7 @@ jobs:
       #   uses: mxschmitt/action-tmate@v3
 
       - uses: actions/upload-artifact@v2
+      
         # if: steps.flatpak-cache.outputs.cache-hit == 'true'
         with:
           name: ginkou.exe

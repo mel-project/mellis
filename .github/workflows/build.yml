@@ -39,7 +39,7 @@ jobs:
         # if: steps.flatpak-cache.outputs.cache-hit == 'true'
         with:
           name: ginkou.exe
-          path: ginkou.exe
+          path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\Output\mellis-windows-setup.exe
 
 
   build-ubuntu:

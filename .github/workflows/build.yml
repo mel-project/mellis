@@ -34,8 +34,8 @@ jobs:
       - if: steps.app-cache.outputs.cache-hit != 'true'
         run: cd windows; bash build-windows.bash
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
 
       - uses: actions/upload-artifact@v2
       

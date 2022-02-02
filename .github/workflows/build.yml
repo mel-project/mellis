@@ -24,14 +24,14 @@ jobs:
         run: git submodule update --init --recursive
       
       - uses: actions/cache@v2
-        id: ginkou-cache
+        id: app-cache
         with:
           path: |
             D:\a\ginkou-flatpak\ginkou-flatpak\windows\
           key: ${{ runner.os }}-npm-${{ hashFiles('**/windows') }}-debug
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/windows') }}-debug
 
-      - if: steps.flatpak-cache.outputs.cache-hit != 'true'
+      - if: steps.app-cache.outputs.cache-hit != 'true'
         run: cd windows; bash build-windows.bash
 
       - name: Setup tmate session

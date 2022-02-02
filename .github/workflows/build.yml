@@ -30,13 +30,14 @@ jobs:
             ginkou-flatpak/windows
           key: ${{ runner.os }}-npm-${{ hashFiles('**/windows') }}-debug
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/windows') }}-debug
-      - run: ls; ls; cd windows; ls; bash build-windows.bash
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+          
+      - if: steps.flatpak-cache.outputs.cache-hit != 'true'
+        run: cd windows; bash build-windows.bash
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
 
       - uses: actions/upload-artifact@v2
       
-        # if: steps.flatpak-cache.outputs.cache-hit == 'true'
         with:
           name: ginkou.exe
           path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\Output\mellis-windows-setup.exe

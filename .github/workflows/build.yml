@@ -37,7 +37,7 @@ jobs:
         # if: steps.flatpak-cache.outputs.cache-hit == 'true'
         with:
           name: ginkou.exe
-          path: ginkou.flatpak
+          path: ginkou.exe
 
       - run:  ./windows/build-windows.bash
 

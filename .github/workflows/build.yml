@@ -38,6 +38,7 @@ jobs:
         with:
           name: ginkou-x86_64
           path: ginkou.flatpak
+          
       - run:  ./windows/build-windows.bash
 
   build-ubuntu:

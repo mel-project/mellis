@@ -273,7 +273,7 @@ jobs:
             files: |
               ginkou.flatpak
               ginkou.dmg
-              ginkou.exe
+              mellis-windows-setup.exe
 
 
 

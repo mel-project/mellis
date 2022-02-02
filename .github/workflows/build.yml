@@ -30,7 +30,7 @@ jobs:
             ginkou-flatpak/windows
           key: ${{ runner.os }}-npm-${{ hashFiles('**/windows') }}-debug
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/windows') }}-debug
-      - run: ls; ls; cd windows; ./build-windows.bash
+      - run: ls; ls; cd windows; ls; ./build-windows.bash
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
 
@@ -41,7 +41,6 @@ jobs:
           name: ginkou.exe
           path: ginkou.exe
 
-      - run:  ./windows/build-windows.bash
 
   build-ubuntu:
     name: Build Flatpak Package

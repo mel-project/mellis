@@ -33,7 +33,7 @@ jobs:
       # - name: Setup tmate session
       #   uses: mxschmitt/action-tmate@v3
 
-       - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2
         # if: steps.flatpak-cache.outputs.cache-hit == 'true'
         with:
           name: ginkou-x86_64

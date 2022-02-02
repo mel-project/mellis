@@ -128,6 +128,13 @@ ls
 rm -rf $TMP
 mkdir $TMP
 
+if (($_GINKOU_LOADER + $_MELWALLETD + $_GINKOU + $_APP + $_DMG < 1)); then  
+    install_ginkou_loader   
+    install_melwalletd
+    install_ginkou
+    build_app
+    build_dmg
+fi;
 
 (( $_GINKOU_LOADER > 0 )) && install_ginkou_loader
 (( $_MELWALLETD > 0 )) && install_melwalletd

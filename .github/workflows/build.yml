@@ -67,7 +67,7 @@ jobs:
           restore-keys: ${{ runner.os }}-flatpak-${{ hashFiles('**/flatpak/') }}
 
       - name: Build Flatpak
-        if: steps.flatpak-cache.outputs.cache-hit != 'true'
+        # if: steps.flatpak-cache.outputs.cache-hit != 'true'
         uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
         with:
           bundle: ginkou.flatpak

@@ -17,7 +17,7 @@ jobs:
     steps: 
 
       - name: Checkout repository
-      
+
         uses: actions/checkout@v1
 
       - name: Submodule Clone
@@ -31,8 +31,8 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/windows') }}-debug
           restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/windows') }}-debug
 
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       - uses: actions/upload-artifact@v2
       
@@ -251,13 +251,15 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         - uses: actions/download-artifact@v2
           with:
-            # not sure how this is created?
-            # have faith in the flatpak-github-actions gods
+            # created by 'build-ubuntu'
             name: ginkou-x86_64 
         - uses: actions/download-artifact@v2
           with:
-            # not sure how this is created?
-            # have faith in the flatpak-github-actions gods
+            # created by 'build-mac'
+            name: ginkou.dmg
+        - uses: actions/download-artifact@v2
+          with:
+            # created by 'build-windows'
             name: ginkou.dmg
         - run: ls ./*
         - name: Release
@@ -270,6 +272,7 @@ jobs:
             files: |
               ginkou-x86_64 
               ginkou.dmg
+              ginkou.exe
 
 
 

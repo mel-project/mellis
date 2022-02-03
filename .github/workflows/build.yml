@@ -233,8 +233,8 @@ jobs:
       - run: chmod +x mac/artifacts/*
       - run: ls -ls mac/artifacts
    
-      - if: steps.cache.outputs.cache-hit != 'true'
-        run: ./mac/build-mac.sh --app --dmg
+      # - if: steps.cache.outputs.cache-hit != 'true'
+      - run: ./mac/build-mac.sh --app --dmg
       - run: ls mac; ls mac/artifacts
       - uses: actions/upload-artifact@v2
         with:

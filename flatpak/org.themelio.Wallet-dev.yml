@@ -35,7 +35,7 @@ modules:
     sources:
       - type: git
         path: ../melwalletd
-        branch: "462c06f1ef38aadac2350038f6110c0f41df0f12"
+        branch: "a4f36c34c6a63c84d1fac7ed6ef66f9a33089ca4"
     build-commands:
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose "
       - "install -D ./target/debug/melwalletd -t /app/bin/"

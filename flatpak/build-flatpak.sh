@@ -1,5 +1,7 @@
 #!/bin/sh
 
+
+# Before merge to master run `build-flatpak --manifest` and `build-flatpak --manifest --release`
 if [ -n "${ARCH_FIRST_RUN}" ]; then
   sudo pacman -S flatpak flatpak-builder elfutils patch
   sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
@@ -24,7 +26,7 @@ MANIFEST_FILE="org.themelio.Wallet-dev.yml"
 
 
 while [[ "$#" -gt 0 ]]; do
-  case $opt in
+  case $1 in
     -i|--install)
       INSTALL_MANIFEST="--install"
       shift
@@ -39,13 +41,20 @@ while [[ "$#" -gt 0 ]]; do
       USER_FLAG="--user"
       shift
       ;;
+    -m|--manifest)
+      ONLY_MANIFEST=1
+      shift
+      ;;
     -h|--help)
       echo "By default the script generates org.themelio.Wallet-dev.yml and installs all it's dependencies, you can additionally specify,"
       echo
       echo "-i --install\t\t installs flatpak manifest, by default thats org.themelio.Wallet-dev.yml (changed by -r)"
       echo "-r --release\t\t build rust as release, this also generates org.themelio.Wallet.yml"
       echo "-u --user\t\t adds --user flag to flatpak-builder"
+      echo "-m --manifest\t\t build manifest only"
       echo "-h --help\t\t this help message"
+
+
       exit 1
       ;;
     \?)
@@ -65,4 +74,5 @@ export LOADER_BRANCH=`(cd ../ginkou-loader && git log --format='%H' -n 1)`
 cat org.themelio.Wallet-dev-template.yml | 
 envsubst '$GINKOU_BRANCH $WALLET_BRANCH $LOADER_BRANCH $RELEASE_FLAG $TARGET' > $MANIFEST_FILE;
 
-flatpak-builder build $MANIFEST_FILE --force-clean $INSTALL_MANIFEST --install-deps-from flathub $USER_FLAG
+
+(( $ONLY_MANIFEST < 0 )) && flatpak-builder build $MANIFEST_FILE --force-clean $INSTALL_MANIFEST --install-deps-from flathub $USER_FLAG

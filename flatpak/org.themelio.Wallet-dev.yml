@@ -15,7 +15,6 @@ modules:
         branch: "721e7e7c888b1fbcc8f72784d2ce2e2a11b62d2a"
         
     build-commands:
-      - "git checkout `(cd ../ginkou && git log --format='%H' -n 1)`"
       - "npm ci --cache=$FLATPAK_BUILDER_BUILDDIR/flatpak-node/npm-cache"
       - "npm run build"
       - "npm run smui-theme-light"

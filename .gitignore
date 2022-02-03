@@ -4,3 +4,4 @@ ginkou.app
 ginkou-public
 *.dmg
 .vscode/settings.json
+mac/artifacts

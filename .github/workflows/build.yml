@@ -261,9 +261,10 @@ jobs:
           with:
             # created by 'build-windows'
             name: ginkou.exe
-            
-        - run: chmod o+x *
-        - run: ls ./*
+
+        - run: chmod +x *
+        - run: ls -ls ./*
+
         - name: Release
           uses: softprops/action-gh-release@v1
           # if: startsWith(github.ref, 'refs/tags/')

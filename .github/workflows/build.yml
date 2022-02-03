@@ -207,7 +207,7 @@ jobs:
       - run: ls mac;
       - run: ls ~/;
       - name: Install create-dmg
-        # if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.cache.outputs.cache-hit != 'true'
         run: brew install create-dmg
 
      # download all artifacts
@@ -229,11 +229,12 @@ jobs:
           name: mac-melwalletd
           path: mac/artifacts/
 
+      # restore executable attribute
       - run: ls
       - run: chmod +x mac/artifacts/*
       - run: ls -ls mac/artifacts
    
-      # - if: steps.cache.outputs.cache-hit != 'true'
+      - if: steps.cache.outputs.cache-hit != 'true'
       - run: ./mac/build-mac.sh --app --dmg
       - run: ls mac; ls mac/artifacts
       - uses: actions/upload-artifact@v2

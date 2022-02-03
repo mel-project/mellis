@@ -207,7 +207,7 @@ jobs:
       - run: ls mac;
       - run: ls ~/;
       - name: Install create-dmg
-        if: steps.cache.outputs.cache-hit != 'true'
+        # if: steps.cache.outputs.cache-hit != 'true'
         run: brew install create-dmg
 
      # download all artifacts

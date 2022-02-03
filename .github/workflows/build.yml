@@ -230,7 +230,9 @@ jobs:
           path: mac/artifacts/
 
       - run: ls
-
+      - run: chmod +x mac/artifacts/*
+      - run: ls -ls mac/artifacts
+   
       - if: steps.cache.outputs.cache-hit != 'true'
         run: ./mac/build-mac.sh --app --dmg
       - run: ls mac; ls mac/artifacts
@@ -262,11 +264,6 @@ jobs:
             # created by 'build-windows'
             name: ginkou.exe
 
-        - run: chmod +x *
-        - run: ls -ls ./*
-        
-        - name: Setup tmate session
-          uses: mxschmitt/action-tmate@v3
 
         - name: Release
           uses: softprops/action-gh-release@v1

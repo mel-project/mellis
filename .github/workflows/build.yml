@@ -264,6 +264,9 @@ jobs:
 
         - run: chmod +x *
         - run: ls -ls ./*
+        
+        - name: Setup tmate session
+          uses: mxschmitt/action-tmate@v3
 
         - name: Release
           uses: softprops/action-gh-release@v1

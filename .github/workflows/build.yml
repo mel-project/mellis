@@ -17,7 +17,6 @@ jobs:
     steps: 
 
       - name: Checkout repository
-
         uses: actions/checkout@v1
 
       - name: Submodule Clone
@@ -235,7 +234,7 @@ jobs:
       - run: ls -ls mac/artifacts
    
       - if: steps.cache.outputs.cache-hit != 'true'
-      - run: ./mac/build-mac.sh --app --dmg
+        run: ./mac/build-mac.sh --app --dmg
       - run: ls mac; ls mac/artifacts
       - uses: actions/upload-artifact@v2
         with:

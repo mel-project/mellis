@@ -71,6 +71,7 @@ jobs:
           toolchain: stable
       - run: rustc --version
       - run: cargo --version
+      - run: which rustc; which cargo;
 
       # - name: Setup tmate session
       #   uses: mxschmitt/action-tmate@v3

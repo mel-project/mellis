@@ -53,7 +53,7 @@ modules:
     sources:
       - type: git
         path: ../ginkou-loader 
-        branch: "fb82385510bf2f6546d201d79baa58b35c463c89"
+        branch: "de90fd0ee2b7f82c826758247689aed4c9ee90db"
     build-commands:
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose "
       - "install -D ./target/debug/ginkou-loader -t /app/bin/ "

@@ -37,6 +37,8 @@ modules:
         path: ../melwalletd
         branch: "a4f36c34c6a63c84d1fac7ed6ef66f9a33089ca4"
     build-commands:
+      - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo --version"
+      - "env CARGO_HOME=/run/build/ginkou-loader/cargo rustc --version"
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose --release"
       - "install -D ./target/release/melwalletd -t /app/bin/"
 

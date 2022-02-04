@@ -2,6 +2,6 @@
 wallet
 ginkou.app
 ginkou-public
-*.dmg
+*.dmg*
 .vscode/settings.json
 mac/artifacts

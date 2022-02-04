@@ -4,6 +4,7 @@
 # setup global state
 MAC_ROOT=$( cd "$(dirname "$0")" ; pwd -P ) # The absolute path to this files parent
 PROJECT_ROOT=$( cd $MAC_ROOT/.. ; pwd -P ) # The absolute path to ginkou-flatpak
+TEMPLATE=$MAC_ROOT/template.app
 RES=$MAC_ROOT/ginkou.app/Contents/MacOS/res # The absolue path to the (yet to be created) ginkou.app
 ARTIFACTS=$MAC_ROOT/artifacts
 TMP=$MAC_ROOT/tmp
@@ -40,6 +41,7 @@ install_ginkou () {
         npm install
         npm run build
         npm run smui-theme-light
+        rm -rf $ARTIFACTS/ginkou-public
         mv public $ARTIFACTS/ginkou-public
     popd
 
@@ -49,30 +51,31 @@ install_ginkou () {
 build_app (){
     
     pushd $MAC_ROOT
+
         rm -rf ginkou.app
-        cp -r $MAC_ROOT/template.app ginkou.app
+        cp -r $TEMPLATE ginkou.app
         mkdir -p $RES
         cp -r $ARTIFACTS/* $RES
+
+        # build_dmg assumes this exists
+        rm -rf dmg_setup
+        mkdir dmg_setup
+        mv ginkou.app dmg_setup
+
+        # add a sym link to applications into which users may drag ginkou.app
+        cd dmg_setup
+        ln -s /Applications
     popd
 
 }
 
 build_dmg () {
 # setup a directory containing ginkou.app
-    pushd $MAC_ROOT
-        rm -rf dmg_setup
-        mkdir dmg_setup
-        mv ginkou.app dmg_setup
+    pushd $MAC_ROOT         
 
-
-        # add a sym link to applications into which users may drag ginkou.app
-        cd dmg_setup
-        ln -s /Applications
-
-        # create the dmg
         cd $MAC_ROOT
-        rm -rf ginkou.dmg
-        create-dmg ginkou.dmg dmg_setup
+        [[ -f ginkou.dmg ]] && mv ginkou.dmg ginkou.dmg-`date +%s` # store old dmg unobtrusively
+        create-dmg ginkou.dmg dmg_setup # build new dmg
 
         # delete artifacts
         rm -rf dmg_setup
@@ -119,7 +122,7 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 
-set -ex 
+set -ex
 
 [[ ! -d $ARTIFACTS ]] && mkdir $ARTIFACTS
 ls

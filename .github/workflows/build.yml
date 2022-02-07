@@ -53,9 +53,9 @@ jobs:
     name: Build Flatpak Package
     runs-on: ubuntu-latest
 
-    container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-40
-      options: --privileged
+    # container:
+    #   image: bilelmoussaoui/flatpak-github-actions:gnome-40
+    #   options: --privileged
     steps:
 
 
@@ -73,8 +73,8 @@ jobs:
       - run: cargo --version
       - run: which rustc; which cargo;
 
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       
       # - uses: actions/cache@v2
       #   id: flatpak-cache
@@ -90,7 +90,9 @@ jobs:
           bundle: ginkou.flatpak
           manifest-path: flatpak/org.themelio.Wallet.yml
           cache-key: flatpak-builder-${{ hashFiles('**/flatpak/org.themelio.Wallet.yml')}}
-      
+ 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3     
       
 
 

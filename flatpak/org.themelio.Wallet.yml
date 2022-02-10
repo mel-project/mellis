@@ -37,7 +37,6 @@ modules:
         path: ../melwalletd
         branch: "a4f36c34c6a63c84d1fac7ed6ef66f9a33089ca4"
     build-commands:
-      - "rustup update"
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo which cargo"
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo which rustc"
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose --release"
@@ -58,7 +57,6 @@ modules:
         path: ../ginkou-loader
         branch: "de90fd0ee2b7f82c826758247689aed4c9ee90db"
     build-commands:
-      - "rustup update"
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose --release"
       - "install -D ./target/release/ginkou-loader -t /app/bin/ "
 

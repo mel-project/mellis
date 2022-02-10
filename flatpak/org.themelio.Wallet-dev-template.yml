@@ -1,9 +1,9 @@
 app-id: org.themelio.Wallet
 runtime: org.gnome.Platform
-runtime-version: "40"
+runtime-version: "41"
 sdk: org.gnome.Sdk
 sdk-extensions:
-  - org.freedesktop.Sdk.Extension.rust-stable//21.08
+  - org.freedesktop.Sdk.Extension.rust-stable
   - org.freedesktop.Sdk.Extension.node14
 command: "ginkou-loader-wrapper"
 modules:
@@ -13,7 +13,7 @@ modules:
       - type: git
         path: ../ginkou
         branch: "${GINKOU_BRANCH}"
-        
+
     build-commands:
       - "npm ci --cache=$FLATPAK_BUILDER_BUILDDIR/flatpak-node/npm-cache"
       - "npm run build"
@@ -54,7 +54,7 @@ modules:
     buildsystem: "simple"
     sources:
       - type: git
-        path: ../ginkou-loader 
+        path: ../ginkou-loader
         branch: "${LOADER_BRANCH}"
     build-commands:
       - "env CARGO_HOME=/run/build/ginkou-loader/cargo cargo build --verbose ${RELEASE_FLAG}"

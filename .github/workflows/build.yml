@@ -58,11 +58,13 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive
 
-      - name: Flatpak deps
-        run: "flatpak install -y flathub org.gnome.Sdk/x86_64/40 org.gnome.Platform/x86_64/40 flathub org.freedesktop.Sdk.Extension.rust-stable//21.08 flathub org.freedesktop.Sdk.Extension.node14//20.08"
-
       - name: Build Flatpak
-        run: "flatpak-builder --install-deps-from flathub flatpak_app flatpak/org.themelio.Wallet.yml --repo=repo"
+        # if: steps.flatpak-cache.outputs.cache-hit != 'true'
+        uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+        with:
+          bundle: ginkou.flatpak
+          manifest-path: flatpak/org.themelio.Wallet.yml
+          cache-key: flatpak-builder-${{ hashFiles('**/flatpak/org.themelio.Wallet.yml')}}
         # with:
         #   bundle: ginkou.flatpak
         #   manifest-path: flatpak/org.themelio.Wallet.yml

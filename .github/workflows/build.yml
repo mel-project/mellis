@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Submodule Clone
         run: git submodule update --init --recursive
-      
+       
       # this maintains the flatpak cache
       - name: Cache build directory
         uses: actions/cache@v2
@@ -63,8 +63,8 @@ jobs:
             /var/tmp/flatpak-cache-*
           key: /var/tmp/${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-${{ hashFiles('**/melwalletd/Cargo.lock') }}
        
-      - name: Build Flatpak manifest
-        run: cd flatpak; env DEBIAN_FIRST_RUN=1 ./build-flatpak.sh --release  --user --install
+      # - name: Build Flatpak manifest
+      #   run: cd flatpak; env DEBIAN_FIRST_RUN=1 ./build-flatpak.sh --release  --user --install
  # with:
         #   bundle: ginkou.flatpak
         #   manifest-path: flatpak/org.themelio.Wallet.yml

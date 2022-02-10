@@ -49,16 +49,13 @@ jobs:
     name: Build Flatpak Package
     runs-on: ubuntu-latest
 
-    container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-40
-      options: --privileged
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Submodule Clone
         run: git submodule update --init --recursive
       - name: Build Flatpak manifest
-        run: ./flatpak/build-flatpak.sh --manifest --release 
+        run: cd flatpak; env DEBIAN_FIRST_RUN=1 ./build-flatpak.sh --manifest --release 
       - name: Build Flatpak
         # if: steps.flatpak-cache.outputs.cache-hit != 'true'
         uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4

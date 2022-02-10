@@ -7,7 +7,7 @@ if [ -n "${ARCH_FIRST_RUN}" ]; then
 elif [ -n "${DEBIAN_FIRST_RUN}" ]; then
   sudo apt update
   env DEBIAN_FRONTEND=noninteractive sudo apt -y install flatpak flatpak-builder libgtk-3-dev libwebkit2gtk-4.0-dev
-
+fi;
 
 export RELEASE_FLAG=""
 export USER_FLAG=""

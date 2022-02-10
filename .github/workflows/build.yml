@@ -60,8 +60,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/flatpak/build
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-${{ hashFiles('**/melwalletd/Cargo.lock') }}
+            /var/tmp/flatpak-cache-*
+          key: /var/tmp/${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-${{ hashFiles('**/melwalletd/Cargo.lock') }}
        
       - name: Build Flatpak manifest
         run: cd flatpak; env DEBIAN_FIRST_RUN=1 ./build-flatpak.sh --release  --user --install

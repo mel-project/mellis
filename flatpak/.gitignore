@@ -4,3 +4,5 @@ output-build-dir
 output-repo
 repo
 build/
+org.themelio.Wallet-dev.yml
+org.themelio.Wallet.yml

@@ -55,12 +55,13 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive
       
-      # - uses: actions/cache@v2
-      #   id: ginkou-cache
-      #   with:
-      #     path: |
-      #       /Users/runner/work/ginkou-flatpak/ginkou-flatpak/flatpak
-      #     key: ${{ runner.os }}-npm-${{ hashFiles('**/flatpak') }}-${{ hashFiles('**/ginkou/yarn.lock') }}-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-${{ hashFiles('**/melwalletd/Cargo.lock') }}
+      # this maintains the flatpak cache
+      - name: Cache build directory
+        uses: actions/cache@v2
+        with:
+          path: |
+            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/flatpak/build
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-${{ hashFiles('**/melwalletd/Cargo.lock') }}
        
       - name: Build Flatpak manifest
         run: cd flatpak; env DEBIAN_FIRST_RUN=1 ./build-flatpak.sh --release  --user --install

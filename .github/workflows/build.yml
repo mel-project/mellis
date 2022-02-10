@@ -63,7 +63,7 @@ jobs:
       #     key: ${{ runner.os }}-npm-${{ hashFiles('**/flatpak') }}-${{ hashFiles('**/ginkou/yarn.lock') }}-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-${{ hashFiles('**/melwalletd/Cargo.lock') }}
        
       - name: Build Flatpak manifest
-        run: cd flatpak; env DEBIAN_FIRST_RUN=1 ./build-flatpak.sh --manifest --release  --user --install
+        run: cd flatpak; env DEBIAN_FIRST_RUN=1 ./build-flatpak.sh --release  --user --install
  # with:
         #   bundle: ginkou.flatpak
         #   manifest-path: flatpak/org.themelio.Wallet.yml

@@ -71,4 +71,4 @@ cat org.themelio.Wallet-dev-template.yml |
 envsubst '$GINKOU_BRANCH $WALLET_BRANCH $LOADER_BRANCH $RELEASE_FLAG $TARGET' > $MANIFEST_FILE;
 
 flatpak remote-add --if-not-exists $USER_FLAG flathub https://flathub.org/repo/flathub.flatpakrepo 
-(( $ONLY_MANIFEST  < 1)) && flatpak-builder build $MANIFEST_FILE --force-clean $INSTALL_MANIFEST --install-deps-from flathub $USER_FLAG
+if (( $ONLY_MANIFEST  == 0)); then flatpak-builder build $MANIFEST_FILE --force-clean $INSTALL_MANIFEST --install-deps-from flathub $USER_FLAG; fi

@@ -58,6 +58,8 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive
 
+      - name: Flatpak deps
+
       - name: Build Flatpak
         # if: steps.flatpak-cache.outputs.cache-hit != 'true'
         uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4

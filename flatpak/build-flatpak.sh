@@ -13,7 +13,7 @@ elif [ -n "${NIXOS_FIRST_RUN}" ]; then
   sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 fi
 
-  sudo flatpak install -y flathub org.gnome.Sdk/x86_64/40 org.gnome.Platform/x86_64/40 flathub org.freedesktop.Sdk.Extension.rust-stable//21.08 flathub org.freedesktop.Sdk.Extension.node14//20.08
+sudo flatpak install -y flathub org.gnome.Sdk/x86_64/40 org.gnome.Platform/x86_64/40 flathub org.freedesktop.Sdk.Extension.rust-stable//21.08 flathub org.freedesktop.Sdk.Extension.node14//20.08
 
 export RELEASE_FLAG=""
 export USER_FLAG=""

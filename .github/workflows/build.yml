@@ -62,7 +62,7 @@ jobs:
         run: "flatpak install -y flathub org.gnome.Sdk/x86_64/40 org.gnome.Platform/x86_64/40 flathub org.freedesktop.Sdk.Extension.rust-stable//21.08 flathub org.freedesktop.Sdk.Extension.node14//20.08"
 
       - name: Build Flatpak
-        run: "flatpak-builder --install-deps-from flathub --manifest flatpak/org.themelio.Wallet.yml --repo=repo"
+        run: "flatpak-builder --install-deps-from flathub flatpak_app flatpak/org.themelio.Wallet.yml --repo=repo"
         # with:
         #   bundle: ginkou.flatpak
         #   manifest-path: flatpak/org.themelio.Wallet.yml

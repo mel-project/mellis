@@ -10,7 +10,7 @@ env:
 
 jobs:
   build-windows:
-    # needs: [build-ginkou]
+    needs: [build-ginkou]
     name: Build Windows App
     runs-on: windows-2019
     steps:
@@ -25,53 +25,80 @@ jobs:
         with:
           path: |
             D:\a\ginkou-flatpak\ginkou-flatpak\windows\
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/windows') }}-${{ hashFiles('**/ginkou/yarn.lock') }}-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-${{ hashFiles('**/melwalletd/Cargo.lock') }}
+          key: ${{ runner.os }}-1npm-${{ hashFiles('**/windows') }}-${{ hashFiles('**/ginkou/yarn.lock') }}-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-${{ hashFiles('**/melwalletd/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('**/windows') }}
+     
+      - uses: actions/download-artifact@v2
+        with:
+          name: ginkou-public
+          path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\ginkou-public
+
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Install latest rust stable
-        if: steps.app-cache.outputs.cache-hit != 'true'
+        # if: steps.app-cache.outputs.cache-hit != 'true'
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
-      - if: steps.app-cache.outputs.cache-hit != 'true'
+          toolchain: stable-i686-pc-windows-msvc
+      # - if: steps.app-cache.outputs.cache-hit != 'true'
         run: cd windows; bash build-windows.bash
 
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
 
       - uses: actions/upload-artifact@v2
 
         with:
           name: ginkou.exe
           path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\Output\mellis-windows-setup.exe
-
-  build-ubuntu:
-    name: Build Flatpak Package
+  
+  build-flatpak-manifest:
+    name: Build manifest
     runs-on: ubuntu-latest
 
-    steps:
+    steps: 
       - name: Checkout
         uses: actions/checkout@v2
       - name: Submodule Clone
         run: git submodule update --init --recursive
        
-      # this maintains the flatpak cache
-      - name: Cache build directory
-        uses: actions/cache@v2
-        with:
-          path: |
-            /var/tmp/flatpak-cache-*
-          key: /var/tmp/${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-${{ hashFiles('**/melwalletd/Cargo.lock') }}
-       
       - name: Build Flatpak manifest
-        run: cd flatpak; env DEBIAN_FIRST_RUN=1 ./build-flatpak.sh --release  --user 
-#  with:
-#           bundle: ginkou.flatpak
-#           manifest-path: flatpak/org.themelio.Wallet.yml
-#         cache-key: flatpak-builder-${{ hashFiles('**/flatpak/org.themelio.Wallet.yml')}}
+        run: cd flatpak; ./build-flatpak.sh --manifest --release 
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      - uses: actions/upload-artifact@v2
+        with:
+          name: flatpak-manifest
+          path: flatpak/org.themelio.Wallet.yml
+      
+  build-ubuntu:
+    name: Build Flatpak Package
+    runs-on: ubuntu-latest
+    needs: [build-flatpak-manifest]
+
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:gnome-40
+      options: --privileged
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Submodule Clone
+        run: git submodule update --init --recursive
+      - uses: actions/download-artifact@v2
+        with:
+          # created by 'build-windows'
+          name: flatpak-manifest
+          path: flatpak
+
+      - run: ls
+      - name: Build Flatpak
+        # if: steps.flatpak-cache.outputs.cache-hit != 'true'
+        uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+        with:
+          bundle: ginkou.flatpak
+          manifest-path: flatpak/org.themelio.Wallet.yml
+          cache-key: flatpak-${{ hashFiles('**/flatpak/org.themelio.Wallet.yml')}}
+
 
       # - uses: actions/upload-artifact@v2
       #   if: steps.flatpak-cache.outputs.cache-hit == 'true'

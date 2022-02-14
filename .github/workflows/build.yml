@@ -9,7 +9,49 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
+  build-windows:
+    needs: [build-ginkou]
+    name: Build Windows App
+    runs-on: windows-2019
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
 
+      - name: Submodule Clone
+        run: git submodule update --init --recursive
+
+      - uses: actions/cache@v2
+        id: app-cache
+        with:
+          path: |
+            D:\a\ginkou-flatpak\ginkou-flatpak\windows\
+          key: ${{ runner.os }}-1npm-${{ hashFiles('**/windows') }}-${{ hashFiles('**/ginkou/yarn.lock') }}-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-${{ hashFiles('**/melwalletd/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('**/windows') }}
+     
+      - uses: actions/download-artifact@v2
+        with:
+          name: ginkou-public
+          path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\ginkou-public
+
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
+      - name: Install latest rust stable
+        # if: steps.app-cache.outputs.cache-hit != 'true'
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable-i686-pc-windows-msvc
+      # - if: steps.app-cache.outputs.cache-hit != 'true'
+        run: cd windows; bash build-windows.bash
+
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ginkou.exe
+          path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\Output\mellis-windows-setup.exe
+  
   build-flatpak-manifest:
     name: Build manifest
     runs-on: ubuntu-latest

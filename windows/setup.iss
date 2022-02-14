@@ -38,8 +38,7 @@ Type: filesandordirs; Name: "{app}\*"
 
 [Files]
 Source: "MicrosoftEdgeWebview2Setup.exe"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "dir\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "..\ginkou\public"; DestDir: "{app}\ginkou-public"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "artifacts\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

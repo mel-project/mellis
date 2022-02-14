@@ -12,8 +12,8 @@ unzip IS6.zip -d iscc
 # cargo install --locked --path ../melwalletd
 # (cd ../ginkou && npm ci && npm run build)
 
-mkdir -p dir
-touch dir/testing.txt
-# cp $(which melwalletd) dir
-# cp $(which ginkou-loader) dir
+mkdir -p artifacts
+touch artifacts/testing.txt
+# cp $(which melwalletd) artifacts
+# cp $(which ginkou-loader) artifacts
 sh -c "$ISCC setup.iss"

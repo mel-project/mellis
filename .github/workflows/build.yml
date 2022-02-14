@@ -31,7 +31,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: ginkou-public
-          path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\ginkou-public
+          path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\artifacts\ginkou-public
 
 
 

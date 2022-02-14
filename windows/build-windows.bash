@@ -13,6 +13,6 @@ unzip IS6.zip -d iscc
 # (cd ../ginkou && npm ci && npm run build)
 
 mkdir -p dir
-cp $(which melwalletd) dir
-cp $(which ginkou-loader) dir
+# cp $(which melwalletd) dir
+# cp $(which ginkou-loader) dir
 sh -c "$ISCC setup.iss"

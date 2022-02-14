@@ -44,7 +44,7 @@ jobs:
           profile: minimal
           toolchain: stable-i686-pc-windows-msvc
       # - if: steps.app-cache.outputs.cache-hit != 'true'
-        run: cd windows; bash build-windows.bash
+      - run: cd windows; bash build-windows.bash
 
 
       - uses: actions/upload-artifact@v2

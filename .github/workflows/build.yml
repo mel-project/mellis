@@ -34,8 +34,6 @@ jobs:
           path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\ginkou-public
 
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
 
       - name: Install latest rust stable
         # if: steps.app-cache.outputs.cache-hit != 'true'
@@ -46,6 +44,8 @@ jobs:
       # - if: steps.app-cache.outputs.cache-hit != 'true'
       - run: cd windows; bash build-windows.bash
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       - uses: actions/upload-artifact@v2
         with:

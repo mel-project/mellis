@@ -119,8 +119,8 @@ jobs:
         with:
           path: |
             /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/artifacts/ginkou-public
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-debug
-          restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-debug
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/') }}-debug
+          # restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-debug
 
       - name: install ginkou
         if: steps.ginkou-cache.outputs.cache-hit != 'true'

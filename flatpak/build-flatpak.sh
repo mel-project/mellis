@@ -70,5 +70,7 @@ export LOADER_BRANCH=`(cd ../ginkou-loader && git log --format='%H' -n 1)`
 cat org.themelio.Wallet-dev-template.yml | 
 envsubst '$GINKOU_BRANCH $WALLET_BRANCH $LOADER_BRANCH $RELEASE_FLAG $TARGET' > $MANIFEST_FILE;
 
-flatpak remote-add --if-not-exists $USER_FLAG flathub https://flathub.org/repo/flathub.flatpakrepo 
-if (( $ONLY_MANIFEST  == 0)); then flatpak-builder build $MANIFEST_FILE --force-clean $INSTALL_MANIFEST --install-deps-from flathub $USER_FLAG; fi
+if (( $ONLY_MANIFEST  == 0)); then 
+  flatpak remote-add --if-not-exists $USER_FLAG flathub https://flathub.org/repo/flathub.flatpakrepo;
+  flatpak-builder build $MANIFEST_FILE --force-clean $INSTALL_MANIFEST --install-deps-from flathub $USER_FLAG;
+fi;

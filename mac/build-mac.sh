@@ -40,7 +40,6 @@ install_ginkou () {
         cd ginkou
         npm install
         npm run build
-        npm run smui-theme-light
         rm -rf $ARTIFACTS/ginkou-public
         mv public $ARTIFACTS/ginkou-public
     popd

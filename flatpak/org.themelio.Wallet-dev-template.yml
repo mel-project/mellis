@@ -15,9 +15,8 @@ modules:
         branch: "${GINKOU_BRANCH}"
 
     build-commands:
-      - "npm ci --cache=$FLATPAK_BUILDER_BUILDDIR/flatpak-node/npm-cache"
+      - "npm install"
       - "npm run build"
-      - "npm run smui-theme-light"
       - "mv public /app/ginkou-files"
   ## uncomment these lines and comment the modules with that same name
   # - name: ginkou

@@ -12,7 +12,9 @@ jobs:
   build-windows:
     needs: [build-ginkou]
     name: Build Windows App
-    runs-on: windows-2019
+    runs-on: self-hosted
+    container:
+      image: mcr.microsoft.com/windows/servercore:ltsc2019
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1

@@ -55,8 +55,15 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: Update Apt
+        run: sudo apt update
+
+      - name: Install Gettext
+        run: sudo apt install -y gettext
+
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Submodule Clone
         run: git submodule update --init --recursive
 

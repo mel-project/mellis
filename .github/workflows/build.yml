@@ -27,13 +27,11 @@ jobs:
             D:\a\ginkou-flatpak\ginkou-flatpak\windows\
           key: ${{ runner.os }}-1npm-${{ hashFiles('**/windows') }}-${{ hashFiles('**/ginkou/yarn.lock') }}-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-${{ hashFiles('**/melwalletd/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('**/windows') }}
-     
+
       - uses: actions/download-artifact@v2
         with:
           name: ginkou-public
           path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\artifacts\ginkou-public
-
-
 
       - name: Install latest rust stable
         if: steps.app-cache.outputs.cache-hit != 'true'
@@ -51,25 +49,25 @@ jobs:
         with:
           name: ginkou.exe
           path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\Output\mellis-windows-setup.exe
-  
+
   build-flatpak-manifest:
     name: Build manifest
     runs-on: ubuntu-latest
 
-    steps: 
+    steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Submodule Clone
         run: git submodule update --init --recursive
-       
+
       - name: Build Flatpak manifest
-        run: cd flatpak; ./build-flatpak.sh --manifest --release 
+        run: cd flatpak; ./build-flatpak.sh --manifest --release
 
       - uses: actions/upload-artifact@v2
         with:
           name: flatpak-manifest
           path: flatpak/org.themelio.Wallet.yml
-      
+
   build-ubuntu:
     name: Build Flatpak Package
     runs-on: ubuntu-latest
@@ -94,16 +92,15 @@ jobs:
         # if: steps.flatpak-cache.outputs.cache-hit != 'true'
         uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
         with:
-          bundle: ginkou.flatpak
+          bundle: mellis.flatpak
           manifest-path: flatpak/org.themelio.Wallet.yml
           cache-key: flatpak-${{ hashFiles('**/flatpak/org.themelio.Wallet.yml')}}
-
 
       # - uses: actions/upload-artifact@v2
       #   if: steps.flatpak-cache.outputs.cache-hit == 'true'
       #   with:
       #     name: ginkou-x86_64
-      #     path: ginkou.flatpak
+      #     path: mellis.flatpak
 
   build-ginkou:
     runs-on: macos-latest
@@ -256,8 +253,8 @@ jobs:
       - run: ls mac; ls mac/artifacts
       - uses: actions/upload-artifact@v2
         with:
-          name: ginkou.dmg
-          path: mac/ginkou.dmg
+          name: mellis.dmg
+          path: mac/mellis.dmg
 
   release:
     needs: [build-ubuntu, build-mac, build-windows]
@@ -275,7 +272,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           # created by 'build-mac'
-          name: ginkou.dmg
+          name: mellis.dmg
       - uses: actions/download-artifact@v2
         with:
           # created by 'build-windows'
@@ -287,8 +284,8 @@ jobs:
 
         with:
           files: |
-            ginkou.flatpak
-            ginkou.dmg
+            mellis.flatpak
+            mellis.dmg
             mellis-windows-setup.exe
 
 # This is a basic workflow to help you get started with Actions

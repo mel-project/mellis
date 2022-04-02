@@ -2,7 +2,7 @@
 
 ## How to install?
 
-Go to the [Releases}(https://github.com/themeliolabs/mellis/releases) page to download the latest version. Currently, only the following platforms are supported:
+Go to the [Releases](https://github.com/themeliolabs/mellis/releases) page to download the latest version. Currently, only the following platforms are supported:
 
 - Windows (the `.exe` file)
 - macOS (the `.dmg` file)

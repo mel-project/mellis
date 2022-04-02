@@ -24,14 +24,14 @@ jobs:
         id: app-cache
         with:
           path: |
-            D:\a\ginkou-flatpak\ginkou-flatpak\windows\
+            D:\a\mellis\mellis\windows\
           key: ${{ runner.os }}-1npm-${{ hashFiles('**/windows') }}-${{ hashFiles('**/ginkou/yarn.lock') }}-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-${{ hashFiles('**/melwalletd/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('**/windows') }}
 
       - uses: actions/download-artifact@v2
         with:
           name: ginkou-public
-          path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\artifacts\ginkou-public
+          path: D:\a\mellis\mellis\windows\artifacts\ginkou-public
 
       - name: Install latest rust stable
         if: steps.app-cache.outputs.cache-hit != 'true'
@@ -48,7 +48,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: ginkou.exe
-          path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\Output\mellis-windows-setup.exe
+          path: D:\a\mellis\mellis\windows\Output\mellis-windows-setup.exe
 
   build-flatpak-manifest:
     name: Build manifest
@@ -115,7 +115,7 @@ jobs:
         id: ginkou-cache
         with:
           path: |
-            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/artifacts/ginkou-public
+            /Users/runner/work/mellis/mellis/mac/artifacts/ginkou-public
           key: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/') }}-debug
           # restore-keys: ${{ runner.os }}-npm-${{ hashFiles('**/ginkou/yarn.lock') }}-debug
 
@@ -146,7 +146,7 @@ jobs:
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
-            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/artifacts/
+            /Users/runner/work/mellis/mellis/mac/artifacts/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
           restore-keys: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-debug
 
@@ -183,7 +183,7 @@ jobs:
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
-            /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/artifacts/
+            /Users/runner/work/mellis/mellis/mac/artifacts/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/melwalletd/Cargo.lock') }}-debug
           restore-keys: ${{ runner.os }}-cargo-${{ hashFiles('**/melwalletd/Cargo.lock') }}-debug
 
@@ -216,7 +216,7 @@ jobs:
       - uses: actions/cache@v2
         id: cache
         with:
-          path: /Users/runner/work/ginkou-flatpak/ginkou-flatpak/mac/
+          path: /Users/runner/work/mellis/mellis/mac/
           key: ${{ runner.os }}-ginkou.app-${{ hashFiles('**/') }}-debug
       - run: ls mac;
       - run: ls ~/;

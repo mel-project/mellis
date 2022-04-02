@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleName</key>
-	<string>Ginkou</string>
+	<string>Mellis</string>
 	<key>CFBundleDisplayName</key>
-	<string>Ginkou</string>
+	<string>Mellis</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.themelio.ginkou-walllet</string>
 	<key>CFBundleVersion</key>

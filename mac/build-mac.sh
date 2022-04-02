@@ -73,8 +73,8 @@ build_dmg () {
     pushd $MAC_ROOT         
 
         cd $MAC_ROOT
-        [[ -f ginkou.dmg ]] && mv ginkou.dmg ginkou.dmg-`date +%s` # store old dmg unobtrusively
-        create-dmg ginkou.dmg dmg_setup # build new dmg
+        [[ -f mellis.dmg ]] && mv mellis.dmg mellis.dmg-`date +%s` # store old dmg unobtrusively
+        create-dmg mellis.dmg dmg_setup # build new dmg
 
         # delete artifacts
         rm -rf dmg_setup

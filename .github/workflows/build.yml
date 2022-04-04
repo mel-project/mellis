@@ -96,11 +96,11 @@ jobs:
           manifest-path: flatpak/org.themelio.Wallet.yml
           cache-key: flatpak-${{ hashFiles('**/flatpak/org.themelio.Wallet.yml')}}
 
-      # - uses: actions/upload-artifact@v2
-      #   if: steps.flatpak-cache.outputs.cache-hit == 'true'
-      #   with:
-      #     name: ginkou-x86_64
-      #     path: mellis.flatpak
+      - uses: actions/upload-artifact@v2
+        if: steps.flatpak-cache.outputs.cache-hit == 'true'
+        with:
+          name: ginkou-x86_64
+          path: mellis.flatpak
 
   build-ginkou:
     runs-on: macos-latest

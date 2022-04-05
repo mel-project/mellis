@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Mellis
+Comment=Official Themelio wallet
+Exec=ginkou-loader-wrapper
+Terminal=false
+Icon=org.themelio.Wallet
+Categories=Application
+StartupWMClass=mellis

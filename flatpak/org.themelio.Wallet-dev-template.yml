@@ -73,6 +73,16 @@ modules:
       - "echo '#!/bin/sh' >> /app/bin/ginkou-loader-wrapper"
       - "echo 'ginkou-loader --html-path /app/ginkou-files --data-path $XDG_DATA_HOME/ginkou-storage --wallet-path $XDG_DATA_HOME/themelio-wallets;'  >> /app/bin/ginkou-loader-wrapper"
       - "chmod +x /app/bin/ginkou-loader-wrapper"
+  - name: icons
+    buildsystem: "simple"
+    sources:
+      - type: dir
+        path: "../flatpak/icons"
+    build-commands:
+      - "mkdir -p /app/share/icons/hicolor/"
+      - "mv *x* /app/share/icons/hicolor/"
+      - "mkdir -p /app/share/applications"
+      - "cp org.themelio.Wallet.desktop /app/share/applications"
 
 build-options:
   append-path: "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/node14/bin"

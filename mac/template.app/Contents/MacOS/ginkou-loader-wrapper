@@ -1,11 +1,8 @@
 #!/bin/bash
 RES=$( cd "$(dirname "$0")" ; pwd -P )/res
 PATH=$RES:$PATH
-mkdir $RES/wallets
-mkdir $RES/data
 
 which melwalletd
 which ginkou-loader
 
-ginkou-loader --html-path $RES/ginkou-public --wallet-path $RES/wallets --data-path $RES/data 
-
+ginkou-loader --html-path $RES/ginkou-public

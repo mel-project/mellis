@@ -2,10 +2,13 @@
 
 
 # setup global state
+
+
+APP_NAME="mellis.app"
 MAC_ROOT=$( cd "$(dirname "$0")" ; pwd -P ) # The absolute path to this files parent
 PROJECT_ROOT=$( cd $MAC_ROOT/.. ; pwd -P ) # The absolute path to ginkou-flatpak
 TEMPLATE=$MAC_ROOT/template.app
-RES=$MAC_ROOT/ginkou.app/Contents/MacOS/res # The absolue path to the (yet to be created) ginkou.app
+RES=$MAC_ROOT/$APP_NAME/Contents/MacOS/res # The absolue path to the (yet to be created) ginkou.app
 ARTIFACTS=$MAC_ROOT/artifacts
 TMP=$MAC_ROOT/tmp
 # each of these functions depends on global state 
@@ -33,7 +36,7 @@ install_melwalletd () {
 
 install_ginkou () {
 
-    echo "Building mellis"
+    echo "Building ginkou"
 
     pushd $TMP
         git clone $PROJECT_ROOT/ginkou 
@@ -51,15 +54,15 @@ build_app (){
     
     pushd $MAC_ROOT
 
-        rm -rf mellis.app
-        cp -r $TEMPLATE mellis.app
+        rm -rf $APP_NAME
+        cp -r $TEMPLATE $APP_NAME
         mkdir -p $RES
         cp -r $ARTIFACTS/* $RES
-
+        
         # build_dmg assumes this exists
         rm -rf dmg_setup
         mkdir dmg_setup
-        mv mellis.app dmg_setup
+        mv $APP_NAME dmg_setup
 
         # add a sym link to applications into which users may drag ginkou.app
         cd dmg_setup

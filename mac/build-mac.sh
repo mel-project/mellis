@@ -33,7 +33,7 @@ install_melwalletd () {
 
 install_ginkou () {
 
-    echo "Building ginkou"
+    echo "Building mellis"
 
     pushd $TMP
         git clone $PROJECT_ROOT/ginkou 
@@ -51,15 +51,15 @@ build_app (){
     
     pushd $MAC_ROOT
 
-        rm -rf ginkou.app
-        cp -r $TEMPLATE ginkou.app
+        rm -rf mellis.app
+        cp -r $TEMPLATE mellis.app
         mkdir -p $RES
         cp -r $ARTIFACTS/* $RES
 
         # build_dmg assumes this exists
         rm -rf dmg_setup
         mkdir dmg_setup
-        mv ginkou.app dmg_setup
+        mv mellis.app dmg_setup
 
         # add a sym link to applications into which users may drag ginkou.app
         cd dmg_setup

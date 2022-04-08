@@ -28,7 +28,7 @@ First let's copy our wallet address. To do that, click the receive button and th
 
 You can now paste it a message to your MEL-rich friend and hope they give you some, or you can hop over to our [discord](https://discord.gg/kNeBHn2B) where we're happy to give MEL to our beta-testers.
 
-## Sending toins
+## Sending assets
 
 Once you find yourself overflowing with MEL you might want to send it out. To do that click the send button, input the recipients address and the amount you want to send, then confirm this transaction in the next popup. Be aware that there are small transaction fees so the amount sent will be slightly more than what you input.
 

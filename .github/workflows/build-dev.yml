@@ -68,7 +68,7 @@ jobs:
           name: melwalletd-macos-dev
           path: target/x86_64-apple-darwin/debug/melwalletd
 
-  build-ginkou-macos:
+  build-ginkou:
     runs-on: self-hosted
     steps:
       - name: Checkout repository
@@ -91,8 +91,8 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: melwalletd-macos-dev
-          path: target/x86_64-apple-darwin/debug/ginkou
+          name: ginkou-dev
+          path: ginkou/public
 
 
 #  build-windows:

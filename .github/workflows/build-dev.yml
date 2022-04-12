@@ -42,8 +42,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Submodule Clone
-        run: git submodule update --init --recursive
+      - name: Clone MelwalletD Submodule
+        run: git submodule update --recursive --remote melwalletd
 
       - name: Add Default Toolchain
         run: rustup default stable
@@ -67,6 +67,40 @@ jobs:
         with:
           name: melwalletd-macos-dev
           path: target/x86_64-apple-darwin/debug/melwalletd
+
+  build-ginkou-macos:
+    runs-on: self-hosted
+    container:
+      image: joseluisq/rust-linux-darwin-builder:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Clone Ginkou Submodule
+        run: git submodule update --recursive --remote ginkou
+
+      - name: Add Default Toolchain
+        run: rustup default stable
+
+      - name: Add MacOS Toolchain
+        run: rustup target add x86_64-apple-darwin
+
+      - name: Create Cargo Path
+        run: mkdir -p ~/.cargo
+
+      - name: Copy Cargo Configuration
+        run: cp /root/.cargo/config ~/.cargo/config
+
+      - name: Build MelwalletD
+        env:
+          CC: "o64-clang"
+          CXX: "o64-clang++"
+        run: cargo build --locked --target x86_64-apple-darwin --manifest-path ginkou/Cargo.toml
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: melwalletd-macos-dev
+          path: target/x86_64-apple-darwin/debug/ginkou
 
 
 #  build-windows:

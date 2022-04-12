@@ -45,17 +45,15 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive
 
-      - name: Show Directory
-        run: pwd
-
-      - name: Show Home
-        run: echo $HOME
 
       - name: Add Default Toolchain
         run: rustup default stable
 
       - name: Add MacOS Toolchain
         run: rustup target add x86_64-apple-darwin
+
+      - name: Create Cargo Path
+        run: mkdir -p ~/.cargo
 
       - name: Copy Cargo Configuration
         run: cp cargo.config ~/.cargo/config

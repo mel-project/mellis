@@ -32,7 +32,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: ginkou-loader-macos-dev
-          path: target/release/x86_64-apple-darwin/ginkou-loader
+          path: target/x86_64-apple-darwin/debug/ginkou-loader
 
   build-melwalletd-macos:
     runs-on: self-hosted
@@ -52,19 +52,12 @@ jobs:
         env:
           CC: "o64-clang"
           CXX: "o64-clang++"
-        run: cargo build --locked --manifest-path melwalletd/Cargo.toml --target x86_64-apple-darwin
+        run: cargo build --locked --target x86_64-apple-darwin --manifest-path melwalletd/Cargo.toml
 
       - uses: actions/upload-artifact@v2
         with:
           name: melwalletd-macos-dev
-          path: target/release/x86_64-apple-darwin/melwalletd
-
-
-#  docker run --rm \
-#  --volume (pwd):/root/src \
-#  --workdir /root/src \
-#  joseluisq/rust-linux-darwin-builder:1.59.0 \
-#  sh -c "cargo build --target x86_64-apple-darwin"
+          path: target/x86_64-apple-darwin/debug/melwalletd
 
 
 #  build-windows:

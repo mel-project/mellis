@@ -45,6 +45,9 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive
 
+      - name: Add Default Toolchain
+        run: rustup default stable
+
       - name: Add MacOS Toolchain
         run: rustup target add x86_64-apple-darwin
 

@@ -52,7 +52,7 @@ jobs:
         run: rustup target add x86_64-apple-darwin
 
       - name: Copy Cargo Configuration
-        run: sudo cp /root/.cargo/config ~/.cargo/config
+        run: cp cargo.config ~/.cargo/config
 
       - name: Build MelwalletD
         env:

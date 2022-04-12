@@ -45,9 +45,6 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive
 
-      - name: Show Root Cargo Config
-        run: cat /root/.cargo/config
-
       - name: Add Default Toolchain
         run: rustup default stable
 
@@ -58,7 +55,7 @@ jobs:
         run: mkdir -p ~/.cargo
 
       - name: Copy Cargo Configuration
-        run: cp cargo.config ~/.cargo/config
+        run: cp /root/.cargo/config ~/.cargo/config
 
       - name: Build MelwalletD
         env:

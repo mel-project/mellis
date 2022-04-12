@@ -45,6 +45,9 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive
 
+      - name: Set Default Toolchain
+        run: rustup default x86_64-apple-darwin
+
       - name: Build MelwalletD
         env:
           CC: "o64-clang"

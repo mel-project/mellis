@@ -9,7 +9,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build-ginkou-loader-macos:
+  ginkou-loader-build-macos:
     runs-on: macos-latest
     steps:
       - name: Checkout repository
@@ -34,7 +34,7 @@ jobs:
           name: ginkou-loader-macos-dev
           path: target/x86_64-apple-darwin/debug/ginkou-loader
 
-  build-melwalletd-macos:
+  melwalletd-build-macos:
     runs-on: self-hosted
     container:
       image: joseluisq/rust-linux-darwin-builder:latest
@@ -68,7 +68,7 @@ jobs:
           name: melwalletd-macos-dev
           path: target/x86_64-apple-darwin/debug/melwalletd
 
-  build-ginkou:
+  ginkou-test:
     runs-on: self-hosted
     steps:
       - name: Checkout repository
@@ -87,6 +87,29 @@ jobs:
         run: npm install --prefix ginkou
 
       - name: Run NPM Build
+        run: npm run test --prefix ginkou
+
+  ginkou-build:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Update Apt
+        run: sudo apt update
+
+      - name: Install NPM
+        run: sudo apt install -y npm
+
+      - name: Clone Ginkou Submodule
+        run: git submodule update --init --recursive --remote ginkou
+
+      - name: Run NPM Install
+        run: npm install --prefix ginkou
+
+      - name: Run NPM Build
+        env:
+          BUILD: "development"
         run: npm run build --prefix ginkou
 
       - uses: actions/upload-artifact@v2

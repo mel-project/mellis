@@ -11,6 +11,7 @@ env:
 jobs:
   ginkou-loader-build-macos:
     runs-on: macos-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -36,8 +37,10 @@ jobs:
 
   melwalletd-build-macos:
     runs-on: self-hosted
+
     container:
       image: joseluisq/rust-linux-darwin-builder:latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -70,6 +73,7 @@ jobs:
 
   ginkou-test:
     runs-on: self-hosted
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -91,6 +95,10 @@ jobs:
 
   ginkou-build:
     runs-on: self-hosted
+
+    needs:
+      - ginkou-test
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

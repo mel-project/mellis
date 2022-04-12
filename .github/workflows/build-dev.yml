@@ -45,8 +45,11 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive
 
-      - name: Show Contents
-        run: ls -la
+      - name: Show Directory
+        run: pwd
+
+      - name: Show Home
+        run: echo $HOME
 
       - name: Add Default Toolchain
         run: rustup default stable

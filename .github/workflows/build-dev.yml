@@ -90,7 +90,7 @@ jobs:
       - name: Run NPM Install
         run: npm install --prefix ginkou
 
-      - name: Run NPM Build
+      - name: Run NPM Test
         run: npm run test --prefix ginkou
 
   ginkou-build:

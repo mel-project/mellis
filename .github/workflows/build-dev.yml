@@ -74,6 +74,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Update Apt
+        run: sudo apt update
+
+      - name: Install NPM
+        run: sudo apt install -y npm
+
       - name: Clone Ginkou Submodule
         run: git submodule update --init --recursive --remote ginkou
 

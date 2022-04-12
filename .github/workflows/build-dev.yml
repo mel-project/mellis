@@ -52,9 +52,9 @@ jobs:
         run: rustup target add x86_64-apple-darwin
 
       - name: Build MelwalletD
-        env:
-          CC: "o64-clang"
-          CXX: "o64-clang++"
+#        env:
+#          CC: "o64-clang"
+#          CXX: "o64-clang++"
         run: cargo build --locked --target x86_64-apple-darwin --manifest-path melwalletd/Cargo.toml
 
       - uses: actions/upload-artifact@v2

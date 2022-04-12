@@ -35,6 +35,7 @@ jobs:
           name: ginkou-loader-macos-dev
           path: target/x86_64-apple-darwin/debug/ginkou-loader
 
+
   melwalletd-build-macos:
     runs-on: self-hosted
 
@@ -71,27 +72,32 @@ jobs:
           name: melwalletd-macos-dev
           path: target/x86_64-apple-darwin/debug/melwalletd
 
+
   ginkou-test:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Currently Disabled
+        run: echo "Tests are currently disabled."
 
-      - name: Update Apt
-        run: sudo apt update
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Update Apt
+#        run: sudo apt update
+#
+#      - name: Install NPM
+#        run: sudo apt install -y npm
+#
+#      - name: Clone Ginkou Submodule
+#        run: git submodule update --init --recursive --remote ginkou
+#
+#      - name: Run NPM Install
+#        run: npm install --prefix ginkou
+#
+#      - name: Run NPM Test
+#        run: npm run test --prefix ginkou
 
-      - name: Install NPM
-        run: sudo apt install -y npm
-
-      - name: Clone Ginkou Submodule
-        run: git submodule update --init --recursive --remote ginkou
-
-      - name: Run NPM Install
-        run: npm install --prefix ginkou
-
-      - name: Run NPM Test
-        run: npm run test --prefix ginkou
 
   ginkou-build:
     runs-on: self-hosted

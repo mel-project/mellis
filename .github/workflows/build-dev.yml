@@ -34,6 +34,35 @@ jobs:
           name: ginkou-loader-macos-dev
           path: target/release/x86_64-apple-darwin/ginkou-loader
 
+  build-melwalletd-macos:
+    runs-on: self-hosted
+    container:
+      image: joseluisq/rust-linux-darwin-builder:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Submodule Clone
+        run: git submodule update --init --recursive
+
+      - name: Build MelwalletD
+        env:
+          CC: "o64-clang"
+          CXX: "o64-clang++"
+        run: cargo build --locked --manifest-path melwalletd/Cargo.toml --target x86_64-apple-darwin
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: melwalletd-macos-dev
+          path: target/release/x86_64-apple-darwin/melwalletd
+
+
+#  docker run --rm \
+#  --volume (pwd):/root/src \
+#  --workdir /root/src \
+#  joseluisq/rust-linux-darwin-builder:1.59.0 \
+#  sh -c "cargo build --target x86_64-apple-darwin"
+
 
 #  build-windows:
 #    needs: [build-ginkou]

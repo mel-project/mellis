@@ -51,8 +51,8 @@ jobs:
       - name: Add MacOS Toolchain
         run: rustup target add x86_64-apple-darwin
 
-      - name: Show Cargo Configuration
-        run: cat ~/.cargo/config
+      - name: Copy Cargo Configuration
+        run: sudo cp /root/.cargo/config ~/.cargo/config
 
       - name: Build MelwalletD
         env:

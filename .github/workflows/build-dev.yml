@@ -30,6 +30,12 @@ jobs:
       - name: Build Ginkou-Loader
         run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
 
+      - name: Show Current Directory
+        run: pwd
+
+      - name: List Contents
+        run: ls -la
+
       - uses: actions/upload-artifact@v2
         with:
           name: ginkou-loader-macos-dev

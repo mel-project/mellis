@@ -30,6 +30,9 @@ jobs:
       - name: Build Ginkou-Loader
         run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
 
+      - name: List Contents
+        run: ls -la ginkou-loader/target
+
       - uses: actions/upload-artifact@v2
         with:
           name: ginkou-loader-macos-dev

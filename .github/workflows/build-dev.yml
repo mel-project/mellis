@@ -157,6 +157,9 @@ jobs:
           name: ginkou-public-dev
           path: ginkou-public
 
+      - name: Install Create-DMG
+        run: brew install create-dmg
+
       - name: Copy Template
         run: cp -r mac/template.app mellis.app
 

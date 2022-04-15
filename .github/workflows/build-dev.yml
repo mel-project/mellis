@@ -181,6 +181,11 @@ jobs:
       - name: Create Mellis DMG File
         run: create-dmg mellis.dmg mellis.app
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: mellis-dmg
+          path: mellis.dmg
+
 
 
 #  build-windows:

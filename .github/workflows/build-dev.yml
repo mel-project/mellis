@@ -30,11 +30,10 @@ jobs:
       - name: Build Ginkou-Loader
         run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: ginkou-loader-macos-dev
           path: ginkou-loader/target/debug/ginkou-loader
-
 
   melwalletd-build-macos:
     runs-on: self-hosted
@@ -67,7 +66,7 @@ jobs:
           CXX: "o64-clang++"
         run: cargo build --locked --target x86_64-apple-darwin --manifest-path melwalletd/Cargo.toml
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: melwalletd-macos-dev
           path: melwalletd/target/x86_64-apple-darwin/debug/melwalletd
@@ -126,10 +125,43 @@ jobs:
           BUILD: "development"
         run: npm run build --prefix ginkou
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: ginkou-dev
           path: ginkou/public
+
+  ginkou-loader-create-dmg-macos:
+    runs-on: macos-latest
+
+    needs:
+      - ginkou-loader-build-macos
+      - melwalletd-build-macos
+      - ginkou-build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: ginkou-loader-macos-dev
+          path: ginkou-loader
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: melwalletd-macos-dev
+          path: melwalletd
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: ginkou-dev
+          path: ginkou
+
+      - name: List Contents
+        run: ls -la
+
+      - name: List Ginkou
+        run: ls -la ginkou
 
 
 #  build-windows:

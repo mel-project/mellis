@@ -127,7 +127,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: ginkou-dev
+          name: ginkou-public-dev
           path: ginkou/public
 
   ginkou-loader-create-dmg-macos:
@@ -154,14 +154,30 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: ginkou-dev
-          path: ginkou
+          name: ginkou-public-dev
+          path: ginkou-public
 
-      - name: List Contents
-        run: ls -la
+      - name: Copy Template
+        run: cp -r mac/template.app mellis.app
 
-      - name: List Ginkou
-        run: ls -la ginkou
+      - name: Copy Template
+        run: cp -r mac/template.app mellis.app
+
+      - name: Create Resources Directory
+        run: mkdir mellis.app/Contents/MacOS/res
+
+      - name: Move Ginkou-Loader Into The Resources Directory
+        run: mv ginkou-loader mellis.app/Contents/MacOS/res/
+
+      - name: Move MelwalletD Into The Resources Directory
+        run: mv melwalletd mellis.app/Contents/MacOS/res/
+
+      - name: Move Ginkou-Public Into The Resources Directory
+        run: mv ginkou-public mellis.app/Contents/MacOS/res/
+
+      - name: Create Mellis DMG File
+        run: create-dmg mellis.dmg mellis.app
+
 
 
 #  build-windows:

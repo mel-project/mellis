@@ -178,6 +178,9 @@ jobs:
       - name: Move Ginkou-Public Into The Resources Directory
         run: mv ginkou-public mellis.app/Contents/MacOS/res/
 
+      - name: Create User Symlink
+        run: ln -s /Applications mellis.app/
+
       - name: Create Mellis DMG File
         run: create-dmg mellis.dmg mellis.app
 

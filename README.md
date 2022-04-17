@@ -10,6 +10,15 @@ Go to the [Releases](https://github.com/themeliolabs/mellis/releases) page to do
 
 Once you're installed head over to our [Discord](https://discord.gg/kNeBHn2B) to **participate in our giveaways**, so that you have something to put in your wallet!
 
+## Run flatpak on Linux
+
+Assuming you have installed the latest flatpak from the releases on this GitHub repo, and you have [flatpak](https://flatpak.org/).
+
+```bash
+flatpak install mellis.flatpak
+flatpak run org.themelio.Wallet
+```
+
 ## Initial startup
 
 When you first open Mellis you'll be presented a screen to either create a new wallet, or import a secret key

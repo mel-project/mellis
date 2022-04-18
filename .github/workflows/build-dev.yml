@@ -40,6 +40,12 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive --remote ginkou-loader
 
+      - name: Add Default Toolchain
+        run: rustup default stable
+
+      - name: Add Windows 32-Bit Toolchain
+        run: rustup target add i686-pc-windows-gnu
+
       - name: Build Ginkou-Loader
         run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path ginkou-loader/Cargo.toml
 

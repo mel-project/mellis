@@ -181,7 +181,9 @@ jobs:
 
     needs:
       - ginkou-loader-build-macos
+      - ginkou-loader-build-windows
       - melwalletd-build-macos
+      - melwalletd-build-windows
       - ginkou-build
 
     steps:

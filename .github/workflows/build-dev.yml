@@ -91,7 +91,10 @@ jobs:
           path: melwalletd/target/x86_64-apple-darwin/debug/melwalletd
 
   melwalletd-build-windows:
-    runs-on: windows-2019
+    runs-on: self-hosted
+
+    container:
+      image: ghcr.io/themeliolabs/windows-32-bit:latest
 
     steps:
       - name: Checkout repository
@@ -100,13 +103,19 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive --remote melwalletd
 
+      - name: Add Default Toolchain
+        run: rustup default stable
+
+      - name: Add Windows 32-Bit Toolchain
+        run: rustup target add i686-pc-windows-gnu
+
       - name: Build Ginkou-Loader
-        run: cargo build --locked --manifest-path melwalletd/Cargo.toml
+        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path melwalletd/Cargo.toml
 
       - uses: actions/upload-artifact@v3
         with:
-          name: melwalletd-windows-dev
-          path: melwalletd/target/debug/melwalletd
+          name: ginkou-loader-windows-dev
+          path: ginkou-loader/target/i686-pc-windows-gnu/debug/melwalletd.exe
 
 
   ginkou-test:

@@ -1,6 +1,7 @@
 [submodule "ginkou-loader"]
 	path = ginkou-loader
 	url = https://github.com/themeliolabs/ginkou-loader.git
+	branch = meade-updates
 [submodule "ginkou"]
 	path = ginkou
 	url = https://github.com/themeliolabs/ginkou.git

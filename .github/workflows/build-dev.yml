@@ -28,7 +28,10 @@ jobs:
           path: ginkou-loader/target/debug/ginkou-loader
 
   ginkou-loader-build-windows:
-    runs-on: windows-2019
+    runs-on: self-hosted
+
+    container:
+      image: ghcr.io/themeliolabs/windows-32-bit:latest
 
     steps:
       - name: Checkout repository
@@ -38,12 +41,12 @@ jobs:
         run: git submodule update --init --recursive --remote ginkou-loader
 
       - name: Build Ginkou-Loader
-        run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
+        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path ginkou-loader/Cargo.toml
 
       - uses: actions/upload-artifact@v3
         with:
           name: ginkou-loader-windows-dev
-          path: ginkou-loader/target/debug/ginkou-loader
+          path: ginkou-loader/target/i686-pc-windows-gnu/debug/ginkou-loader.exe
 
   melwalletd-build-macos:
     runs-on: self-hosted
@@ -80,6 +83,24 @@ jobs:
         with:
           name: melwalletd-macos-dev
           path: melwalletd/target/x86_64-apple-darwin/debug/melwalletd
+
+  melwalletd-build-windows:
+    runs-on: windows-2019
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Submodule Clone
+        run: git submodule update --init --recursive --remote melwalletd
+
+      - name: Build Ginkou-Loader
+        run: cargo build --locked --manifest-path melwalletd/Cargo.toml
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: melwalletd-windows-dev
+          path: melwalletd/target/debug/melwalletd
 
 
   ginkou-test:

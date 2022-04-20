@@ -256,9 +256,6 @@ jobs:
       - name: Create Artifacts Directory
         run: mkdir -p windows/artifacts
 
-      - name: Create Blank File
-        run: touch windows/artifacts/blank
-
       - uses: actions/download-artifact@v3
         with:
           name: ginkou-loader-windows-dev

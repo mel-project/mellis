@@ -279,7 +279,7 @@ jobs:
         run: mkdir -p ~/.wine
 
       - name: Create Wine Directory
-        run: mkdir -p $(whoami):$(whoami) -R ~/.wine
+        run: mkdir -p ~/.wine
 
       - name: Create Windows Installer
         run: wine /usr/local/iscc/ISCC.exe windows/setup.iss

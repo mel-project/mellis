@@ -244,10 +244,10 @@ jobs:
     container:
       image: ghcr.io/themeliolabs/wine:latest
 
-    needs:
+#    needs:
 #      - ginkou-loader-build-windows
 #      - melwalletd-build-windows
-#      - ginkou-build
+##      - ginkou-build
 
     steps:
       - name: Checkout repository

@@ -379,6 +379,12 @@ jobs:
       - name: Run Flatpak Build
         run: flatpak-builder build flatpak/org.themelio.Wallet-ci.yml --force-clean --install-deps-from flathub
 
+      - name: List Contents
+        run: ls -la
+
+      - name: List Contents
+        run: ls -la flatpak
+
       - uses: actions/upload-artifact@v3
         with:
           name: mellis-flatpak-dev

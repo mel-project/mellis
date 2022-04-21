@@ -361,6 +361,9 @@ jobs:
 #          name: ginkou-public-dev
 #          path: flatpak/public
 
+      - name: Show Home
+        run: echo $HOME
+
       - name: Create Dummy Directory
         run: mkdir -p flatpak/public
 

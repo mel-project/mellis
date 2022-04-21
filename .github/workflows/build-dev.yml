@@ -13,7 +13,7 @@ jobs:
     runs-on: self-hosted
 
     container:
-      image: rust:latest
+      image: ghcr.io/themeliolabs/rust-gtk:latest
 
     steps:
       - name: Checkout repository
@@ -24,12 +24,6 @@ jobs:
 
       - name: Update Rust
         run: rustup update
-
-      - name: Update Apt
-        run: apt update
-
-      - name: Install GTK Dependencies
-        run: apt install -y libgtk-3-dev libjavascriptcoregtk-4.0-dev
 
       - name: Build Ginkou-Loader
         run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml

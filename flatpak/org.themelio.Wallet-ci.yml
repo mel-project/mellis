@@ -11,7 +11,10 @@ modules:
         path: /tmp/public
 
     build-commands:
-      - "mv ../public /app/ginkou-files"
+      - "pwd"
+      - "ls -la"
+      - "ls -la /tmp"
+      - "mv /tmp/public /app/ginkou-files"
 
   - name: melwalletd
     buildsystem: "simple"

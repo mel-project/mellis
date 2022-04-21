@@ -9,6 +9,27 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
+  ginkou-loader-build-linux:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Submodule Clone
+        run: git submodule update --init --recursive --remote ginkou-loader
+
+      - name: Add Default Toolchain
+        run: rustup default stable
+
+      - name: Build Ginkou-Loader
+        run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ginkou-loader-linux-dev
+          path: ginkou-loader/target/debug/ginkou-loader
+
   ginkou-loader-build-macos:
     runs-on: macos-latest
 
@@ -31,7 +52,7 @@ jobs:
     runs-on: self-hosted
 
     container:
-      image: ghcr.io/themeliolabs/windows-32-bit:latest
+      image: ghcr.io/themeliolabs/windows-32-bit:202204211907
 
     steps:
       - name: Checkout repository
@@ -53,6 +74,27 @@ jobs:
         with:
           name: ginkou-loader-windows-dev
           path: ginkou-loader/target/i686-pc-windows-gnu/debug/ginkou-loader.exe
+
+  melwalletd-build-linux:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Submodule Clone
+        run: git submodule update --init --recursive --remote melwalletd
+
+      - name: Add Default Toolchain
+        run: rustup default stable
+
+      - name: Build MelwalletD
+        run: cargo build --locked --manifest-path melwalletd/Cargo.toml
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: melwalletd-linux-dev
+          path: melwalletd/target/debug/melwalletd
 
   melwalletd-build-macos:
     runs-on: self-hosted
@@ -94,7 +136,7 @@ jobs:
     runs-on: self-hosted
 
     container:
-      image: ghcr.io/themeliolabs/windows-32-bit:latest
+      image: ghcr.io/themeliolabs/windows-32-bit:202204211907
 
     steps:
       - name: Checkout repository
@@ -240,11 +282,10 @@ jobs:
     runs-on: self-hosted
 
     container:
-      image: ghcr.io/themeliolabs/wine:latest
+      image: ghcr.io/themeliolabs/wine:202204211907
 
     needs:
-      - ginkou-loader-build-windows
-      - melwalletd-build-windows
+      - ginkou-build
 
     steps:
       - name: Checkout repository
@@ -281,44 +322,62 @@ jobs:
           path: windows/Output/mellis-windows-setup.exe
 
 
-#  build-windows:
-#    needs: [build-ginkou]
-#    name: Build Windows App
+#  mellis-create-flatpak:
 #    runs-on: self-hosted
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
 #
-#      - name: Submodule Clone
-#        run: git submodule update --init --recursive
+#    needs:
+#      - ginkou-loader-build-linux
+#      - melwalletd-build-linux
+#      - ginkou-build
 #
-##      - uses: actions/cache@v2
-##        id: app-cache
-##        with:
-##          path: |
-##            D:\a\ginkou-flatpak\ginkou-flatpak\windows\
-##          key: ${{ runner.os }}-1npm-${{ hashFiles('**/windows') }}-${{ hashFiles('**/ginkou/yarn.lock') }}-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}-${{ hashFiles('**/melwalletd/Cargo.lock') }}
-##          restore-keys: ${{ runner.os }}-${{ hashFiles('**/windows') }}
-#
-#      - uses: actions/download-artifact@v2
+#      - uses: actions/download-artifact@v3
 #        with:
-#          name: ginkou-public
-#          path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\artifacts\ginkou-public
+#          name: ginkou-loader-linux-dev
+#          path: ginkou-loader
 #
-#      - name: Install latest rust stable
-#        if: steps.app-cache.outputs.cache-hit != 'true'
-#        uses: actions-rs/toolchain@v1
+#      - uses: actions/download-artifact@v3
 #        with:
-#          profile: minimal
-#          toolchain: stable-i686-pc-windows-msvc
-#      - if: steps.app-cache.outputs.cache-hit != 'true'
-#        run: cd windows; bash build-windows.bash
+#          name: melwalletd-linux-dev
+#          path: melwalletd
 #
-#      - uses: actions/upload-artifact@v2
+#      - name: Create Windows Installer
+#        run: org.themelio.Wallet-ci-template.yml
+
+
+
+
+
+
+
+
+
+
+
+
+#  GINKOU_BRANCH=`(cd ../ginkou && git log --format='%H' -n 1)`
+#  WALLET_BRANCH=`(cd ../melwalletd && git log --format='%H' -n 1)`
+#  LOADER_BRANCH=`(cd ../ginkou-loader && git log --format='%H' -n 1)`
+
+#  flatpak remote-add --if-not-exists $USER_FLAG flathub https://flathub.org/repo/flathub.flatpakrepo;
+#  flatpak-builder build $MANIFEST_FILE --force-clean $INSTALL_MANIFEST --install-deps-from flathub $USER_FLAG;
+
+
+#      - name: Build Flatpak
+#        # if: steps.flatpak-cache.outputs.cache-hit != 'true'
+#        uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
 #        with:
-#          name: ginkou.exe
-#          path: D:\a\ginkou-flatpak\ginkou-flatpak\windows\Output\mellis-windows-setup.exe
+#          bundle: ginkou.flatpak
+#          manifest-path: flatpak/org.themelio.Wallet.yml
+#          cache-key: flatpak-${{ hashFiles('**/flatpak/org.themelio.Wallet.yml')}}
 #
+#
+#      # - uses: actions/upload-artifact@v2
+#      #   if: steps.flatpak-cache.outputs.cache-hit == 'true'
+#      #   with:
+#      #     name: ginkou-x86_64
+#      #     path: ginkou.flatpak
+
+
 #  build-flatpak-manifest:
 #    name: Build manifest
 #    runs-on: self-hosted

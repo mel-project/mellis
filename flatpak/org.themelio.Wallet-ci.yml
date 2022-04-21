@@ -8,7 +8,7 @@ modules:
     buildsystem: "simple"
     sources:
       - type: dir
-        path: public
+        path: /__w/mellis/mellis/flatpak/public
 
     build-commands:
       - "mv public /app/ginkou-files"

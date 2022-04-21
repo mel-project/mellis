@@ -13,7 +13,7 @@ jobs:
     runs-on: self-hosted
 
     container:
-      image: ghcr.io/themeliolabs/rust-gtk:latest
+      image: ghcr.io/themeliolabs/rust-gtk:202204212038
 
     steps:
       - name: Checkout repository
@@ -55,7 +55,7 @@ jobs:
     runs-on: self-hosted
 
     container:
-      image: ghcr.io/themeliolabs/windows-32-bit:latest
+      image: ghcr.io/themeliolabs/windows-32-bit:202204212038
 
     steps:
       - name: Checkout repository
@@ -142,7 +142,7 @@ jobs:
     runs-on: self-hosted
 
     container:
-      image: ghcr.io/themeliolabs/windows-32-bit:latest
+      image: ghcr.io/themeliolabs/windows-32-bit:202204212038
 
     steps:
       - name: Checkout repository

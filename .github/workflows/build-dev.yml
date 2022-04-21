@@ -367,7 +367,7 @@ jobs:
       - name: Add Flathub Repository
         run: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-      - name: Add Flathub Repository
+      - name: Run Flatpak Build
         run: flatpak-builder build flatpak/org.themelio.Wallet-dev.yml --force-clean --install-deps-from flathub
 
 

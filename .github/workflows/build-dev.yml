@@ -291,6 +291,8 @@ jobs:
       image: ghcr.io/themeliolabs/wine:latest
 
     needs:
+      - ginkou-loader-build-windows
+      - melwalletd-build-windows
       - ginkou-build
 
     steps:

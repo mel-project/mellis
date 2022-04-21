@@ -346,9 +346,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Create Artifacts Directory
-        run: mkdir -p windows/artifacts
-
       - uses: actions/download-artifact@v3
         with:
           name: ginkou-loader-linux-dev

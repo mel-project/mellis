@@ -12,6 +12,9 @@ jobs:
   ginkou-loader-build-linux:
     runs-on: self-hosted
 
+    container:
+      image: rust:latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -19,8 +22,8 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive --remote ginkou-loader
 
-      - name: Add Default Toolchain
-        run: rustup default stable
+      - name: Update Rust
+        run: rustup update
 
       - name: Build Ginkou-Loader
         run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
@@ -52,7 +55,7 @@ jobs:
     runs-on: self-hosted
 
     container:
-      image: ghcr.io/themeliolabs/windows-32-bit:202204211907
+      image: ghcr.io/themeliolabs/windows-32-bit:latest
 
     steps:
       - name: Checkout repository
@@ -78,6 +81,9 @@ jobs:
   melwalletd-build-linux:
     runs-on: self-hosted
 
+    container:
+      image: rust:latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -85,8 +91,8 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive --remote melwalletd
 
-      - name: Add Default Toolchain
-        run: rustup default stable
+      - name: Update Rust
+        run: rustup update
 
       - name: Build MelwalletD
         run: cargo build --locked --manifest-path melwalletd/Cargo.toml
@@ -136,7 +142,7 @@ jobs:
     runs-on: self-hosted
 
     container:
-      image: ghcr.io/themeliolabs/windows-32-bit:202204211907
+      image: ghcr.io/themeliolabs/windows-32-bit:latest
 
     steps:
       - name: Checkout repository
@@ -282,7 +288,7 @@ jobs:
     runs-on: self-hosted
 
     container:
-      image: ghcr.io/themeliolabs/wine:202204211907
+      image: ghcr.io/themeliolabs/wine:latest
 
     needs:
       - ginkou-build

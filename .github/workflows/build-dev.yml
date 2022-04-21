@@ -28,8 +28,8 @@ jobs:
       - name: Update Apt
         run: apt update
 
-      - name: Install GTK3+
-        run: apt install -y libgtk-3-dev
+      - name: Install GTK Dependencies
+        run: apt install -y libgtk-3-dev libjavascriptcoregtk-4.0-dev
 
       - name: Build Ginkou-Loader
         run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml

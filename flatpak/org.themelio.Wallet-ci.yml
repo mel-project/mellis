@@ -8,10 +8,10 @@ modules:
     buildsystem: "simple"
     sources:
       - type: dir
-        path: /__w/mellis/mellis/flatpak/public
+        path: public
 
     build-commands:
-      - "mv public /app/ginkou-files"
+      - "mv /__w/mellis/mellis/flatpak/public /app/ginkou-files"
 
   - name: melwalletd
     buildsystem: "simple"

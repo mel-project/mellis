@@ -1,0 +1,68 @@
+app-id: org.themelio.Wallet
+runtime: org.gnome.Platform
+runtime-version: "41"
+sdk: org.gnome.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+  - org.freedesktop.Sdk.Extension.node14
+command: "mellis.sh"
+modules:
+  - name: ginkou
+    buildsystem: "simple"
+    sources:
+      - type: dir
+        path: public
+
+    build-commands:
+      - "mv public /app/ginkou-files"
+
+  - name: melwalletd
+    buildsystem: "simple"
+
+    sources:
+      - type: file
+        path: melwalletd
+
+    build-commands:
+      - "mv melwalletd /app/bin/"
+
+  - name: ginkou-loader
+    buildsystem: "simple"
+    sources:
+      - type: file
+        path: ginkou-loader
+
+    build-commands:
+      - "mv ginkou-loader /app/bin/"
+
+  - name: mellis.sh
+    buildsystem: "simple"
+    build-commands:
+      - "echo '#!/bin/sh' >> /app/bin/mellis.sh"
+      - "echo 'ginkou-loader --html-path /app/ginkou-files --data-path $XDG_DATA_HOME/ginkou-storage --wallet-path $XDG_DATA_HOME/themelio-wallets;'  >> /app/bin/mellis.sh"
+      - "chmod +x /app/bin/mellis.sh"
+  - name: icons
+    buildsystem: "simple"
+    sources:
+      - type: dir
+        path: "../flatpak/icons"
+    build-commands:
+      - "mkdir -p /app/share/icons/hicolor/"
+      - "mv *x* /app/share/icons/hicolor/"
+      - "mkdir -p /app/share/applications"
+      - "cp org.themelio.Wallet.desktop /app/share/applications"
+
+build-options:
+  append-path: "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/node14/bin"
+  build-args:
+    - --share=network
+finish-args:
+  # X11 + XShm access
+  - --share=ipc
+  - --socket=x11
+  # Wayland access
+  - --socket=wayland
+  # Needs to talk to the network:
+  - --share=network
+  # Needed for OpenGL
+  - --device=dri

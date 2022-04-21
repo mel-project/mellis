@@ -2,9 +2,6 @@ app-id: org.themelio.Wallet
 runtime: org.gnome.Platform
 runtime-version: "41"
 sdk: org.gnome.Sdk
-sdk-extensions:
-  - org.freedesktop.Sdk.Extension.rust-stable
-  - org.freedesktop.Sdk.Extension.node14
 command: "mellis.sh"
 modules:
   - name: ginkou
@@ -53,7 +50,6 @@ modules:
       - "cp org.themelio.Wallet.desktop /app/share/applications"
 
 build-options:
-  append-path: "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/node14/bin"
   build-args:
     - --share=network
 finish-args:

@@ -21,7 +21,8 @@ modules:
         path: /tmp/melwalletd
 
     build-commands:
-      - "mv melwalletd /app/bin/"
+      - "mkdir -p /app/bin"
+      - "mv melwalletd /app/bin/melwalletd"
 
   - name: ginkou-loader
     buildsystem: "simple"
@@ -30,7 +31,8 @@ modules:
         path: /tmp/ginkou-loader
 
     build-commands:
-      - "mv ginkou-loader /app/bin/"
+      - "mkdir -p /app/bin"
+      - "mv ginkou-loader /app/bin/ginkou-loader"
 
   - name: mellis.sh
     buildsystem: "simple"

@@ -330,30 +330,41 @@ jobs:
           path: windows/Output/mellis-windows-setup.exe
 
 
-#  mellis-create-flatpak:
-#    runs-on: self-hosted
-#
-#    needs:
-#      - ginkou-loader-build-linux
-#      - melwalletd-build-linux
-#      - ginkou-build
-#
-#      - uses: actions/download-artifact@v3
-#        with:
-#          name: ginkou-loader-linux-dev
-#          path: ginkou-loader
-#
-#      - uses: actions/download-artifact@v3
-#        with:
-#          name: melwalletd-linux-dev
-#          path: melwalletd
-#
-#      - name: Create Windows Installer
-#        run: org.themelio.Wallet-ci-template.yml
+  mellis-create-flatpak:
+    runs-on: self-hosted
 
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:gnome-40
+      options: --privileged
 
+    needs:
+      - ginkou-loader-build-linux
+      - melwalletd-build-linux
+      - ginkou-build
 
+      - uses: actions/download-artifact@v3
+        with:
+          name: ginkou-loader-linux-dev
+          path: ginkou-loader
 
+      - uses: actions/download-artifact@v3
+        with:
+          name: melwalletd-linux-dev
+          path: melwalletd
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: ginkou-public-dev
+          path: public
+
+      - name: Copy CI Development Template To The Development Location
+        run: cp flatpak/org.themelio.Wallet-ci.yml flatpak/org.themelio.Wallet-dev.yml
+
+      - name: Add Flathub Repository
+        run: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+      - name: Add Flathub Repository
+        run: flatpak-builder build flatpak/org.themelio.Wallet-dev.yml --force-clean --install-deps-from flathub
 
 
 

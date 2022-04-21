@@ -349,32 +349,29 @@ jobs:
 #      - uses: actions/download-artifact@v3
 #        with:
 #          name: ginkou-loader-linux-dev
-#          path: flatpak/ginkou-loader
+#          path: /tmp/ginkou-loader
 #
 #      - uses: actions/download-artifact@v3
 #        with:
 #          name: melwalletd-linux-dev
-#          path: flatpak/melwalletd
+#          path: /tmp/melwalletd
 #
 #      - uses: actions/download-artifact@v3
 #        with:
 #          name: ginkou-public-dev
-#          path: flatpak/public
-
-      - name: Show Current Directory
-        run: pwd
+#          path: /tmp/public
 
       - name: Create Dummy Directory
-        run: mkdir -p flatpak/public
+        run: mkdir -p /tmp/public
 
       - name: Create Dummy File
-        run: touch flatpak/public/thingy
+        run: touch /tmp/public/thingy
 
       - name: Create Dummy File
-        run: touch flatpak/ginkou-loader
+        run: touch /tmp/ginkou-loader
 
       - name: Create Dummy File
-        run: touch flatpak/melwalletd
+        run: touch /tmp/melwalletd
 
       - name: Add Flathub Repository
         run: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo

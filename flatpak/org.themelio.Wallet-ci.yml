@@ -8,17 +8,16 @@ modules:
     buildsystem: "simple"
     sources:
       - type: dir
-        path: public
+        path: /tmp/public
 
     build-commands:
-      - "mv /__w/mellis/mellis/flatpak/public /app/ginkou-files"
+      - "mv ../public /app/ginkou-files"
 
   - name: melwalletd
     buildsystem: "simple"
-
     sources:
       - type: file
-        path: melwalletd
+        path: /tmp/melwalletd
 
     build-commands:
       - "mv melwalletd /app/bin/"
@@ -27,7 +26,7 @@ modules:
     buildsystem: "simple"
     sources:
       - type: file
-        path: ginkou-loader
+        path: /tmp/ginkou-loader
 
     build-commands:
       - "mv ginkou-loader /app/bin/"

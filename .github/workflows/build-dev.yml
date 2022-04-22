@@ -346,12 +346,12 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: ginkou-loader-linux-dev
-          path: /tmp/ginkou-loader
+          path: /tmp
 
       - uses: actions/download-artifact@v3
         with:
           name: melwalletd-linux-dev
-          path: /tmp/melwalletd
+          path: /tmp
 
       - uses: actions/download-artifact@v3
         with:

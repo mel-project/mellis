@@ -19,9 +19,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: List
-        run: ls -la /usr/local/cargo/registry/cache
-
       - name: Submodule Clone
         run: git submodule update --init --recursive --remote ginkou-loader
 
@@ -30,6 +27,9 @@ jobs:
 
       - name: Build Ginkou-Loader
         run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
+
+      - name: List
+        run: ls -la /usr/local/cargo/registry/cache
 
       - uses: actions/upload-artifact@v3
         with:

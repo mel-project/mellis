@@ -417,5 +417,5 @@ jobs:
       - name: List
         run: ls -la /var/run/docker.sock
 
-      - name: Docker PS
-        run: docker ps
+      - name: Docker Images
+        run: docker images

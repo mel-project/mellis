@@ -408,15 +408,12 @@ jobs:
     runs-on: self-hosted
 
     container:
-      image: summerwind/actions-runner-dind:latest
+#      image: summerwind/actions-runner-dind:latest
       options: --privileged
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: List
-        run: ls -la /var/run/docker.sock
 
 #      - name: Pull Image
 #        run: docker pull ghcr.io/themeliolabs/rust-gtk:latest

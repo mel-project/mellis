@@ -283,6 +283,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
 
         with:
+          draft: true
           files: |
             mellis.flatpak
             mellis.dmg

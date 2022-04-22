@@ -408,7 +408,7 @@ jobs:
     runs-on: self-hosted
 
     container:
-      image: ghcr.io/themeliolabs/rust-gtk:latest
+      image: summerwind/actions-runner-dind:latest
       options: --privileged
 
     steps:

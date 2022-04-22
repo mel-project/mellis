@@ -422,4 +422,4 @@ jobs:
 #        run: docker pull ghcr.io/themeliolabs/rust-gtk:latest
 
       - name: Docker Images
-        run: docker images
+        run: sudo docker images

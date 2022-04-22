@@ -376,7 +376,7 @@ jobs:
       - name: Add Flathub Repository
         run: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-        uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+      - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
         with:
           bundle: mellis.flatpak
           manifest-path: flatpak/org.themelio.Wallet-ci.yml

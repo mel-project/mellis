@@ -209,7 +209,7 @@ jobs:
         run: git submodule update --init --recursive --remote ginkou
 
       - name: Run NPM Install
-        run: npm install --prefix ginkou
+        run: npm ci --prefix ginkou
 
       - name: Run NPM Build
         env:

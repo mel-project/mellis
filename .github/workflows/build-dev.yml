@@ -409,6 +409,7 @@ jobs:
 
     container:
 #      image: summerwind/actions-runner-dind:latest
+      image: ghcr.io/themeliolabs/wine:latest
       options: --privileged
 
     steps:
@@ -418,5 +419,5 @@ jobs:
 #      - name: Pull Image
 #        run: docker pull ghcr.io/themeliolabs/rust-gtk:latest
 
-      - name: Docker Images
-        run: sudo docker images
+#      - name: Docker Images
+#        run: sudo docker images

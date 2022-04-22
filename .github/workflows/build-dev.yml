@@ -19,6 +19,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: List
+        run: ls -la /usr/local/cargo/registry/cache
+
       - name: Submodule Clone
         run: git submodule update --init --recursive --remote ginkou-loader
 

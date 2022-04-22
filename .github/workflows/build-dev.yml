@@ -9,34 +9,30 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  ginkou-loader-build-linux:
-    runs-on: self-hosted
-
-    container:
-      image: ghcr.io/themeliolabs/rust-gtk:latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: List
-        run: ls -la /root/.cargo/
-
-      - name: Submodule Clone
-        run: git submodule update --init --recursive --remote ginkou-loader
-
-      - name: Update Rust
-        run: rustup update
-
-      - name: Build Ginkou-Loader
-        run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
-
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ginkou-loader-linux-dev
-          path: ginkou-loader/target/debug/ginkou-loader
-
+#  ginkou-loader-build-linux:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: ghcr.io/themeliolabs/rust-gtk:latest
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Submodule Clone
+#        run: git submodule update --init --recursive --remote ginkou-loader
+#
+#      - name: Update Rust
+#        run: rustup update
+#
+#      - name: Build Ginkou-Loader
+#        run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: ginkou-loader-linux-dev
+#          path: ginkou-loader/target/debug/ginkou-loader
+#
 #  ginkou-loader-build-macos:
 #    runs-on: macos-latest
 #
@@ -408,21 +404,22 @@ jobs:
 #          name: mellis-flatpak-dev
 #          path: mellis.flatpak
 
-#  cache:
-#    runs-on: self-hosted
-#
-##    container:
-##      image: ghcr.io/themeliolabs/rust-gtk:latest
-#
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#
-#      - name: List
-#        run: ls -la /var/run/docker.sock
-#
-##      - name: Pull Image
-##        run: docker pull ghcr.io/themeliolabs/rust-gtk:latest
-#
-#      - name: Docker Images
-#        run: docker images
+  cache:
+    runs-on: self-hosted
+
+    container:
+      image: ghcr.io/themeliolabs/rust-gtk:latest
+      options: --privileged
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: List
+        run: ls -la /var/run/docker.sock
+
+#      - name: Pull Image
+#        run: docker pull ghcr.io/themeliolabs/rust-gtk:latest
+
+      - name: Docker Images
+        run: docker images

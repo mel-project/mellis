@@ -192,11 +192,38 @@ jobs:
 #        run: npm run test --prefix ginkou
 
 
+
+#  ginkou-build:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: node:latest
+#
+#    needs:
+#      - ginkou-test
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Clone Ginkou Submodule
+#        run: git submodule update --init --recursive --remote ginkou
+#
+#      - name: Run NPM Install
+#        run: npm ci --prefix ginkou
+#
+#      - name: Run NPM Build
+#        env:
+#          BUILD: "development"
+#        run: npm run build --prefix ginkou
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: ginkou-public-dev
+#          path: ginkou/public
+
   ginkou-build:
     runs-on: self-hosted
-
-    container:
-      image: node:latest
 
     needs:
       - ginkou-test
@@ -205,11 +232,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Update Apt
+        run: sudo apt update
+
+      - name: Install NPM
+        run: sudo apt install -y npm
+
       - name: Clone Ginkou Submodule
         run: git submodule update --init --recursive --remote ginkou
 
       - name: Run NPM Install
-        run: npm ci --prefix ginkou
+        run: npm install --prefix ginkou
 
       - name: Run NPM Build
         env:

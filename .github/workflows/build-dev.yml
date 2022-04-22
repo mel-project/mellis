@@ -376,14 +376,13 @@ jobs:
       - name: Add Flathub Repository
         run: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-      - name: Run Flatpak Build
-        run: flatpak-builder build flatpak/org.themelio.Wallet-ci.yml --force-clean --install-deps-from flathub
+        uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+        with:
+          bundle: mellis.flatpak
+          manifest-path: flatpak/org.themelio.Wallet-ci.yml
 
-      - name: List Contents
-        run: ls -la
-
-      - name: List Contents
-        run: ls -la flatpak
+#      - name: Run Flatpak Build
+#        run: flatpak-builder build flatpak/org.themelio.Wallet-ci.yml --force-clean --install-deps-from flathub
 
       - uses: actions/upload-artifact@v3
         with:

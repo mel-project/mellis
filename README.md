@@ -1,5 +1,7 @@
 # Mellis: Themelio's official GUI wallet
 
+([Beginner-friendly animated tutorial here!](https://github.com/themeliolabs/mellis/wiki/Installing-Mellis-and-getting-free-MEL))
+
 ## How to install?
 
 Go to the [Releases](https://github.com/themeliolabs/mellis/releases) page to download the latest version. Currently, only the following platforms are supported:

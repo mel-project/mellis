@@ -7,8 +7,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  CARGO_HOME: "/tmp/cargo/"
-#  CARGO_HOME: "/usr/local/cargo/"
+  CARGO_HOME: "/usr/local/cargo/"
 
 jobs:
   ginkou-loader-build-linux:

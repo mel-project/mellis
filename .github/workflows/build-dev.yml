@@ -23,6 +23,9 @@ jobs:
       - name: List
         run: test -d /usr/local/cargo/registry/cache || echo "Directory does not exist."
 
+      - name: Disk Free
+        run: df -h
+
       - name: Submodule Clone
         run: git submodule update --init --recursive --remote ginkou-loader
 
@@ -34,6 +37,9 @@ jobs:
 
       - name: List
         run: test -d /usr/local/cargo/registry/cache || echo "Directory does not exist."
+
+      - name: Disk Free
+        run: df -h
 
       - uses: actions/upload-artifact@v3
         with:

@@ -19,6 +19,7 @@ jobs:
       volumes:
         - /usr/local/cargo/git:/usr/local/cargo/git
         - /usr/local/cargo/registry:/usr/local/cargo/registry
+        - /usr/local/cargo/target:/usr/local/cargo/target
 
     steps:
       - name: Checkout repository

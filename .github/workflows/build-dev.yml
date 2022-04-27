@@ -15,6 +15,8 @@ jobs:
 
     container:
       image: ghcr.io/themeliolabs/rust-gtk:latest
+      volumes:
+        - /usr/local/cargo:/usr/local/cargo
 
     steps:
       - name: Checkout repository

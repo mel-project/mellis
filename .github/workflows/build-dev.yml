@@ -8,6 +8,7 @@ on:
 env:
   CARGO_TERM_COLOR: always
   CARGO_HOME: "/usr/local/cargo/"
+  CARGO_TARGET_DIR: "/usr/local/cargo/target"
 
 jobs:
   ginkou-loader-build-linux:
@@ -42,16 +43,21 @@ jobs:
         run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
 
       - name: List
-        run: test -d /usr/local/cargo/registry/cache || echo "Directory does not exist."
+        run: ls -la /usr/local/cargo/target/debug
 
-      - name: Disk Free
-        run: df -h
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: ginkou-loader-linux-dev
+#          path: /usr/local/cargo/target/debug/ginkou-loader
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ginkou-loader-linux-dev
-          path: ginkou-loader/target/debug/ginkou-loader
-#
+
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: ginkou-loader-linux-dev
+#          path: ginkou-loader/target/debug/ginkou-loader
+
+
+
 #  ginkou-loader-build-macos:
 #    runs-on: macos-latest
 #

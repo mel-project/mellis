@@ -83,6 +83,7 @@ jobs:
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/cargo/target:/usr/local/cargo/target
         - /usr/local/rustup:/usr/local/rustup
+        - /var/lib/docker:/var/lib/docker
 
     steps:
       - name: Checkout repository

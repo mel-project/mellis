@@ -12,46 +12,46 @@ env:
   RUSTUP_HOME: "/usr/local/rustup"
 
 jobs:
-  ginkou-loader-build-linux:
-    runs-on: self-hosted
-
-    container:
-      image: ghcr.io/themeliolabs/rust-gtk:latest
-      volumes:
-        - /usr/local/cargo/git:/usr/local/cargo/git
-        - /usr/local/cargo/registry:/usr/local/cargo/registry
-        - /usr/local/cargo/target:/usr/local/cargo/target
-        - /usr/local/rustup:/usr/local/rustup
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: List
-        run: test -d /usr/local/cargo/target || echo "Directory does not exist."
-
-      - name: Disk Free
-        run: df -h
-
-      - name: Submodule Clone
-        run: git submodule update --init --recursive --remote ginkou-loader
-
-      - name: Install default toolchain
-        run: rustup default stable
-
-      - name: Update Rust
-        run: rustup update
-
-      - name: Build Ginkou-Loader
-        run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
-
-      - name: List
-        run: ls -la /usr/local/cargo/target/debug
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ginkou-loader-linux-dev
-          path: /usr/local/cargo/target/debug/ginkou-loader
+#  ginkou-loader-build-linux:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: ghcr.io/themeliolabs/rust-gtk:latest
+#      volumes:
+#        - /usr/local/cargo/git:/usr/local/cargo/git
+#        - /usr/local/cargo/registry:/usr/local/cargo/registry
+#        - /usr/local/cargo/target:/usr/local/cargo/target
+#        - /usr/local/rustup:/usr/local/rustup
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: List
+#        run: test -d /usr/local/cargo/target || echo "Directory does not exist."
+#
+#      - name: Disk Free
+#        run: df -h
+#
+#      - name: Submodule Clone
+#        run: git submodule update --init --recursive --remote ginkou-loader
+#
+#      - name: Install default toolchain
+#        run: rustup default stable
+#
+#      - name: Update Rust
+#        run: rustup update
+#
+#      - name: Build Ginkou-Loader
+#        run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
+#
+#      - name: List
+#        run: ls -la /usr/local/cargo/target/debug
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: ginkou-loader-linux-dev
+#          path: /usr/local/cargo/target/debug/ginkou-loader
 
 
 
@@ -72,34 +72,39 @@ jobs:
 #        with:
 #          name: ginkou-loader-macos-dev
 #          path: ginkou-loader/target/debug/ginkou-loader
-#
-#  ginkou-loader-build-windows:
-#    runs-on: self-hosted
-#
-#    container:
-#      image: ghcr.io/themeliolabs/windows-32-bit:latest
-#
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#
-#      - name: Submodule Clone
-#        run: git submodule update --init --recursive --remote ginkou-loader
-#
-#      - name: Add Default Toolchain
-#        run: rustup default stable
-#
-#      - name: Add Windows 32-Bit Toolchain
-#        run: rustup target add i686-pc-windows-gnu
-#
-#      - name: Build Ginkou-Loader
-#        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path ginkou-loader/Cargo.toml
-#
-#      - uses: actions/upload-artifact@v3
-#        with:
-#          name: ginkou-loader-windows-dev
-#          path: ginkou-loader/target/i686-pc-windows-gnu/debug/ginkou-loader.exe
-#
+
+  ginkou-loader-build-windows:
+    runs-on: self-hosted
+
+    container:
+      image: ghcr.io/themeliolabs/windows-32-bit:latest
+      volumes:
+        - /usr/local/cargo/git:/usr/local/cargo/git
+        - /usr/local/cargo/registry:/usr/local/cargo/registry
+        - /usr/local/cargo/target:/usr/local/cargo/target
+        - /usr/local/rustup:/usr/local/rustup
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Submodule Clone
+        run: git submodule update --init --recursive --remote ginkou-loader
+
+      - name: Add Default Toolchain
+        run: rustup default stable
+
+      - name: Add Windows 32-Bit Toolchain
+        run: rustup target add i686-pc-windows-gnu
+
+      - name: Build Ginkou-Loader
+        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path ginkou-loader/Cargo.toml
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ginkou-loader-windows-dev
+          path: /usr/local/cargo/target/i686-pc-windows-gnu/debug/ginkou-loader.exe
+
 #  melwalletd-build-linux:
 #    runs-on: self-hosted
 #

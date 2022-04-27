@@ -32,6 +32,9 @@ jobs:
       - name: Submodule Clone
         run: git submodule update --init --recursive --remote ginkou-loader
 
+      - name: Install default toolchain
+        run: rustup default stable
+
       - name: Update Rust
         run: rustup update
 

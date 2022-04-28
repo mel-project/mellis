@@ -10,6 +10,7 @@ env:
   CARGO_HOME: "/usr/local/cargo/"
   CARGO_TARGET_DIR: "/usr/local/cargo/target"
   RUSTUP_HOME: "/usr/local/rustup"
+  npm_config_cache: "/usr/local/npm-cache"
 
 jobs:
 #  ginkou-loader-build-linux:
@@ -22,16 +23,11 @@ jobs:
 #        - /usr/local/cargo/registry:/usr/local/cargo/registry
 #        - /usr/local/cargo/target:/usr/local/cargo/target
 #        - /usr/local/rustup:/usr/local/rustup
+#        - /var/lib/docker:/var/lib/docker
 #
 #    steps:
 #      - name: Checkout repository
 #        uses: actions/checkout@v3
-#
-#      - name: List
-#        run: test -d /usr/local/cargo/target || echo "Directory does not exist."
-#
-#      - name: Disk Free
-#        run: df -h
 #
 #      - name: Submodule Clone
 #        run: git submodule update --init --recursive --remote ginkou-loader
@@ -44,9 +40,6 @@ jobs:
 #
 #      - name: Build Ginkou-Loader
 #        run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
-#
-#      - name: List
-#        run: ls -la /usr/local/cargo/target/debug
 #
 #      - uses: actions/upload-artifact@v3
 #        with:
@@ -73,38 +66,38 @@ jobs:
 #          name: ginkou-loader-macos-dev
 #          path: ginkou-loader/target/debug/ginkou-loader
 
-  ginkou-loader-build-windows:
-    runs-on: self-hosted
-
-    container:
-      image: ghcr.io/themeliolabs/windows-32-bit:latest
-      volumes:
-        - /usr/local/cargo/git:/usr/local/cargo/git
-        - /usr/local/cargo/registry:/usr/local/cargo/registry
-        - /usr/local/cargo/target:/usr/local/cargo/target
-        - /usr/local/rustup:/usr/local/rustup
-        - /var/lib/docker:/var/lib/docker
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Submodule Clone
-        run: git submodule update --init --recursive --remote ginkou-loader
-
-      - name: Add Default Toolchain
-        run: rustup default stable
-
-      - name: Add Windows 32-Bit Toolchain
-        run: rustup target add i686-pc-windows-gnu
-
-      - name: Build Ginkou-Loader
-        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path ginkou-loader/Cargo.toml
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ginkou-loader-windows-dev
-          path: /usr/local/cargo/target/i686-pc-windows-gnu/debug/ginkou-loader.exe
+#  ginkou-loader-build-windows:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: ghcr.io/themeliolabs/windows-32-bit:latest
+#      volumes:
+#        - /usr/local/cargo/git:/usr/local/cargo/git
+#        - /usr/local/cargo/registry:/usr/local/cargo/registry
+#        - /usr/local/cargo/target:/usr/local/cargo/target
+#        - /usr/local/rustup:/usr/local/rustup
+#        - /var/lib/docker:/var/lib/docker
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Submodule Clone
+#        run: git submodule update --init --recursive --remote ginkou-loader
+#
+#      - name: Add Default Toolchain
+#        run: rustup default stable
+#
+#      - name: Add Windows 32-Bit Toolchain
+#        run: rustup target add i686-pc-windows-gnu
+#
+#      - name: Build Ginkou-Loader
+#        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path ginkou-loader/Cargo.toml
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: ginkou-loader-windows-dev
+#          path: /usr/local/cargo/target/i686-pc-windows-gnu/debug/ginkou-loader.exe
 
 #  melwalletd-build-linux:
 #    runs-on: self-hosted
@@ -193,63 +186,63 @@ jobs:
 #          name: melwalletd-windows-dev
 #          path: melwalletd/target/i686-pc-windows-gnu/debug/melwalletd.exe
 #
+
+  ginkou-test:
+    runs-on: self-hosted
+
+    steps:
+      - name: Currently Disabled
+        run: echo "Tests are currently disabled."
+
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
 #
-#  ginkou-test:
-#    runs-on: self-hosted
+#      - name: Update Apt
+#        run: sudo apt update
 #
-#    steps:
-#      - name: Currently Disabled
-#        run: echo "Tests are currently disabled."
+#      - name: Install NPM
+#        run: sudo apt install -y npm
 #
-##      - name: Checkout repository
-##        uses: actions/checkout@v3
-##
-##      - name: Update Apt
-##        run: sudo apt update
-##
-##      - name: Install NPM
-##        run: sudo apt install -y npm
-##
-##      - name: Clone Ginkou Submodule
-##        run: git submodule update --init --recursive --remote ginkou
-##
-##      - name: Run NPM Install
-##        run: npm install --prefix ginkou
-##
-##      - name: Run NPM Test
-##        run: npm run test --prefix ginkou
+#      - name: Clone Ginkou Submodule
+#        run: git submodule update --init --recursive --remote ginkou
 #
+#      - name: Run NPM Install
+#        run: npm install --prefix ginkou
 #
-#
-##  ginkou-build:
-##    runs-on: self-hosted
-##
-##    container:
-##      image: node:latest
-##
-##    needs:
-##      - ginkou-test
-##
-##    steps:
-##      - name: Checkout repository
-##        uses: actions/checkout@v3
-##
-##      - name: Clone Ginkou Submodule
-##        run: git submodule update --init --recursive --remote ginkou
-##
-##      - name: Run NPM Install
-##        run: npm ci --prefix ginkou
-##
-##      - name: Run NPM Build
-##        env:
-##          BUILD: "development"
-##        run: npm run build --prefix ginkou
-##
-##      - uses: actions/upload-artifact@v3
-##        with:
-##          name: ginkou-public-dev
-##          path: ginkou/public
-#
+#      - name: Run NPM Test
+#        run: npm run test --prefix ginkou
+
+  ginkou-build:
+    runs-on: self-hosted
+
+    container:
+      image: node:latest
+      volumes:
+        - /usr/local/npm-cache:/usr/local/npm-cache
+
+    needs:
+      - ginkou-test
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Clone Ginkou Submodule
+        run: git submodule update --init --recursive --remote ginkou
+
+      - name: Run NPM Install
+        run: npm ci --prefix ginkou
+
+      - name: Run NPM Build
+        env:
+          BUILD: "development"
+        run: npm run build --prefix ginkou
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ginkou-public-dev
+          path: ginkou/public
+
 #  ginkou-build:
 #    runs-on: self-hosted
 #
@@ -431,21 +424,3 @@ jobs:
 #        with:
 #          name: mellis-flatpak-dev
 #          path: mellis.flatpak
-
-#  cache:
-#    runs-on: self-hosted
-#
-#    container:
-##      image: summerwind/actions-runner-dind:latest
-#      image: ghcr.io/themeliolabs/wine:latest
-#      options: --privileged
-#
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#
-##      - name: Pull Image
-##        run: docker pull ghcr.io/themeliolabs/rust-gtk:latest
-#
-##      - name: Docker Images
-##        run: sudo docker images

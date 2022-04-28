@@ -15,7 +15,7 @@ env:
 #  WINEPREFIX: "/usr/local/wine"
 
 jobs:
-  ginkou-loader-build-linux:
+#  ginkou-loader-build-linux:
 #    runs-on: self-hosted
 #
 #    container:
@@ -139,6 +139,7 @@ jobs:
       volumes:
         - /usr/local/cargo/git:/usr/local/cargo/git
         - /usr/local/cargo/registry:/usr/local/cargo/registry
+#        - /usr/local/cargo/target:/usr/local/cargo/target
         - /usr/local/rustup:/usr/local/rustup
         - /var/lib/docker:/var/lib/docker
 

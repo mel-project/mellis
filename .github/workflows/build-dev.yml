@@ -88,6 +88,9 @@ jobs:
             /usr/local/cargo/registry/cache/
             /usr/local/cargo/git/db/
             /usr/local/cargo/target/
+            /usr/local/cargo/incremental/
+            /usr/local/rustup/toolchains/
+            /usr/local/rustup/update-hashes/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}
 
       - uses: actions/upload-artifact@v3

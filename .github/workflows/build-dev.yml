@@ -83,11 +83,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-#            /usr/local/cargo/bin/
-#            /usr/local/cargo/registry/index/
-#            /usr/local/cargo/registry/cache/
-#            /usr/local/cargo/git/db/
-#            /usr/local/cargo/target/
             /usr/local/cargo/
             /usr/local/rustup/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}
@@ -96,6 +91,14 @@ jobs:
         with:
           name: ginkou-loader-macos-dev
           path: /usr/local/cargo/target/debug/ginkou-loader
+
+#            /usr/local/cargo/bin/
+#            /usr/local/cargo/registry/index/
+#            /usr/local/cargo/registry/cache/
+#            /usr/local/cargo/git/db/
+#            /usr/local/cargo/target/
+
+
 
 #  ginkou-loader-build-windows:
 #    runs-on: self-hosted

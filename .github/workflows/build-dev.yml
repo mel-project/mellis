@@ -11,6 +11,7 @@ env:
   CARGO_TARGET_DIR: "/usr/local/cargo/target"
   RUSTUP_HOME: "/usr/local/rustup"
   npm_config_cache: "/usr/local/npm-cache"
+  YARN_CACHE_FOLDER: "/usr/local/npm-cache"
 
 jobs:
 #  ginkou-loader-build-linux:
@@ -187,38 +188,37 @@ jobs:
 #          path: melwalletd/target/i686-pc-windows-gnu/debug/melwalletd.exe
 #
 
+
   ginkou-test:
-    runs-on: self-hosted
-
-    steps:
-      - name: Currently Disabled
-        run: echo "Tests are currently disabled."
-
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#
-#      - name: Update Apt
-#        run: sudo apt update
-#
-#      - name: Install NPM
-#        run: sudo apt install -y npm
-#
-#      - name: Clone Ginkou Submodule
-#        run: git submodule update --init --recursive --remote ginkou
-#
-#      - name: Run NPM Install
-#        run: npm install --prefix ginkou
-#
-#      - name: Run NPM Test
-#        run: npm run test --prefix ginkou
-
-  ginkou-build:
     runs-on: self-hosted
 
     container:
       image: node:latest
       volumes:
         - /usr/local/npm-cache:/usr/local/npm-cache
+        - /var/lib/docker:/var/lib/docker
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Clone Ginkou Submodule
+        run: git submodule update --init --recursive --remote ginkou
+
+      - name: Run Yarn Install
+        run: yarn install --prefer-offline --cwd ginkou
+
+      - name: Run NPM Test
+        run: npm run test --prefix ginkou
+
+  build:
+    runs-on: self-hosted
+
+    container:
+      image: node:latest
+      volumes:
+        - /usr/local/npm-cache:/usr/local/npm-cache
+        - /var/lib/docker:/var/lib/docker
 
     needs:
       - ginkou-test
@@ -230,11 +230,8 @@ jobs:
       - name: Clone Ginkou Submodule
         run: git submodule update --init --recursive --remote ginkou
 
-#      - name: Run NPM Install
-#        run: npm ci --prefix ginkou
-
-      - name: Run NPM Install
-        run: npm install --prefix ginkou
+      - name: Run Yarn Install
+        run: yarn install --prefer-offline --cwd ginkou
 
       - name: Run NPM Build
         env:
@@ -245,6 +242,9 @@ jobs:
         with:
           name: ginkou-public-dev
           path: ginkou/public
+
+
+
 
 #  ginkou-build:
 #    runs-on: self-hosted

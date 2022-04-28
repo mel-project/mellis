@@ -230,8 +230,11 @@ jobs:
       - name: Clone Ginkou Submodule
         run: git submodule update --init --recursive --remote ginkou
 
+#      - name: Run NPM Install
+#        run: npm ci --prefix ginkou
+
       - name: Run NPM Install
-        run: npm ci --prefix ginkou
+        run: npm install --prefix ginkou
 
       - name: Run NPM Build
         env:

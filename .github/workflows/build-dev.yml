@@ -55,6 +55,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Create Cargo Home
+        run: sudo mkdir -p /usr/local/cargo
+
+      - name: Change Cargo Home Ownership
+        run: sudo chown $USER /usr/local/cargo
+
+      - name: Create Rustup Directory
+        run: sudo mkdir -p /usr/local/rustup
+
+      - name: Change Rustup Directory Ownership
+        run: sudo chown $USER /usr/local/rustup
+
       - name: Cache Rust
         uses: actions/cache@v3
         with:
@@ -68,18 +80,6 @@ jobs:
             /usr/local/rustup/toolchains/
             /usr/local/rustup/update-hashes/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}
-
-      - name: Create Cargo Home
-        run: sudo mkdir -p /usr/local/cargo
-
-      - name: Change Cargo Home Ownership
-        run: sudo chown $USER /usr/local/cargo
-
-      - name: Create Rustup Directory
-        run: sudo mkdir -p /usr/local/rustup
-
-      - name: Change Rustup Directory Ownership
-        run: sudo chown $USER /usr/local/rustup
 
       - name: Add Default Toolchain
         run: rustup default stable

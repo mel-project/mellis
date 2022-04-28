@@ -58,8 +58,14 @@ jobs:
       - name: Create Cargo Home
         run: sudo mkdir -p /usr/local/cargo
 
+      - name: Change Cargo Home Ownership
+        run: sudo chown $USER /usr/local/cargo
+
       - name: Create Rustup Directory
         run: sudo mkdir -p /usr/local/rustup
+
+      - name: Change Rustup Directory Ownership
+        run: sudo chown $USER /usr/local/cargo
 
       - name: Submodule Clone
         run: git submodule update --init --recursive --remote ginkou-loader

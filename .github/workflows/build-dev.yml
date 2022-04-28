@@ -67,6 +67,9 @@ jobs:
       - name: Change Rustup Directory Ownership
         run: sudo chown $USER /usr/local/rustup
 
+      - name: Add Default Toolchain
+        run: rustup default stable
+
       - name: Submodule Clone
         run: git submodule update --init --recursive --remote ginkou-loader
 
@@ -82,6 +85,7 @@ jobs:
 #            /usr/local/cargo/registry/cache/
 #            /usr/local/cargo/git/db/
 #            /usr/local/cargo/target/
+#            /usr/local/rustup/
 #          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - uses: actions/upload-artifact@v3

@@ -55,42 +55,39 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Show ID
-        run: id
+      - name: Create Cargo Home
+        run: sudo mkdir -p /usr/local/cargo
 
-#      - name: Create Cargo Home
-#        run: sudo mkdir -p /usr/local/cargo
-#
-#      - name: Change Cargo Home Ownership
-#        run: sudo chown $USER /usr/local/cargo
-#
-#      - name: Create Rustup Directory
-#        run: sudo mkdir -p /usr/local/rustup
-#
-#      - name: Change Rustup Directory Ownership
-#        run: sudo chown $USER /usr/local/cargo
-#
-#      - name: Submodule Clone
-#        run: git submodule update --init --recursive --remote ginkou-loader
-#
-#      - name: Build Ginkou-Loader
-#        run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
-#
-##      - name: Cache Rust
-##        uses: actions/cache@v3
-##        with:
-##          path: |
-##            /usr/local/cargo/bin/
-##            /usr/local/cargo/registry/index/
-##            /usr/local/cargo/registry/cache/
-##            /usr/local/cargo/git/db/
-##            /usr/local/cargo/target/
-##          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-#
-#      - uses: actions/upload-artifact@v3
+      - name: Change Cargo Home Ownership
+        run: sudo chown $USER /usr/local/cargo
+
+      - name: Create Rustup Directory
+        run: sudo mkdir -p /usr/local/rustup
+
+      - name: Change Rustup Directory Ownership
+        run: sudo chown $USER /usr/local/rustup
+
+      - name: Submodule Clone
+        run: git submodule update --init --recursive --remote ginkou-loader
+
+      - name: Build Ginkou-Loader
+        run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
+
+#      - name: Cache Rust
+#        uses: actions/cache@v3
 #        with:
-#          name: ginkou-loader-macos-dev
-#          path: /usr/local/cargo/target/debug/ginkou-loader
+#          path: |
+#            /usr/local/cargo/bin/
+#            /usr/local/cargo/registry/index/
+#            /usr/local/cargo/registry/cache/
+#            /usr/local/cargo/git/db/
+#            /usr/local/cargo/target/
+#          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ginkou-loader-macos-dev
+          path: /usr/local/cargo/target/debug/ginkou-loader
 
 #  ginkou-loader-build-windows:
 #    runs-on: self-hosted

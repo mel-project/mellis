@@ -55,6 +55,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Cache Rust
+        uses: actions/cache@v3
+        with:
+          path: |
+            /usr/local/cargo/bin/
+            /usr/local/cargo/registry/index/
+            /usr/local/cargo/registry/cache/
+            /usr/local/cargo/git/db/
+            /usr/local/cargo/target/
+            /usr/local/cargo/incremental/
+            /usr/local/rustup/toolchains/
+            /usr/local/rustup/update-hashes/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}
+
       - name: Create Cargo Home
         run: sudo mkdir -p /usr/local/cargo
 
@@ -78,20 +92,6 @@ jobs:
 
       - name: Build Ginkou-Loader
         run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
-
-      - name: Cache Rust
-        uses: actions/cache@v3
-        with:
-          path: |
-            /usr/local/cargo/bin/
-            /usr/local/cargo/registry/index/
-            /usr/local/cargo/registry/cache/
-            /usr/local/cargo/git/db/
-            /usr/local/cargo/target/
-            /usr/local/cargo/incremental/
-            /usr/local/rustup/toolchains/
-            /usr/local/rustup/update-hashes/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}
 
       - uses: actions/upload-artifact@v3
         with:

@@ -172,7 +172,7 @@ jobs:
       volumes:
         - /usr/local/cargo/git:/usr/local/cargo/git
         - /usr/local/cargo/registry:/usr/local/cargo/registry
-#        - /usr/local/cargo/target:/usr/local/cargo/target
+        - /usr/local/cargo/target:/usr/local/cargo/target
         - /usr/local/rustup:/usr/local/rustup
         - /var/lib/docker:/var/lib/docker
 
@@ -188,9 +188,6 @@ jobs:
 
       - name: Add MacOS Toolchain
         run: rustup target add x86_64-apple-darwin
-
-#      - name: Create Cargo Config Backup
-#        run: cp /usr/local/cargo/config /usr/local/cargo/config-bak
 
       - name: Copy Cargo Configuration
         run: cp /root/.cargo/config /usr/local/cargo/config

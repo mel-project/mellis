@@ -169,12 +169,12 @@ jobs:
 
     container:
       image: joseluisq/rust-linux-darwin-builder:latest
-#      volumes:
-#        - /usr/local/cargo/git:/usr/local/cargo/git
-#        - /usr/local/cargo/registry:/usr/local/cargo/registry
+      volumes:
+        - /usr/local/cargo/git:/usr/local/cargo/git
+        - /usr/local/cargo/registry:/usr/local/cargo/registry
 #        - /usr/local/cargo/target:/usr/local/cargo/target
-#        - /usr/local/rustup:/usr/local/rustup
-#        - /var/lib/docker:/var/lib/docker
+        - /usr/local/rustup:/usr/local/rustup
+        - /var/lib/docker:/var/lib/docker
 
     steps:
       - name: Checkout repository
@@ -189,8 +189,8 @@ jobs:
       - name: Add MacOS Toolchain
         run: rustup target add x86_64-apple-darwin
 
-      - name: Create Cargo Config Backup
-        run: cp /usr/local/cargo/config /usr/local/cargo/config-bak
+#      - name: Create Cargo Config Backup
+#        run: cp /usr/local/cargo/config /usr/local/cargo/config-bak
 
       - name: Copy Cargo Configuration
         run: cp /root/.cargo/config /usr/local/cargo/config
@@ -201,8 +201,8 @@ jobs:
           CXX: "o64-clang++"
         run: cargo build --locked --target x86_64-apple-darwin --manifest-path melwalletd/Cargo.toml
 
-      - name: Restore Original Cargo Config
-        run: mv /usr/local/cargo/config-bak /usr/local/cargo/config
+      - name: Remove Cargo Configuration
+        run: rm /usr/local/cargo/config
 
       - uses: actions/upload-artifact@v3
         with:

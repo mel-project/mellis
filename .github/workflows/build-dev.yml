@@ -70,23 +70,27 @@ jobs:
       - name: Add Default Toolchain
         run: rustup default stable
 
+      - name: Update Rust
+        run: rustup update
+
       - name: Submodule Clone
         run: git submodule update --init --recursive --remote ginkou-loader
 
       - name: Build Ginkou-Loader
         run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
 
-#      - name: Cache Rust
-#        uses: actions/cache@v3
-#        with:
-#          path: |
+      - name: Cache Rust
+        uses: actions/cache@v3
+        with:
+          path: |
 #            /usr/local/cargo/bin/
 #            /usr/local/cargo/registry/index/
 #            /usr/local/cargo/registry/cache/
 #            /usr/local/cargo/git/db/
 #            /usr/local/cargo/target/
-#            /usr/local/rustup/
-#          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+            /usr/local/cargo/
+            /usr/local/rustup/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}
 
       - uses: actions/upload-artifact@v3
         with:

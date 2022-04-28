@@ -189,17 +189,20 @@ jobs:
       - name: Add MacOS Toolchain
         run: rustup target add x86_64-apple-darwin
 
-      - name: Create Cargo Path
-        run: mkdir -p ~/.cargo
+      - name: Create Cargo Config Backup
+        run: cp /usr/local/cargo/config /usr/local/cargo/config-bak
 
       - name: Copy Cargo Configuration
-        run: cp /root/.cargo/config ~/.cargo/config
+        run: cp /root/.cargo/config /usr/local/cargo/config
 
       - name: Build MelwalletD
         env:
           CC: "o64-clang"
           CXX: "o64-clang++"
         run: cargo build --locked --target x86_64-apple-darwin --manifest-path melwalletd/Cargo.toml
+
+      - name: Restore Original Cargo Config
+        run: mv /usr/local/cargo/config-bak /usr/local/cargo/config
 
       - uses: actions/upload-artifact@v3
         with:

@@ -238,15 +238,91 @@ jobs:
 #          name: melwalletd-linux-dev
 #          path: /usr/local/cargo/target/debug/melwalletd
 
-  melwalletd-build-macos:
+#  melwalletd-build-macos:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: joseluisq/rust-linux-darwin-builder:latest
+#      volumes:
+#        - /usr/local/cargo/git:/usr/local/cargo/git
+#        - /usr/local/cargo/registry:/usr/local/cargo/registry
+##        - /usr/local/cargo/target-macos:/usr/local/cargo/target
+#        - /usr/local/sccache:/usr/local/sccache
+#        - /usr/local/rustup:/usr/local/rustup
+#        - /var/lib/docker:/var/lib/docker
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Clone MelwalletD Submodule
+#        run: git submodule update --init --recursive --remote melwalletd
+#
+#      - name: Add Default Toolchain
+#        run: rustup default stable
+#
+#      - name: Add MacOS Toolchain
+#        run: rustup target add x86_64-apple-darwin
+#
+#      - name: Copy Cargo Configuration
+#        run: cp /root/.cargo/config /usr/local/cargo/config
+#
+#      - name: Update Apt
+#        run: apt update
+#
+#      - name: Install Wget
+#        run: apt install -y wget
+#
+#      - name: Download SCCache
+#        run: wget https://github.com/mozilla/sccache/releases/download/v0.2.15/sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz
+#
+#      - name: Extract SCCache
+#        run: tar -xf sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz
+#
+#      - name: Move SCCache
+#        run: mv sccache-v0.2.15-x86_64-unknown-linux-musl/sccache /usr/local/bin/sccache
+#
+#      - name: Make SCCache Executable
+#        run: chmod +x /usr/local/bin/sccache
+#
+#      - name: Clean Up Temporary SCCache Bits
+#        run: rm -rf sccache-v0.2.15-x86_64-unknown-linux-musl*
+#
+#      - name: Download Mold
+#        run: wget https://github.com/rui314/mold/releases/download/v1.2.1/mold-1.2.1-x86_64-linux.tar.gz
+#
+#      - name: Extract Mold
+#        run: tar -xf mold-1.2.1-x86_64-linux.tar.gz
+#
+#      - name: Copy Mold Files
+#        run: cp -a mold-1.2.1-x86_64-linux/* /usr/local/
+#
+#      - name: Clean Up Temporary Mold Bits
+#        run: rm -rf mold-1.2.1-x86_64-linux
+#
+#      - name: Build MelwalletD
+#        env:
+#          CC: "o64-clang"
+#          CXX: "o64-clang++"
+#        run: mold --run cargo build --locked --target x86_64-apple-darwin --manifest-path melwalletd/Cargo.toml
+#
+#      - name: Remove Cargo Configuration
+#        run: rm /usr/local/cargo/config
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: melwalletd-macos-dev
+#          path: /usr/local/cargo/target/x86_64-apple-darwin/debug/melwalletd
+
+  melwalletd-build-windows:
     runs-on: self-hosted
 
     container:
-      image: joseluisq/rust-linux-darwin-builder:latest
+      image: ghcr.io/themeliolabs/windows-32-bit:latest
       volumes:
         - /usr/local/cargo/git:/usr/local/cargo/git
         - /usr/local/cargo/registry:/usr/local/cargo/registry
-#        - /usr/local/cargo/target-macos:/usr/local/cargo/target
+#        - /usr/local/cargo/target-windows:/usr/local/cargo/target
         - /usr/local/sccache:/usr/local/sccache
         - /usr/local/rustup:/usr/local/rustup
         - /var/lib/docker:/var/lib/docker
@@ -255,23 +331,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Clone MelwalletD Submodule
+      - name: Submodule Clone
         run: git submodule update --init --recursive --remote melwalletd
 
       - name: Add Default Toolchain
         run: rustup default stable
 
-      - name: Add MacOS Toolchain
-        run: rustup target add x86_64-apple-darwin
-
-      - name: Copy Cargo Configuration
-        run: cp /root/.cargo/config /usr/local/cargo/config
-
-      - name: Update Apt
-        run: apt update
-
-      - name: Install Wget
-        run: apt install -y wget
+      - name: Add Windows 32-Bit Toolchain
+        run: rustup target add i686-pc-windows-gnu
 
       - name: Download SCCache
         run: wget https://github.com/mozilla/sccache/releases/download/v0.2.15/sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz
@@ -301,52 +368,13 @@ jobs:
         run: rm -rf mold-1.2.1-x86_64-linux
 
       - name: Build MelwalletD
-        env:
-          CC: "o64-clang"
-          CXX: "o64-clang++"
-        run: mold --run cargo build --locked --target x86_64-apple-darwin --manifest-path melwalletd/Cargo.toml
-
-      - name: Remove Cargo Configuration
-        run: rm /usr/local/cargo/config
+        run: mold --run cargo build --locked --target=i686-pc-windows-gnu --manifest-path melwalletd/Cargo.toml
 
       - uses: actions/upload-artifact@v3
         with:
-          name: melwalletd-macos-dev
-          path: /usr/local/cargo/target/x86_64-apple-darwin/debug/melwalletd
+          name: melwalletd-windows-dev
+          path: /usr/local/cargo/target/i686-pc-windows-gnu/debug/melwalletd.exe
 
-#  melwalletd-build-windows:
-#    runs-on: self-hosted
-#
-#    container:
-#      image: ghcr.io/themeliolabs/windows-32-bit:latest
-#      volumes:
-#        - /usr/local/cargo/git:/usr/local/cargo/git
-#        - /usr/local/cargo/registry:/usr/local/cargo/registry
-#        - /usr/local/cargo/target-windows:/usr/local/cargo/target
-#        - /usr/local/rustup:/usr/local/rustup
-#        - /var/lib/docker:/var/lib/docker
-#
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#
-#      - name: Submodule Clone
-#        run: git submodule update --init --recursive --remote melwalletd
-#
-#      - name: Add Default Toolchain
-#        run: rustup default stable
-#
-#      - name: Add Windows 32-Bit Toolchain
-#        run: rustup target add i686-pc-windows-gnu
-#
-#      - name: Build MelwalletD
-#        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path melwalletd/Cargo.toml
-#
-#      - uses: actions/upload-artifact@v3
-#        with:
-#          name: melwalletd-windows-dev
-#          path: /usr/local/cargo/target/i686-pc-windows-gnu/debug/melwalletd.exe
-#
 #  ginkou-test:
 #    runs-on: self-hosted
 #

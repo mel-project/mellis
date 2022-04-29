@@ -113,6 +113,7 @@ jobs:
             /usr/local/cargo/bin/
             /usr/local/cargo/registry/index/
             /usr/local/cargo/registry/cache/
+            /usr/local/sccache
             /usr/local/cargo/git/db/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}
 

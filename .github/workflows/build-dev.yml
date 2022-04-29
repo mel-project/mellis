@@ -433,6 +433,8 @@ jobs:
     container:
       image: bilelmoussaoui/flatpak-github-actions:gnome-40
       options: --privileged
+      volumes:
+        - /usr/local/flatpak-cache:/usr/local/flatpak-cache
 
     needs:
       - ginkou-loader-build-linux
@@ -458,13 +460,23 @@ jobs:
           name: ginkou-public-dev
           path: /tmp/public
 
+      - name: Copy Flatpak-Builder Cache To Current Job
+        run: cp -a /usr/local/flatpak-cache/.flatpak-builder ./.flatpak-builder || echo "Flatpak-Builder cache does not exist."
+
       - name: Add Flathub Repository
         run: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
       - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
         with:
           bundle: mellis.flatpak
+          cache: false
           manifest-path: flatpak/org.themelio.Wallet-ci.yml
+
+      - name: Remove Current Flatpak-Builder Cache
+        run: rm -rf /usr/local/flatpak-cache/.flatpak-builder
+
+      - name: Copy Flatpak-Builder Cache
+        run: cp -a ./.flatpak-builder /usr/local/flatpak-cache/.flatpak-builder
 
       - uses: actions/upload-artifact@v3
         with:

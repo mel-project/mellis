@@ -25,7 +25,6 @@ jobs:
 #      volumes:
 #        - /usr/local/cargo/git:/usr/local/cargo/git
 #        - /usr/local/cargo/registry:/usr/local/cargo/registry
-##        - /usr/local/cargo/target-linux:/usr/local/cargo/target
 #        - /usr/local/sccache:/usr/local/sccache
 #        - /usr/local/rustup:/usr/local/rustup
 #        - /var/lib/docker:/var/lib/docker
@@ -114,6 +113,8 @@ jobs:
             /usr/local/cargo/registry/index/
             /usr/local/cargo/registry/cache/
             /usr/local/sccache
+            /usr/local/rustup/toolchains/
+            /usr/local/rustup/update-hashes/
             /usr/local/cargo/git/db/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}
 
@@ -142,7 +143,6 @@ jobs:
 #      volumes:
 #        - /usr/local/cargo/git:/usr/local/cargo/git
 #        - /usr/local/cargo/registry:/usr/local/cargo/registry
-##        - /usr/local/cargo/target-windows:/usr/local/cargo/target
 #        - /usr/local/sccache:/usr/local/sccache
 #        - /usr/local/rustup:/usr/local/rustup
 #        - /var/lib/docker:/var/lib/docker
@@ -182,7 +182,7 @@ jobs:
 #        with:
 #          name: ginkou-loader-windows-dev
 #          path: /usr/local/cargo/target/i686-pc-windows-gnu/debug/ginkou-loader.exe
-
+#
 #  melwalletd-build-linux:
 #    runs-on: self-hosted
 #
@@ -191,7 +191,6 @@ jobs:
 #      volumes:
 #        - /usr/local/cargo/git:/usr/local/cargo/git
 #        - /usr/local/cargo/registry:/usr/local/cargo/registry
-##        - /usr/local/cargo/target-linux:/usr/local/cargo/target
 #        - /usr/local/sccache:/usr/local/sccache
 #        - /usr/local/rustup:/usr/local/rustup
 #        - /var/lib/docker:/var/lib/docker
@@ -243,7 +242,7 @@ jobs:
 #        with:
 #          name: melwalletd-linux-dev
 #          path: /usr/local/cargo/target/debug/melwalletd
-
+#
 #  melwalletd-build-macos:
 #    runs-on: self-hosted
 #
@@ -252,7 +251,6 @@ jobs:
 #      volumes:
 #        - /usr/local/cargo/git:/usr/local/cargo/git
 #        - /usr/local/cargo/registry:/usr/local/cargo/registry
-##        - /usr/local/cargo/target-macos:/usr/local/cargo/target
 #        - /usr/local/sccache:/usr/local/sccache
 #        - /usr/local/rustup:/usr/local/rustup
 #        - /var/lib/docker:/var/lib/docker
@@ -319,7 +317,7 @@ jobs:
 #        with:
 #          name: melwalletd-macos-dev
 #          path: /usr/local/cargo/target/x86_64-apple-darwin/debug/melwalletd
-
+#
 #  melwalletd-build-windows:
 #    runs-on: self-hosted
 #
@@ -328,7 +326,6 @@ jobs:
 #      volumes:
 #        - /usr/local/cargo/git:/usr/local/cargo/git
 #        - /usr/local/cargo/registry:/usr/local/cargo/registry
-##        - /usr/local/cargo/target-windows:/usr/local/cargo/target
 #        - /usr/local/sccache:/usr/local/sccache
 #        - /usr/local/rustup:/usr/local/rustup
 #        - /var/lib/docker:/var/lib/docker
@@ -368,7 +365,7 @@ jobs:
 #        with:
 #          name: melwalletd-windows-dev
 #          path: /usr/local/cargo/target/i686-pc-windows-gnu/debug/melwalletd.exe
-
+#
 #  ginkou-test:
 #    runs-on: self-hosted
 #

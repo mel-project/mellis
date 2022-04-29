@@ -119,7 +119,7 @@ jobs:
             /usr/local/rustup/toolchains/
             /usr/local/rustup/update-hashes/
             /usr/local/cargo/git/db/
-          key: ${{ runner.os }}-ginkou-loader-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}
+          key: ${{ runner.os }}-ginkou-loader
 
       - name: Add Default Toolchain
         run: rustup default stable

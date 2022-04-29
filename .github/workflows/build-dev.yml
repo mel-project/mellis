@@ -8,13 +8,12 @@ on:
 env:
   CARGO_TERM_COLOR: always
   CARGO_HOME: "/usr/local/cargo/"
-#  CARGO_TARGET_DIR: "/usr/local/cargo/target"
   RUSTUP_HOME: "/usr/local/rustup"
   SCCACHE_DIR: "/usr/local/sccache"
   RUSTC_WRAPPER: "/usr/local/bin/sccache"
   npm_config_cache: "/usr/local/npm-cache"
   YARN_CACHE_FOLDER: "/usr/local/npm-cache"
-#  WINEPREFIX: "/usr/local/wine"
+  WINEPREFIX: "/usr/local/wine"
 
 jobs:
   ginkou-loader-build-linux:
@@ -389,6 +388,8 @@ jobs:
 
     container:
       image: ghcr.io/themeliolabs/wine:latest
+      volumes:
+        - /usr/local/wine-cache:/usr/local/wine-cache
 
     needs:
       - ginkou-loader-build-windows

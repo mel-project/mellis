@@ -106,33 +106,36 @@ jobs:
       - name: Install SCCache
         run: brew install sccache
 
-      - name: Cache Rust
-        uses: actions/cache@v3
-        with:
-          path: |
-            /usr/local/cargo/bin/
-            /usr/local/cargo/registry/index/
-            /usr/local/cargo/registry/cache/
-            /usr/local/sccache
-            /usr/local/cargo/git/db/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}
+      - name: Show SCCache Path
+        run: which sccache
 
-      - name: Add Default Toolchain
-        run: rustup default stable
-
-      - name: Update Rust
-        run: rustup update
-
-      - name: Submodule Clone
-        run: git submodule update --init --recursive --remote ginkou-loader
-
-      - name: Build Ginkou-Loader
-        run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ginkou-loader-macos-dev
-          path: /usr/local/cargo/target/debug/ginkou-loader
+#      - name: Cache Rust
+#        uses: actions/cache@v3
+#        with:
+#          path: |
+#            /usr/local/cargo/bin/
+#            /usr/local/cargo/registry/index/
+#            /usr/local/cargo/registry/cache/
+#            /usr/local/sccache
+#            /usr/local/cargo/git/db/
+#          key: ${{ runner.os }}-cargo-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}
+#
+#      - name: Add Default Toolchain
+#        run: rustup default stable
+#
+#      - name: Update Rust
+#        run: rustup update
+#
+#      - name: Submodule Clone
+#        run: git submodule update --init --recursive --remote ginkou-loader
+#
+#      - name: Build Ginkou-Loader
+#        run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: ginkou-loader-macos-dev
+#          path: /Users/runner/work/mellis/mellis/ginkou-loader
 
 #  ginkou-loader-build-windows:
 #    runs-on: self-hosted

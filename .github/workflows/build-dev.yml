@@ -182,7 +182,7 @@ jobs:
         run: rustup target add i686-pc-windows-gnu
 
       - name: Build Ginkou-Loader
-        run: mold --run cargo build --locked --target=i686-pc-windows-gnu --manifest-path ginkou-loader/Cargo.toml
+        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path ginkou-loader/Cargo.toml
 
       - uses: actions/upload-artifact@v3
         with:

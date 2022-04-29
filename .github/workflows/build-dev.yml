@@ -107,6 +107,7 @@ jobs:
 
       - name: Cache Rust
         uses: actions/cache@v3
+        working-directory: ./ginkou-loader
         with:
           path: |
             /usr/local/cargo/bin/
@@ -116,7 +117,7 @@ jobs:
             /usr/local/rustup/toolchains/
             /usr/local/rustup/update-hashes/
             /usr/local/cargo/git/db/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('./ginkou-loader/Cargo.lock') }}
+          key: ${{ runner.os }}-ginkou-loader-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Add Default Toolchain
         run: rustup default stable

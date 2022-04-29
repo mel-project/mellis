@@ -58,8 +58,20 @@ jobs:
       - name: Clean Up Temporary SCCache Bits
         run: rm -rf sccache-v0.2.15-x86_64-unknown-linux-musl*
 
+      - name: Download Mold
+        run: wget https://github.com/rui314/mold/releases/download/v1.2.1/mold-1.2.1-x86_64-linux.tar.gz
+
+      - name: Extract Mold
+        run: tar -xf mold-1.2.1-x86_64-linux.tar.gz
+
+      - name: Copy Mold Files
+        run: cp -a mold-1.2.1-x86_64-linux/* /usr/local/
+
+      - name: Clean Up Temporary SCCache Bits
+        run: rm -rf mold-1.2.1-x86_64-linux
+
       - name: Build Ginkou-Loader
-        run: cargo build --target=x86_64-unknown-linux-gnu --locked --manifest-path ginkou-loader/Cargo.toml
+        run: mold --run cargo build --target=x86_64-unknown-linux-gnu --locked --manifest-path ginkou-loader/Cargo.toml
 
       - uses: actions/upload-artifact@v3
         with:

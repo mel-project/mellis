@@ -110,7 +110,6 @@ jobs:
 
       - name: Cache Rust
         uses: actions/cache@v3
-        working-directory: ./ginkou-loader
         with:
           path: |
             /usr/local/cargo/bin/

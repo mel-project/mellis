@@ -139,7 +139,7 @@ jobs:
       volumes:
         - /usr/local/cargo/git:/usr/local/cargo/git
         - /usr/local/cargo/registry:/usr/local/cargo/registry
-#        - /usr/local/cargo/target-linux:/usr/local/cargo/target
+        - /usr/local/cargo/target-linux:/usr/local/cargo/target
         - /usr/local/rustup:/usr/local/rustup
         - /var/lib/docker:/var/lib/docker
 

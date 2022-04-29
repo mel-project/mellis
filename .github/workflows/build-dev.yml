@@ -8,8 +8,10 @@ on:
 env:
   CARGO_TERM_COLOR: always
   CARGO_HOME: "/usr/local/cargo/"
-  CARGO_TARGET_DIR: "/usr/local/cargo/target"
+#  CARGO_TARGET_DIR: "/usr/local/cargo/target"
   RUSTUP_HOME: "/usr/local/rustup"
+  SCCACHE_DIR: "/usr/local/sccache"
+  RUSTC_WRAPPER: "/usr/local/bin/sccache"
   npm_config_cache: "/usr/local/npm-cache"
   YARN_CACHE_FOLDER: "/usr/local/npm-cache"
 #  WINEPREFIX: "/usr/local/wine"
@@ -23,7 +25,8 @@ jobs:
       volumes:
         - /usr/local/cargo/git:/usr/local/cargo/git
         - /usr/local/cargo/registry:/usr/local/cargo/registry
-        - /usr/local/cargo/target-linux:/usr/local/cargo/target
+#        - /usr/local/cargo/target-linux:/usr/local/cargo/target
+        - /usr/local/sccache:/usr/local/sccache
         - /usr/local/rustup:/usr/local/rustup
         - /var/lib/docker:/var/lib/docker
 
@@ -39,6 +42,21 @@ jobs:
 
       - name: Update Rust
         run: rustup update
+
+      - name: Download SCCache
+        run: wget https://github.com/mozilla/sccache/releases/download/v0.2.15/sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz
+
+      - name: Extract SCCache
+        run: tar -xf sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz
+
+      - name: Move SCCache
+        run: mv sccache-v0.2.15-x86_64-unknown-linux-musl/sccache /usr/local/bin/sccache
+
+      - name: Make SCCache Executable
+        run: chmod +x /usr/local/bin/sccache
+
+      - name: Clean Up Temporary SCCache Bits
+        run: rm -rf sccache-v0.2.15-x86_64-unknown-linux-musl*
 
       - name: Build Ginkou-Loader
         run: cargo build --target=x86_64-unknown-linux-gnu --locked --manifest-path ginkou-loader/Cargo.toml

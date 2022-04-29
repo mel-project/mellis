@@ -84,6 +84,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Submodule Clone
+        run: git submodule update --init --recursive --remote ginkou-loader
+
       - name: Create Cargo Home
         run: sudo mkdir -p /usr/local/cargo
 
@@ -117,16 +120,13 @@ jobs:
             /usr/local/rustup/toolchains/
             /usr/local/rustup/update-hashes/
             /usr/local/cargo/git/db/
-          key: ${{ runner.os }}-ginkou-loader-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-ginkou-loader-${{ hashFiles('**/ginkou-loader/Cargo.lock') }}
 
       - name: Add Default Toolchain
         run: rustup default stable
 
       - name: Update Rust
         run: rustup update
-
-      - name: Submodule Clone
-        run: git submodule update --init --recursive --remote ginkou-loader
 
       - name: Build Ginkou-Loader
         run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml

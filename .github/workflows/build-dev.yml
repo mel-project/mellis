@@ -17,106 +17,11 @@ env:
 #  WINEPREFIX: "/usr/local/wine"
 
 jobs:
-  ginkou-loader-build-linux:
-    runs-on: self-hosted
-
-    container:
-      image: ghcr.io/themeliolabs/rust-gtk:latest
-      volumes:
-        - /usr/local/cargo/git:/usr/local/cargo/git
-        - /usr/local/cargo/registry:/usr/local/cargo/registry
-        - /usr/local/sccache:/usr/local/sccache
-        - /usr/local/rustup:/usr/local/rustup
-        - /var/lib/docker:/var/lib/docker
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Submodule Clone
-        run: git submodule update --init --recursive --remote ginkou-loader
-
-      - name: Install default toolchain
-        run: rustup default stable
-
-      - name: Update Rust
-        run: rustup update
-
-      - uses: themeliolabs/actions-sccache@v1
-
-      - uses: themeliolabs/actions-mold@v1
-
-      - name: Build Ginkou-Loader
-        run: mold --run cargo build --target=x86_64-unknown-linux-gnu --locked --manifest-path ginkou-loader/Cargo.toml
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ginkou-loader-linux-dev
-          path: ginkou-loader/target/x86_64-unknown-linux-gnu/debug/ginkou-loader
-
-#  ginkou-loader-build-macos:
-#    runs-on: macos-latest
-#
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#
-#      - name: Submodule Clone
-#        run: git submodule update --init --recursive --remote ginkou-loader
-#
-#      - name: Create Cargo Home
-#        run: sudo mkdir -p /usr/local/cargo
-#
-#      - name: Change Cargo Home Ownership
-#        run: sudo chown $USER /usr/local/cargo
-#
-#      - name: Create Rustup Directory
-#        run: sudo mkdir -p /usr/local/rustup
-#
-#      - name: Change Rustup Directory Ownership
-#        run: sudo chown $USER /usr/local/rustup
-#
-#      - name: Create SCCache Directory
-#        run: sudo mkdir -p /usr/local/sccache
-#
-#      - name: Change SCCache Directory Ownership
-#        run: sudo chown $USER /usr/local/sccache
-#
-#      - name: Install SCCache
-#        run: brew install sccache
-#
-#      - name: Cache Rust
-#        uses: actions/cache@v3
-#        with:
-#          path: |
-#            /usr/local/cargo/bin/
-#            /usr/local/cargo/registry/index/
-#            /usr/local/cargo/registry/cache/
-#            /usr/local/sccache
-#            /usr/local/rustup/toolchains/
-#            /usr/local/rustup/update-hashes/
-#            /usr/local/cargo/git/db/
-#          key: ${{ runner.os }}-ginkou-loader
-#
-#      - name: Add Default Toolchain
-#        run: rustup default stable
-#
-#      - name: Update Rust
-#        run: rustup update
-#
-#      - name: Build Ginkou-Loader
-#        run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
-#
-#      - uses: actions/upload-artifact@v3
-#        with:
-#          name: ginkou-loader-macos-dev
-#          path: ginkou-loader/target/debug/ginkou-loader
-
-#  ginkou-loader-build-windows:
+#  ginkou-loader-build-linux:
 #    runs-on: self-hosted
 #
 #    container:
-#      image: ghcr.io/themeliolabs/windows-32-bit:latest
+#      image: ghcr.io/themeliolabs/rust-gtk:latest
 #      volumes:
 #        - /usr/local/cargo/git:/usr/local/cargo/git
 #        - /usr/local/cargo/registry:/usr/local/cargo/registry
@@ -131,35 +36,117 @@ jobs:
 #      - name: Submodule Clone
 #        run: git submodule update --init --recursive --remote ginkou-loader
 #
-#      - name: Add Default Toolchain
+#      - name: Install default toolchain
 #        run: rustup default stable
 #
-#      - name: Download SCCache
-#        run: wget https://github.com/mozilla/sccache/releases/download/v0.2.15/sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz
+#      - name: Update Rust
+#        run: rustup update
 #
-#      - name: Extract SCCache
-#        run: tar -xf sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz
+#      - uses: themeliolabs/actions-sccache@v1
 #
-#      - name: Move SCCache
-#        run: mv sccache-v0.2.15-x86_64-unknown-linux-musl/sccache /usr/local/bin/sccache
-#
-#      - name: Make SCCache Executable
-#        run: chmod +x /usr/local/bin/sccache
-#
-#      - name: Clean Up Temporary SCCache Bits
-#        run: rm -rf sccache-v0.2.15-x86_64-unknown-linux-musl*
-#
-#      - name: Add Windows 32-Bit Toolchain
-#        run: rustup target add i686-pc-windows-gnu
+#      - uses: themeliolabs/actions-mold@v1
 #
 #      - name: Build Ginkou-Loader
-#        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path ginkou-loader/Cargo.toml
+#        run: mold --run cargo build --target=x86_64-unknown-linux-gnu --locked --manifest-path ginkou-loader/Cargo.toml
 #
 #      - uses: actions/upload-artifact@v3
 #        with:
-#          name: ginkou-loader-windows-dev
-#          path: /usr/local/cargo/target/i686-pc-windows-gnu/debug/ginkou-loader.exe
-#
+#          name: ginkou-loader-linux-dev
+#          path: ginkou-loader/target/x86_64-unknown-linux-gnu/debug/ginkou-loader
+
+  ginkou-loader-build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Submodule Clone
+        run: git submodule update --init --recursive --remote ginkou-loader
+
+      - name: Create Cargo Home
+        run: sudo mkdir -p /usr/local/cargo
+
+      - name: Change Cargo Home Ownership
+        run: sudo chown $USER /usr/local/cargo
+
+      - name: Create Rustup Directory
+        run: sudo mkdir -p /usr/local/rustup
+
+      - name: Change Rustup Directory Ownership
+        run: sudo chown $USER /usr/local/rustup
+
+      - name: Create SCCache Directory
+        run: sudo mkdir -p /usr/local/sccache
+
+      - name: Change SCCache Directory Ownership
+        run: sudo chown $USER /usr/local/sccache
+
+      - name: Install SCCache
+        run: brew install sccache
+
+      - name: Cache Rust
+        uses: actions/cache@v3
+        with:
+          path: |
+            /usr/local/cargo/bin/
+            /usr/local/cargo/registry/index/
+            /usr/local/cargo/registry/cache/
+            /usr/local/sccache
+            /usr/local/rustup/toolchains/
+            /usr/local/rustup/update-hashes/
+            /usr/local/cargo/git/db/
+          key: ${{ runner.os }}-ginkou-loader
+
+      - name: Add Default Toolchain
+        run: rustup default stable
+
+      - name: Update Rust
+        run: rustup update
+
+      - name: Build Ginkou-Loader
+        run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ginkou-loader-macos-dev
+          path: ginkou-loader/target/debug/ginkou-loader
+
+  ginkou-loader-build-windows:
+    runs-on: self-hosted
+
+    container:
+      image: ghcr.io/themeliolabs/windows-32-bit:latest
+      volumes:
+        - /usr/local/cargo/git:/usr/local/cargo/git
+        - /usr/local/cargo/registry:/usr/local/cargo/registry
+        - /usr/local/sccache:/usr/local/sccache
+        - /usr/local/rustup:/usr/local/rustup
+        - /var/lib/docker:/var/lib/docker
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Submodule Clone
+        run: git submodule update --init --recursive --remote ginkou-loader
+
+      - name: Add Default Toolchain
+        run: rustup default stable
+
+      - uses: themeliolabs/actions-sccache@v1
+
+      - name: Add Windows 32-Bit Toolchain
+        run: rustup target add i686-pc-windows-gnu
+
+      - name: Build Ginkou-Loader
+        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path ginkou-loader/Cargo.toml
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ginkou-loader-windows-dev
+          path: ginkou-loader/target/i686-pc-windows-gnu/debug/ginkou-loader.exe
+
 #  melwalletd-build-linux:
 #    runs-on: self-hosted
 #
@@ -185,40 +172,17 @@ jobs:
 #      - name: Update Rust
 #        run: rustup update
 #
-#      - name: Download SCCache
-#        run: wget https://github.com/mozilla/sccache/releases/download/v0.2.15/sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz
+#      - uses: themeliolabs/actions-sccache@v1
 #
-#      - name: Extract SCCache
-#        run: tar -xf sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz
-#
-#      - name: Move SCCache
-#        run: mv sccache-v0.2.15-x86_64-unknown-linux-musl/sccache /usr/local/bin/sccache
-#
-#      - name: Make SCCache Executable
-#        run: chmod +x /usr/local/bin/sccache
-#
-#      - name: Clean Up Temporary SCCache Bits
-#        run: rm -rf sccache-v0.2.15-x86_64-unknown-linux-musl*
-#
-#      - name: Download Mold
-#        run: wget https://github.com/rui314/mold/releases/download/v1.2.1/mold-1.2.1-x86_64-linux.tar.gz
-#
-#      - name: Extract Mold
-#        run: tar -xf mold-1.2.1-x86_64-linux.tar.gz
-#
-#      - name: Copy Mold Files
-#        run: cp -a mold-1.2.1-x86_64-linux/* /usr/local/
-#
-#      - name: Clean Up Temporary Mold Bits
-#        run: rm -rf mold-1.2.1-x86_64-linux
+#      - uses: themeliolabs/actions-mold@v1
 #
 #      - name: Build MelwalletD
-#        run: mold --run cargo build --locked --manifest-path melwalletd/Cargo.toml
+#        run: mold --run cargo build --target=x86_64-unknown-linux-gnu --locked --manifest-path melwalletd/Cargo.toml
 #
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: melwalletd-linux-dev
-#          path: /usr/local/cargo/target/debug/melwalletd
+#          path: melwalletd/target/x86_64-unknown-linux-gnu/debug/melwalletd
 #
 #  melwalletd-build-macos:
 #    runs-on: self-hosted
@@ -254,32 +218,9 @@ jobs:
 #      - name: Install Wget
 #        run: apt install -y wget
 #
-#      - name: Download SCCache
-#        run: wget https://github.com/mozilla/sccache/releases/download/v0.2.15/sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz
+#      - uses: themeliolabs/actions-sccache@v1
 #
-#      - name: Extract SCCache
-#        run: tar -xf sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz
-#
-#      - name: Move SCCache
-#        run: mv sccache-v0.2.15-x86_64-unknown-linux-musl/sccache /usr/local/bin/sccache
-#
-#      - name: Make SCCache Executable
-#        run: chmod +x /usr/local/bin/sccache
-#
-#      - name: Clean Up Temporary SCCache Bits
-#        run: rm -rf sccache-v0.2.15-x86_64-unknown-linux-musl*
-#
-#      - name: Download Mold
-#        run: wget https://github.com/rui314/mold/releases/download/v1.2.1/mold-1.2.1-x86_64-linux.tar.gz
-#
-#      - name: Extract Mold
-#        run: tar -xf mold-1.2.1-x86_64-linux.tar.gz
-#
-#      - name: Copy Mold Files
-#        run: cp -a mold-1.2.1-x86_64-linux/* /usr/local/
-#
-#      - name: Clean Up Temporary Mold Bits
-#        run: rm -rf mold-1.2.1-x86_64-linux
+#      - uses: themeliolabs/actions-mold@v1
 #
 #      - name: Build MelwalletD
 #        env:
@@ -293,7 +234,7 @@ jobs:
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: melwalletd-macos-dev
-#          path: /usr/local/cargo/target/x86_64-apple-darwin/debug/melwalletd
+#          path: melwalletd/target/x86_64-apple-darwin/debug/melwalletd
 #
 #  melwalletd-build-windows:
 #    runs-on: self-hosted
@@ -320,20 +261,7 @@ jobs:
 #      - name: Add Windows 32-Bit Toolchain
 #        run: rustup target add i686-pc-windows-gnu
 #
-#      - name: Download SCCache
-#        run: wget https://github.com/mozilla/sccache/releases/download/v0.2.15/sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz
-#
-#      - name: Extract SCCache
-#        run: tar -xf sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz
-#
-#      - name: Move SCCache
-#        run: mv sccache-v0.2.15-x86_64-unknown-linux-musl/sccache /usr/local/bin/sccache
-#
-#      - name: Make SCCache Executable
-#        run: chmod +x /usr/local/bin/sccache
-#
-#      - name: Clean Up Temporary SCCache Bits
-#        run: rm -rf sccache-v0.2.15-x86_64-unknown-linux-musl*
+#      - uses: themeliolabs/actions-sccache@v1
 #
 #      - name: Build MelwalletD
 #        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path melwalletd/Cargo.toml
@@ -341,8 +269,8 @@ jobs:
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: melwalletd-windows-dev
-#          path: /usr/local/cargo/target/i686-pc-windows-gnu/debug/melwalletd.exe
-#
+#          path: melwalletd/target/i686-pc-windows-gnu/debug/melwalletd.exe
+
 #  ginkou-test:
 #    runs-on: self-hosted
 #

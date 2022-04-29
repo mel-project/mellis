@@ -419,9 +419,6 @@ jobs:
       - name: Move MelwalletD Into The Artifacts Directory
         run: mv melwalletd.exe windows/artifacts/
 
-      - name: Create Wine Directory
-        run: mkdir -p ~/.wine
-
       - name: Create Windows Installer
         run: wine /usr/local/iscc/ISCC.exe windows/setup.iss
 

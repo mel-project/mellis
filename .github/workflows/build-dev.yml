@@ -465,17 +465,17 @@ jobs:
       - name: Create Empty MelwalletD
         run: touch /tmp/melwalletd
 
-#      - name: Copy Flatpak-Builder Cache To Current Job
-#        run: cp -a /usr/local/flatpak-cache/.flatpak-builder ./.flatpak-builder || echo "Flatpak-Builder cache does not exist."
+      - name: Copy Flatpak-Builder Cache To Current Job
+        run: cp -a /usr/local/flatpak-cache/.flatpak-builder ./.flatpak-builder || echo "Flatpak-Builder cache does not exist."
 
-      - name: Create Empty Flatpak-Builder Directory
-        run: mkdir .flatpak-builder
-
-      - name: Symlink Flatpak-Builder Cache To Current Job
-        run: ln -s /usr/local/flatpak-cache/ ./.flatpak-builder
-
-      - name: List Current Flatpak-Builder Cache
-        run: ls -la ./.flatpak-builder
+#      - name: Create Empty Flatpak-Builder Directory
+#        run: mkdir .flatpak-builder
+#
+#      - name: Symlink Flatpak-Builder Cache To Current Job
+#        run: ln -s /usr/local/flatpak-cache/ ./.flatpak-builder
+#
+#      - name: List Current Flatpak-Builder Cache
+#        run: ls -la ./.flatpak-builder
 
       - name: Add Flathub Repository
         run: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -486,11 +486,11 @@ jobs:
           cache: false
           manifest-path: flatpak/org.themelio.Wallet-ci.yml
 
-#      - name: Remove Current Flatpak-Builder Cache
-#        run: rm -rf /usr/local/flatpak-cache/.flatpak-builder
+      - name: Remove Current Flatpak-Builder Cache
+        run: rm -rf /usr/local/flatpak-cache/.flatpak-builder
 
-#      - name: Copy Flatpak-Builder Cache
-#        run: cp -a ./.flatpak-builder /usr/local/flatpak-cache/.flatpak-builder
+      - name: Copy Flatpak-Builder Cache
+        run: cp -a ./.flatpak-builder /usr/local/flatpak-cache/.flatpak-builder
 
       - uses: actions/upload-artifact@v3
         with:

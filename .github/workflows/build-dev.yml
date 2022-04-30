@@ -26,7 +26,7 @@ jobs:
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
         - /usr/local/rustup:/usr/local/rustup
-        - /var/lib/docker:/var/lib/docker
+#        - /var/lib/docker:/var/lib/docker
 
     steps:
       - name: Checkout repository
@@ -121,7 +121,7 @@ jobs:
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
         - /usr/local/rustup:/usr/local/rustup
-        - /var/lib/docker:/var/lib/docker
+#        - /var/lib/docker:/var/lib/docker
 
     steps:
       - name: Checkout repository
@@ -156,7 +156,7 @@ jobs:
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
         - /usr/local/rustup:/usr/local/rustup
-        - /var/lib/docker:/var/lib/docker
+#        - /var/lib/docker:/var/lib/docker
 
     steps:
       - name: Checkout repository
@@ -193,7 +193,7 @@ jobs:
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
         - /usr/local/rustup:/usr/local/rustup
-        - /var/lib/docker:/var/lib/docker
+#        - /var/lib/docker:/var/lib/docker
 
     steps:
       - name: Checkout repository
@@ -245,7 +245,7 @@ jobs:
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
         - /usr/local/rustup:/usr/local/rustup
-        - /var/lib/docker:/var/lib/docker
+#        - /var/lib/docker:/var/lib/docker
 
     steps:
       - name: Checkout repository
@@ -277,7 +277,7 @@ jobs:
       image: node:latest
       volumes:
         - /usr/local/npm-cache:/usr/local/npm-cache
-        - /var/lib/docker:/var/lib/docker
+#        - /var/lib/docker:/var/lib/docker
 
     steps:
       - name: Checkout repository
@@ -299,7 +299,7 @@ jobs:
       image: node:latest
       volumes:
         - /usr/local/npm-cache:/usr/local/npm-cache
-        - /var/lib/docker:/var/lib/docker
+#        - /var/lib/docker:/var/lib/docker
 
     needs:
       - ginkou-test
@@ -390,7 +390,7 @@ jobs:
       image: ghcr.io/themeliolabs/wine:latest
       volumes:
         - /usr/local/wine-cache:/usr/local/wine-cache
-        - /var/lib/docker:/var/lib/docker
+#        - /var/lib/docker:/var/lib/docker
 
     needs:
       - ginkou-loader-build-windows
@@ -436,7 +436,7 @@ jobs:
       options: --privileged
       volumes:
         - /usr/local/flatpak-cache:/usr/local/flatpak-cache
-        - /var/lib/docker:/var/lib/docker
+#        - /var/lib/docker:/var/lib/docker
 
     needs:
       - ginkou-loader-build-linux

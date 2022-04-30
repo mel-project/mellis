@@ -477,6 +477,9 @@ jobs:
       - name: Remove Current Flatpak-Builder Cache
         run: rm -rf /usr/local/flatpak-cache/.flatpak-builder
 
+      - name: List Current Flatpak-Builder Cache
+        run: ls -la ./.flatpak-builder
+
       - name: Copy Flatpak-Builder Cache
         run: cp -a ./.flatpak-builder /usr/local/flatpak-cache/.flatpak-builder
 

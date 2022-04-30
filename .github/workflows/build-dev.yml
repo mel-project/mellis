@@ -474,6 +474,9 @@ jobs:
       - name: Symlink Flatpak-Builder Cache To Current Job
         run: ln -s /usr/local/flatpak-cache/ ./.flatpak-builder
 
+      - name: List Current Flatpak-Builder Cache
+        run: ls -la ./.flatpak-builder
+
       - name: Add Flathub Repository
         run: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
@@ -485,9 +488,6 @@ jobs:
 
 #      - name: Remove Current Flatpak-Builder Cache
 #        run: rm -rf /usr/local/flatpak-cache/.flatpak-builder
-
-      - name: List Current Flatpak-Builder Cache
-        run: ls -la ./.flatpak-builder
 
 #      - name: Copy Flatpak-Builder Cache
 #        run: cp -a ./.flatpak-builder /usr/local/flatpak-cache/.flatpak-builder

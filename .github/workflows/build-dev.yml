@@ -456,6 +456,9 @@ jobs:
 #      - name: Copy Flatpak-Builder Cache To Current Job
 #        run: cp -a /usr/local/flatpak-cache/.flatpak-builder ./.flatpak-builder || echo "Flatpak-Builder cache does not exist."
 
+      - name: Create Empty Flatpak-Builder Directory
+        run: mkdir .flatpak-builder
+
       - name: Symlink Flatpak-Builder Cache To Current Job
         run: ln -s /usr/local/flatpak-cache/ ./.flatpak-builder
 

@@ -26,7 +26,6 @@ jobs:
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
         - /usr/local/rustup:/usr/local/rustup
-#        - /var/lib/docker:/var/lib/docker
 
     steps:
       - name: Checkout repository
@@ -121,7 +120,6 @@ jobs:
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
         - /usr/local/rustup:/usr/local/rustup
-#        - /var/lib/docker:/var/lib/docker
 
     steps:
       - name: Checkout repository
@@ -156,7 +154,6 @@ jobs:
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
         - /usr/local/rustup:/usr/local/rustup
-#        - /var/lib/docker:/var/lib/docker
 
     steps:
       - name: Checkout repository
@@ -193,7 +190,6 @@ jobs:
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
         - /usr/local/rustup:/usr/local/rustup
-#        - /var/lib/docker:/var/lib/docker
 
     steps:
       - name: Checkout repository
@@ -245,7 +241,6 @@ jobs:
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
         - /usr/local/rustup:/usr/local/rustup
-#        - /var/lib/docker:/var/lib/docker
 
     steps:
       - name: Checkout repository
@@ -277,7 +272,6 @@ jobs:
       image: node:latest
       volumes:
         - /usr/local/npm-cache:/usr/local/npm-cache
-#        - /var/lib/docker:/var/lib/docker
 
     steps:
       - name: Checkout repository
@@ -299,7 +293,6 @@ jobs:
       image: node:latest
       volumes:
         - /usr/local/npm-cache:/usr/local/npm-cache
-#        - /var/lib/docker:/var/lib/docker
 
     needs:
       - ginkou-test
@@ -390,7 +383,6 @@ jobs:
       image: ghcr.io/themeliolabs/wine:latest
       volumes:
         - /usr/local/wine-cache:/usr/local/wine-cache
-#        - /var/lib/docker:/var/lib/docker
 
     needs:
       - ginkou-loader-build-windows
@@ -436,7 +428,6 @@ jobs:
       options: --privileged
       volumes:
         - /usr/local/flatpak-cache:/usr/local/flatpak-cache
-#        - /var/lib/docker:/var/lib/docker
 
     needs:
       - ginkou-loader-build-linux
@@ -462,8 +453,11 @@ jobs:
           name: ginkou-public-dev
           path: /tmp/public
 
-      - name: Copy Flatpak-Builder Cache To Current Job
-        run: cp -a /usr/local/flatpak-cache/.flatpak-builder ./.flatpak-builder || echo "Flatpak-Builder cache does not exist."
+#      - name: Copy Flatpak-Builder Cache To Current Job
+#        run: cp -a /usr/local/flatpak-cache/.flatpak-builder ./.flatpak-builder || echo "Flatpak-Builder cache does not exist."
+
+      - name: Symlink Flatpak-Builder Cache To Current Job
+        run: ln -s /usr/local/flatpak-cache/ ./.flatpak-builder
 
       - name: Add Flathub Repository
         run: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -474,14 +468,14 @@ jobs:
           cache: false
           manifest-path: flatpak/org.themelio.Wallet-ci.yml
 
-      - name: Remove Current Flatpak-Builder Cache
-        run: rm -rf /usr/local/flatpak-cache/.flatpak-builder
+#      - name: Remove Current Flatpak-Builder Cache
+#        run: rm -rf /usr/local/flatpak-cache/.flatpak-builder
 
       - name: List Current Flatpak-Builder Cache
         run: ls -la ./.flatpak-builder
 
-      - name: Copy Flatpak-Builder Cache
-        run: cp -a ./.flatpak-builder /usr/local/flatpak-cache/.flatpak-builder
+#      - name: Copy Flatpak-Builder Cache
+#        run: cp -a ./.flatpak-builder /usr/local/flatpak-cache/.flatpak-builder
 
       - uses: actions/upload-artifact@v3
         with:

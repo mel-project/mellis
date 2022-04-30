@@ -390,6 +390,7 @@ jobs:
       image: ghcr.io/themeliolabs/wine:latest
       volumes:
         - /usr/local/wine-cache:/usr/local/wine-cache
+        - /var/lib/docker:/var/lib/docker
 
     needs:
       - ginkou-loader-build-windows
@@ -435,6 +436,7 @@ jobs:
       options: --privileged
       volumes:
         - /usr/local/flatpak-cache:/usr/local/flatpak-cache
+        - /var/lib/docker:/var/lib/docker
 
     needs:
       - ginkou-loader-build-linux

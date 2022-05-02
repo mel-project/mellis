@@ -16,25 +16,25 @@ env:
   WINEPREFIX: "/usr/local/wine"
 
 jobs:
-  testy:
-    runs-on: self-hosted
-
+#  testy:
+#    runs-on: self-hosted
+#
 #    container:
 #      image: ghcr.io/themeliolabs/rust-gtk:latest
-
-    steps:
-      - name: Docker Images
-        run: docker images
-
-#      - name: Docker Images (Network, Insecure)
-#        env:
-#          DOCKER_HOST: "tcp://docker:2375"
+#
+#    steps:
+#      - name: Docker Images
 #        run: docker images
-
-#      - name: Docker Images (Network, Secure)
-#        env:
-#          DOCKER_HOST: "tcp://docker:2376"
-#        run: docker images
+#
+##      - name: Docker Images (Network, Insecure)
+##        env:
+##          DOCKER_HOST: "tcp://docker:2375"
+##        run: docker images
+#
+##      - name: Docker Images (Network, Secure)
+##        env:
+##          DOCKER_HOST: "tcp://docker:2376"
+##        run: docker images
 
 #  ginkou-loader-build-linux:
 #    runs-on: self-hosted
@@ -440,79 +440,80 @@ jobs:
 #          name: mellis-windows-installer-dev
 #          path: windows/Output/mellis-windows-setup.exe
 
-#  mellis-create-flatpak:
-#    runs-on: self-hosted
+  mellis-create-flatpak:
+    runs-on: self-hosted
+
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:gnome-40
+      options: --privileged
+      volumes:
+        - /usr/local/flatpak-cache:/usr/local/flatpak-cache
+        - /var/lib/docker:/var/lib/docker
+
+#    needs:
+#      - ginkou-loader-build-linux
+#      - melwalletd-build-linux
+#      - ginkou-build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: ginkou-loader-linux-dev
+#          path: /tmp
 #
-#    container:
-#      image: bilelmoussaoui/flatpak-github-actions:gnome-40
-#      options: --privileged
-#      volumes:
-#        - /usr/local/flatpak-cache:/usr/local/flatpak-cache
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: melwalletd-linux-dev
+#          path: /tmp
 #
-##    needs:
-##      - ginkou-loader-build-linux
-##      - melwalletd-build-linux
-##      - ginkou-build
-#
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#
-##      - uses: actions/download-artifact@v3
-##        with:
-##          name: ginkou-loader-linux-dev
-##          path: /tmp
-##
-##      - uses: actions/download-artifact@v3
-##        with:
-##          name: melwalletd-linux-dev
-##          path: /tmp
-##
-##      - uses: actions/download-artifact@v3
-##        with:
-##          name: ginkou-public-dev
-##          path: /tmp/public
-#
-#      - name: Create Empty Public Directory
-#        run: mkdir /tmp/public
-#
-#      - name: Create Empty File
-#        run: touch /tmp/public/empty
-#
-#      - name: Create Empty Ginkou-Loader
-#        run: touch /tmp/ginkou-loader
-#
-#      - name: Create Empty MelwalletD
-#        run: touch /tmp/melwalletd
-#
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: ginkou-public-dev
+#          path: /tmp/public
+
+      - name: Create Empty Public Directory
+        run: mkdir /tmp/public
+
+      - name: Create Empty File
+        run: touch /tmp/public/empty
+
+      - name: Create Empty Ginkou-Loader
+        run: touch /tmp/ginkou-loader
+
+      - name: Create Empty MelwalletD
+        run: touch /tmp/melwalletd
+
 #      - name: Create Empty Flatpak-Builder Directory
 #        run: mkdir .flatpak-builder
 #
 #      - name: Copy Flatpak-Builder Cache To Current Job
 #        run: cp -a /usr/local/flatpak-cache/* .flatpak-builder/ || echo "Flatpak-Builder cache does not exist."
-#
-##      - name: Symlink Flatpak-Builder Cache To Current Job
-##        run: ln -s /usr/local/flatpak-cache/ ./.flatpak-builder
-#
-#      - name: Add Flathub Repository
-#        run: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-#
-#      - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
-#        with:
-#          bundle: mellis.flatpak
-#          cache: false
-#          manifest-path: flatpak/org.themelio.Wallet-ci.yml
-#
-#      - name: List Current Flatpak-Builder Cache
-#        run: ls -la .flatpak-builder
-#
+
+#      - name: Symlink Flatpak-Builder Cache To Current Job
+#        run: ln -s /usr/local/flatpak-cache/ ./.flatpak-builder
+
+      - name: Add Flathub Repository
+        run: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+      - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+        with:
+          bundle: mellis.flatpak
+          cache: false
+          manifest-path: flatpak/org.themelio.Wallet-ci.yml
+
+      - name: List Current Flatpak-Builder Cache
+        run: ls -la .flatpak-builder
+
 #      - name: Remove Current Flatpak-Builder Cache
 #        run: rm -rf /usr/local/flatpak-cache/*
 #
 #      - name: Copy Flatpak-Builder Cache
 #        run: cp -a .flatpak-builder/* /usr/local/flatpak-cache/
-#
-#      - uses: actions/upload-artifact@v3
-#        with:
-#          name: mellis-flatpak-dev
-#          path: mellis.flatpak
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: mellis-flatpak-dev
+          path: mellis.flatpak

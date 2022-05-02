@@ -26,10 +26,10 @@ jobs:
       - name: Docker Images
         run: docker images
 
-      - name: Docker Images (Network, Insecure)
-        env:
-          DOCKER_HOST: "tcp://docker:2375"
-        run: docker images
+#      - name: Docker Images (Network, Insecure)
+#        env:
+#          DOCKER_HOST: "tcp://docker:2375"
+#        run: docker images
 
       - name: Docker Images (Network, Secure)
         env:

@@ -486,6 +486,9 @@ jobs:
       - name: Create Empty MelwalletD
         run: touch /tmp/melwalletd
 
+      - name: List Current Flatpak-Builder PV Cache
+        run: ls -la /usr/local/flatpak-cache
+
 #      - name: Create Empty Flatpak-Builder Directory
 #        run: mkdir .flatpak-builder
 #

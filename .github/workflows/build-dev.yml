@@ -19,8 +19,8 @@ jobs:
   testy:
     runs-on: self-hosted
 
-    container:
-      image: ghcr.io/themeliolabs/rust-gtk:latest
+#    container:
+#      image: ghcr.io/themeliolabs/rust-gtk:latest
 
     steps:
       - name: Docker Images

@@ -16,51 +16,51 @@ env:
   WINEPREFIX: "/usr/local/wine"
 
 jobs:
-  testy:
-    runs-on: self-hosted
-
-    container:
-      image: ghcr.io/themeliolabs/rust-gtk:latest
-
-    steps:
-      - name: Echo
-        run: echo "Done"
-
-#  ginkou-loader-build-linux:
+#  testy:
 #    runs-on: self-hosted
 #
 #    container:
 #      image: ghcr.io/themeliolabs/rust-gtk:latest
-#      volumes:
-#        - /usr/local/cargo/git:/usr/local/cargo/git
-#        - /usr/local/cargo/registry:/usr/local/cargo/registry
-#        - /usr/local/sccache:/usr/local/sccache
-#        - /usr/local/rustup:/usr/local/rustup
 #
 #    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#
-#      - name: Submodule Clone
-#        run: git submodule update --init --recursive --remote ginkou-loader
-#
-#      - name: Install default toolchain
-#        run: rustup default stable
-#
-#      - name: Update Rust
-#        run: rustup update
-#
-#      - uses: themeliolabs/actions-sccache@v1
-#
-#      - uses: themeliolabs/actions-mold@v1
-#
-#      - name: Build Ginkou-Loader
-#        run: mold --run cargo build --target=x86_64-unknown-linux-gnu --locked --manifest-path ginkou-loader/Cargo.toml
-#
-#      - uses: actions/upload-artifact@v3
-#        with:
-#          name: ginkou-loader-linux-dev
-#          path: ginkou-loader/target/x86_64-unknown-linux-gnu/debug/ginkou-loader
+#      - name: Echo
+#        run: echo "Done"
+
+  ginkou-loader-build-linux:
+    runs-on: self-hosted
+
+    container:
+      image: ghcr.io/themeliolabs/rust-gtk:latest
+      volumes:
+        - /usr/local/cargo/git:/usr/local/cargo/git
+        - /usr/local/cargo/registry:/usr/local/cargo/registry
+        - /usr/local/sccache:/usr/local/sccache
+        - /usr/local/rustup:/usr/local/rustup
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Submodule Clone
+        run: git submodule update --init --recursive --remote ginkou-loader
+
+      - name: Install default toolchain
+        run: rustup default stable
+
+      - name: Update Rust
+        run: rustup update
+
+      - uses: themeliolabs/actions-sccache@v1
+
+      - uses: themeliolabs/actions-mold@v1
+
+      - name: Build Ginkou-Loader
+        run: mold --run cargo build --target=x86_64-unknown-linux-gnu --locked --manifest-path ginkou-loader/Cargo.toml
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ginkou-loader-linux-dev
+          path: ginkou-loader/target/x86_64-unknown-linux-gnu/debug/ginkou-loader
 
 #  ginkou-loader-build-macos:
 #    runs-on: macos-latest

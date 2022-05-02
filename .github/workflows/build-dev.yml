@@ -19,6 +19,9 @@ jobs:
   testy:
     runs-on: self-hosted
 
+    container:
+      image: ghcr.io/themeliolabs/rust-gtk:latest
+
     steps:
       - name: Echo
         run: echo "Done"

@@ -57,7 +57,7 @@ modules:
       - "mkdir -p /app/share/icons/hicolor/"
       - "mv flatpak/icons/*x* /app/share/icons/hicolor/"
       - "mkdir -p /app/share/applications"
-      - "cp flatpak/icons/org.themelio.Wallet.desktop /app/share/applications"
+      - "mv flatpak/icons/org.themelio.Wallet.desktop /app/share/applications"
 
 build-options:
   build-args:

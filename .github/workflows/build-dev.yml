@@ -130,12 +130,12 @@ jobs:
         run: cargo build --locked --manifest-path ginkou-loader/Cargo.toml
 
       - name: Create Ginkou-Loader Archive
-        run: tar -czvf /tmp/ginkou-loader.tar.gz ginkou-loader/target/debug/ginkou-loader
+        run: tar -czvf ginkou-loader.tar.gz ginkou-loader/target/debug/ginkou-loader
 
       - uses: actions/upload-artifact@v3
         with:
           name: ginkou-loader-macos-dev
-          path: /tmp/ginkou-loader.tar.gz
+          path: ginkou-loader.tar.gz
 
   ginkou-loader-build-windows:
     runs-on: self-hosted

@@ -147,10 +147,10 @@ jobs:
         run: rustup update
 
       - name: Build Ginkou-Loader
-        run: cargo build --locked --target x86_64-apple-darwin --manifest-path ginkou-loader/Cargo.toml
+        run: cargo build --locked --target x86_64-apple-darwin --manifest-path ginkou-loader/Cargo.toml --verbose
 
       - name: Create Ginkou-Loader Archive
-        run: tar -czvf ginkou-loader.tar.gz -C ginkou-loader/target debug/ginkou-loader
+        run: tar -czvf ginkou-loader.tar.gz -C ginkou-loader/target/x86_64-apple-darwin debug/ginkou-loader
 
       - uses: actions/upload-artifact@v3
         with:

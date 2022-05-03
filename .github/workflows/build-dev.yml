@@ -358,7 +358,7 @@ jobs:
         run: npm run build --prefix ginkou
 
       - name: Create Ginkou-Public Archive
-        run: tar -czvf /tmp/public.tar.gz ginkou/public/.
+        run: tar -czvf /tmp/public.tar.gz ginkou/public
 
       - uses: actions/upload-artifact@v3
         with:
@@ -492,17 +492,17 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: ginkou-loader-linux-dev
-          path: /tmp/ginkou-loader.tar.gz
+          path: /tmp
 
       - uses: actions/download-artifact@v3
         with:
           name: melwalletd-linux-dev
-          path: /tmp/melwalletd.tar.gz
+          path: /tmp
 
       - uses: actions/download-artifact@v3
         with:
           name: ginkou-public-dev
-          path: /tmp/public.tar.gz
+          path: /tmp
 
 #      - name: Create Empty Public Directory
 #        run: mkdir /tmp/public

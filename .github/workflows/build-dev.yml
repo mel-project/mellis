@@ -449,6 +449,7 @@ jobs:
       volumes:
         - /usr/local/flatpak-cache:/usr/local/flatpak-cache
         - /var/lib/docker:/var/lib/docker
+        - /var/lib/flatpak:/var/lib/flatpak
 
 #    needs:
 #      - ginkou-loader-build-linux
@@ -520,12 +521,6 @@ jobs:
           bundle: mellis.flatpak
           cache: false
           manifest-path: flatpak/org.themelio.Wallet-ci.yml
-
-      - name: List Cache
-        run: ls -la ~/.cache
-
-      - name: List User Flatpak Cache
-        run: ls -la ~/.cache/flatpak
 
       - name: List Current Flatpak-Builder Cache
         run: ls -la .flatpak-builder

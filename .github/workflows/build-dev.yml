@@ -42,6 +42,7 @@ jobs:
     container:
       image: ghcr.io/themeliolabs/rust-gtk:latest
       volumes:
+        - /var/lib/docker:/var/lib/docker
         - /usr/local/cargo/git:/usr/local/cargo/git
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
@@ -142,6 +143,7 @@ jobs:
     container:
       image: ghcr.io/themeliolabs/windows-32-bit:latest
       volumes:
+        - /var/lib/docker:/var/lib/docker
         - /usr/local/cargo/git:/usr/local/cargo/git
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
@@ -179,6 +181,7 @@ jobs:
     container:
       image: rust:latest
       volumes:
+        - /var/lib/docker:/var/lib/docker
         - /usr/local/cargo/git:/usr/local/cargo/git
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
@@ -218,6 +221,7 @@ jobs:
     container:
       image: joseluisq/rust-linux-darwin-builder:latest
       volumes:
+        - /var/lib/docker:/var/lib/docker
         - /usr/local/cargo/git:/usr/local/cargo/git
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
@@ -272,6 +276,7 @@ jobs:
     container:
       image: ghcr.io/themeliolabs/windows-32-bit:latest
       volumes:
+        - /var/lib/docker:/var/lib/docker
         - /usr/local/cargo/git:/usr/local/cargo/git
         - /usr/local/cargo/registry:/usr/local/cargo/registry
         - /usr/local/sccache:/usr/local/sccache
@@ -309,6 +314,7 @@ jobs:
     container:
       image: node:latest
       volumes:
+        - /var/lib/docker:/var/lib/docker
         - /usr/local/npm-cache:/usr/local/npm-cache
 
     steps:
@@ -330,6 +336,7 @@ jobs:
     container:
       image: node:latest
       volumes:
+        - /var/lib/docker:/var/lib/docker
         - /usr/local/npm-cache:/usr/local/npm-cache
 
     needs:
@@ -423,6 +430,7 @@ jobs:
     container:
       image: ghcr.io/themeliolabs/wine:latest
       volumes:
+        - /var/lib/docker:/var/lib/docker
         - /usr/local/wine-cache:/usr/local/wine-cache
 
     needs:

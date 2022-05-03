@@ -480,6 +480,8 @@ jobs:
       - name: Create Empty File
         run: touch /tmp/public/empty
 
+# I need to change the upload artifact steps of all the needs to create a .tar.gz file.
+
       - name: Create Public Archive
         run: tar -czvf /tmp/public.tar.gz /tmp/public
 
@@ -518,6 +520,12 @@ jobs:
           bundle: mellis.flatpak
           cache: false
           manifest-path: flatpak/org.themelio.Wallet-ci.yml
+
+      - name: List Cache
+        run: ls -la ~/.cache
+
+      - name: List User Flatpak Cache
+        run: ls -la ~/.cache/flatpak
 
       - name: List Current Flatpak-Builder Cache
         run: ls -la .flatpak-builder

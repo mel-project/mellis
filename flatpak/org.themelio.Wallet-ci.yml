@@ -11,6 +11,8 @@ modules:
         path: /tmp/public.tar.gz
 
     build-commands:
+      - "pwd"
+      - "ls -la"
       - "mkdir -p /app/ginkou-files"
       - "mv * /app/ginkou-files/"
 

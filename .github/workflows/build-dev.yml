@@ -36,25 +36,25 @@ jobs:
 ##          DOCKER_HOST: "tcp://docker:2376"
 ##        run: docker images
 
-  macos-investigation:
-      runs-on: macos-latest
-
-      steps:
-#        - name: Find Carbon
-#          run: find / -iname "Carbon.h"
-
-        - name: Find Header
-          run: find / -iname "generic_unix_base.h"
-
-#        - name: Show Carbon Information
-#          run: pkgutil --file-info /System/Volumes/Data/Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk/System/Library/Frameworks/Carbon.framework/Versions/A/Headers/Carbon.h
+#  macos-investigation:
+#      runs-on: macos-latest
 #
-#        - name: Show Carbon Information
-#          run: pkgutil --file-info /System/Volumes/Data/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/System/Library/Frameworks/Carbon.framework/Versions/A/Headers/Carbon.h
-
-#        - name: Show SDK Root
-#          run: xcrun --sdk macosx --show-sdk-path
-##          /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk
+#      steps:
+##        - name: Find Carbon
+##          run: find / -iname "Carbon.h"
+#
+#        - name: Find Header
+#          run: find / -iname "generic_unix_base.h"
+#
+##        - name: Show Carbon Information
+##          run: pkgutil --file-info /System/Volumes/Data/Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk/System/Library/Frameworks/Carbon.framework/Versions/A/Headers/Carbon.h
+##
+##        - name: Show Carbon Information
+##          run: pkgutil --file-info /System/Volumes/Data/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/System/Library/Frameworks/Carbon.framework/Versions/A/Headers/Carbon.h
+#
+##        - name: Show SDK Root
+##          run: xcrun --sdk macosx --show-sdk-path
+###          /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk
 
   ginkou-loader-build-linux:
     runs-on: self-hosted

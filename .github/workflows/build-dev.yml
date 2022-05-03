@@ -358,7 +358,7 @@ jobs:
         run: npm run build --prefix ginkou
 
       - name: Create Ginkou-Public Archive
-        run: tar -czvf /tmp/public.tar.gz ginkou/public
+        run: tar -czvf /tmp/public.tar.gz ginkou/public/.
 
       - uses: actions/upload-artifact@v3
         with:

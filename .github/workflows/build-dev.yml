@@ -496,7 +496,7 @@ jobs:
         run: tar -czvf /tmp/melwalletd.tar.gz /tmp/melwalletd
 
       - name: Create Icons Archive
-        run: tar -czvf /tmp/icons.tar.gz .flatpak/icons
+        run: tar -czvf /tmp/icons.tar.gz ./flatpak/icons
 
       - name: List Current Flatpak-Builder PV Cache
         run: ls -la /usr/local/flatpak-cache

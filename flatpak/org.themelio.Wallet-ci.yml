@@ -14,7 +14,7 @@ modules:
       - "pwd"
       - "ls -la"
       - "mkdir -p /app/ginkou-files"
-      - "mv ginkou/public/* /app/ginkou-files/"
+      - "mv public/* /app/ginkou-files/"
 
   - name: melwalletd
     buildsystem: "simple"

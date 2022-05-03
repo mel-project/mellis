@@ -368,6 +368,11 @@ jobs:
   mellis-create-dmg-macos:
     runs-on: self-hosted
 
+    container:
+      image: ghcr.io/themeliolabs/create-dmg:latest
+      volumes:
+        - /var/lib/docker:/var/lib/docker
+
     needs:
       - ginkou-loader-build-macos
       - melwalletd-build-macos
@@ -392,12 +397,6 @@ jobs:
           name: ginkou-public-dev
           path: ginkou-public
 
-      - name: Update Apt
-        run: sudo apt -y update
-
-      - name: Update Apt
-        run: sudo apt -y install genisoimage
-
       - name: Copy Template
         run: cp -r mac/template.app mellis.app
 
@@ -416,12 +415,15 @@ jobs:
       - name: Create User Symlink
         run: ln -s /Applications mellis.app/
 
+      - name: Create Uncompressed Mellis DMG File
+        run: genisoimage -V mellis -D -R -apple -no-pad -o mellis-uncompressed.dmg mellis.app
+
       - name: Create Mellis DMG File
-        run: genisoimage -V mellis -D -R -apple -no-pad -o mellis.dmg mellis.app
+        run: dmg mellis-uncompressed.dmg mellis.dmg
 
       - uses: actions/upload-artifact@v3
         with:
-          name: mellis-dmg
+          name: mellis-dmg-dev
           path: mellis.dmg
 
 #mellis-create-dmg-macos:
@@ -477,7 +479,7 @@ jobs:
 #
 #      - uses: actions/upload-artifact@v3
 #        with:
-#          name: mellis-dmg
+#          name: mellis-dmg-dev
 #          path: mellis.dmg
 
   mellis-create-installer-windows:

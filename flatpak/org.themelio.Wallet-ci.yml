@@ -23,6 +23,8 @@ modules:
         path: /tmp/melwalletd.tar.gz
 
     build-commands:
+      - "pwd"
+      - "ls -la"
       - "mkdir -p /app/bin"
       - "mv melwalletd /app/bin/melwalletd"
 
@@ -33,6 +35,8 @@ modules:
         path: /tmp/ginkou-loader.tar.gz
 
     build-commands:
+      - "pwd"
+      - "ls -la"
       - "mkdir -p /app/bin"
       - "mv ginkou-loader /app/bin/ginkou-loader"
 
@@ -48,6 +52,8 @@ modules:
       - type: archive
         path: /tmp/icons.tar.gz
     build-commands:
+      - "pwd"
+      - "ls -la"
       - "mkdir -p /app/share/icons/hicolor/"
       - "mv flatpak/icons/*x* /app/share/icons/hicolor/"
       - "mkdir -p /app/share/applications"

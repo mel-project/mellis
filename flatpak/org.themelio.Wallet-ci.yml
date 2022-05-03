@@ -26,7 +26,7 @@ modules:
       - "pwd"
       - "ls -la"
       - "mkdir -p /app/bin"
-      - "mv ../melwalletd /app/bin/melwalletd"
+      - "mv melwalletd /app/bin/melwalletd"
 
   - name: ginkou-loader
     buildsystem: "simple"
@@ -38,7 +38,7 @@ modules:
       - "pwd"
       - "ls -la"
       - "mkdir -p /app/bin"
-      - "mv ../ginkou-loader /app/bin/ginkou-loader"
+      - "mv ginkou-loader /app/bin/ginkou-loader"
 
   - name: mellis.sh
     buildsystem: "simple"

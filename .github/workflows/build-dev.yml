@@ -480,11 +480,23 @@ jobs:
       - name: Create Empty File
         run: touch /tmp/public/empty
 
+      - name: Create Public Archive
+        run: tar -czvf /tmp/public.tar.gz /tmp/public
+
       - name: Create Empty Ginkou-Loader
         run: touch /tmp/ginkou-loader
 
+      - name: Create Ginkou-Loader Archive
+        run: tar -czvf /tmp/ginkou-loader.tar.gz /tmp/ginkou-loader
+
       - name: Create Empty MelwalletD
         run: touch /tmp/melwalletd
+
+      - name: Create MelwalletD Archive
+        run: tar -czvf /tmp/melwalletd.tar.gz /tmp/melwalletd
+
+      - name: Create Icons Archive
+        run: tar -czvf /tmp/icons.tar.gz .flatpak/icons
 
       - name: List Current Flatpak-Builder PV Cache
         run: ls -la /usr/local/flatpak-cache

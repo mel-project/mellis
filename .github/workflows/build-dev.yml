@@ -49,8 +49,8 @@ jobs:
 #        - name: Show Carbon Information
 #          run: pkgutil --file-info /System/Volumes/Data/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/System/Library/Frameworks/Carbon.framework/Versions/A/Headers/Carbon.h
 
-        - name: Echo SDKROOT
-          run: echo $SDKROOT
+        - name: Show SDK Root
+          run: xcrun --sdk macosx --show-sdk-path
 
   ginkou-loader-build-linux:
     runs-on: self-hosted

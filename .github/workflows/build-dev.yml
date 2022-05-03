@@ -36,6 +36,13 @@ jobs:
 ##          DOCKER_HOST: "tcp://docker:2376"
 ##        run: docker images
 
+  macos-investigation:
+      runs-on: macos-latest
+
+      steps:
+        - name: Find Carbon
+          run: find / -iname "Carbon.h"
+
   ginkou-loader-build-linux:
     runs-on: self-hosted
 

@@ -42,7 +42,7 @@ Source: "artifacts\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs cre
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\{cm:MyAppName}"; Filename: "{app}\{#MyAppExeName}"; WorkingDir: "{app}"
+Name: "{group}\{cm:MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Parameters: "--html-path ginkou-public" ; WorkingDir: "{app}"
 Name: "{group}\{cm:UninstallProgram,{cm:MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\{cm:MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; Parameters: "--html-path ginkou-public" ; WorkingDir: "{app}"
 

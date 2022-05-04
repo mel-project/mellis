@@ -43,8 +43,8 @@ jobs:
 #        - name: Find Carbon
 #          run: find / -iname "Carbon.h"
 
-        - name: Find Header
-          run: find / -iname "generic_unix_base.h"
+#        - name: Find Header
+#          run: find / -iname "generic_unix_base.h"
 
         - name: Clone Tao
           run: git clone https://github.com/tauri-apps/tao

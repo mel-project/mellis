@@ -589,14 +589,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-
-      - name: Delete Drafts
-        uses: hugo19941994/delete-draft-releases@v1.0.0
-#        with:
-#          threshold: 5d
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - uses: actions/download-artifact@v3
         with:
           name: mellis-flatpak-dev
@@ -615,15 +607,25 @@ jobs:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #          CUSTOM_TAG: ${{ github.head_ref || github.ref_name }}
 
-      - name: Create Draft Release
-        uses: softprops/action-gh-release@v1
-#        if: startsWith(github.ref, 'refs/tags/')
+#      - name: Create Draft Release
+#        uses: softprops/action-gh-release@v1
+##        if: startsWith(github.ref, 'refs/tags/')
+#
+#        with:
+#          draft: true
+#          tag_name: ${{ github.head_ref || github.ref_name }}
+#          body_path: ${{ github.workspace }}-CHANGELOG.md
+#          files: |
+#            mellis.flatpak
+#            mellis.dmg
+#            mellis-windows-setup.exe
 
+      - name: Create Draft Release
+        uses: ncipollo/release-action@v1
         with:
+          artifacts: "mellis.flatpak,mellis.dmg,mellis-windows-setup.exe"
+          bodyFile: "CHANGELOG.md"
+          allowUpdates: true
           draft: true
-          tag_name: ${{ github.head_ref || github.ref_name }}
-          body_path: ${{ github.workspace }}-CHANGELOG.md
-          files: |
-            mellis.flatpak
-            mellis.dmg
-            mellis-windows-setup.exe
+          tag: ${{ github.head_ref || github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}

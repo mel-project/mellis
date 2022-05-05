@@ -638,8 +638,6 @@ jobs:
 
       - name: Comment On The Pull Request With The Draft URL
         uses: thollander/actions-comment-pull-request@v1
-        env:
-          DRAFT_URL: ${{ steps.draftRelease.outputs.html_url }}
         with:
-          message: "The draft URL is: $DRAFT_URL"
+          message: 'The draft URL is: ${{ steps.draftRelease.outputs.html_url }}'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

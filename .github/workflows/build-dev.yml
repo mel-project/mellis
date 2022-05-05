@@ -622,6 +622,7 @@ jobs:
         with:
           draft: true
           tag_name: ${{ github.head_ref || github.ref_name }}
+          body_path: ${{ github.workspace }}-CHANGELOG.md
           files: |
             mellis.flatpak
             mellis.dmg

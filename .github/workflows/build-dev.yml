@@ -589,14 +589,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set Branch Name Environment Variable
-        shell: bash
-        run: echo "BRANCH_NAME=$(git branch --show-current)" >> $GITHUB_ENV
+#      - name: Set Branch Name Environment Variable
+#        shell: bash
+#        run: echo "BRANCH_NAME=$(git branch --show-current)" >> $GITHUB_ENV
 
       - name: Branch
-        run: git branch --show-current
-
-      - name: Echo
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: echo $BRANCH_NAME
 
 #      - name: Delete Drafts

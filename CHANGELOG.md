@@ -30,8 +30,6 @@
 * Eliminates the background console window on Windows
 
 
-
-
 ##  v0.2.6
 
 ### Fixes
@@ -40,3 +38,16 @@
 * Correct bad hidpi scaling on windows
 * Prevent empty passwords that lead to inaccessible wallets
 * Corrected race conditions with Modal transitions that cause the UI to become unclickable
+
+
+##  v0.2.4
+
+### Fixes
+
+* Prevents UI randomly freezing
+* Cleared up blurry QR code
+
+
+##  v0.2.0
+
+This is the first public release of Mellis.

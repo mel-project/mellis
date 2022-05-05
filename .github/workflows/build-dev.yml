@@ -592,8 +592,8 @@ jobs:
 
       - name: Delete Drafts
         uses: hugo19941994/delete-draft-releases@v1.0.0
-        with:
-          threshold: 5d
+#        with:
+#          threshold: 5d
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

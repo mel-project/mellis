@@ -593,6 +593,9 @@ jobs:
         shell: bash
         run: echo "BRANCH_NAME=$(git branch --show-current)" >> $GITHUB_ENV
 
+      - name: Branch
+        run: git branch --show-current
+
       - name: Echo
         run: echo $BRANCH_NAME
 

@@ -589,6 +589,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set Branch Name Environment Variable
+        shell: bash
+        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')"
+
       - name: Delete Drafts
         uses: hugo19941994/delete-draft-releases@v1.0.0
         with:
@@ -612,7 +616,7 @@ jobs:
         uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CUSTOM_TAG: ${{ github.ref }}
+          CUSTOM_TAG: ${BRANCH_NAME}
 
       - name: Create Draft Release
         uses: softprops/action-gh-release@v1

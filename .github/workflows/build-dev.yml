@@ -621,6 +621,7 @@ jobs:
 #            mellis-windows-setup.exe
 
       - name: Create Draft Release
+        id: draftRelease
         uses: ncipollo/release-action@v1
         with:
           artifacts: "mellis.flatpak,mellis.dmg,mellis-windows-setup.exe"
@@ -629,3 +630,8 @@ jobs:
           draft: true
           tag: ${{ github.head_ref || github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Show Draft URL
+        run: echo $DRAFT_URL
+        env:
+          DRAFT_URL: ${{ steps.draftRelease.outputs.html_url }}

@@ -586,6 +586,9 @@ jobs:
       - mellis-create-installer-windows
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Delete Drafts
         uses: hugo19941994/delete-draft-releases@v1.0.0
         with:

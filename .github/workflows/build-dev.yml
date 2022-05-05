@@ -593,6 +593,9 @@ jobs:
         shell: bash
         run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
 
+      - name: Echo
+        run: echo $BRANCH_NAME
+
 #      - name: Delete Drafts
 #        uses: hugo19941994/delete-draft-releases@v1.0.0
 #        with:

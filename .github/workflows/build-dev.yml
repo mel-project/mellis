@@ -580,10 +580,10 @@ jobs:
   create-draft-release:
     runs-on: self-hosted
 
-#    needs:
-#      - mellis-create-flatpak
-#      - mellis-create-dmg-macos
-#      - mellis-create-installer-windows
+    needs:
+      - mellis-create-flatpak
+      - mellis-create-dmg-macos
+      - mellis-create-installer-windows
 
     steps:
       - name: Checkout repository
@@ -593,32 +593,9 @@ jobs:
         run: ./verify_release_markdown.sh
 
 #      - name: Set Latest Version Enviromnent Variable
-#        id: latestVersion
-#        run: head -1 LATEST_VERSION.md | tr -d ['#',:blank:]
+#        shell: bash
+#        run: echo "LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])" >> $GITHUB_ENV
 #
-#
-
-      - name: Set Latest Version Enviromnent Variable
-        shell: bash
-        run: echo "LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])" >> $GITHUB_ENV
-
-#      - name: Echo
-#        env:
-#          LATEST_VERSION: ${{ env.LATEST_VERSION}}
-#        run: echo $LATEST_VERSION
-
-#  It looks like the version commands are prefixing the version with a space: " v0.3.0"
-#  Run echo "::set-output version=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])"
-#  ::set-output version= v0.3.0
-
-
-
-
-#      - name: Show Latest Version
-#        env:
-#          THINGY: ${{ steps.latestVersion.outputs.version }}
-#        run: echo $THINGY
-
 #      - uses: actions/download-artifact@v3
 #        with:
 #          name: mellis-flatpak-dev
@@ -641,14 +618,11 @@ jobs:
 #          draft: true
 #          tag: ${{ github.head_ref || github.ref_name }}
 #          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Comment On The Pull Request With The Draft URL
-        uses: thollander/actions-comment-pull-request@v1
-#        env:
-#          LATEST_VERSION: ${{ steps.latestVersion.outputs.stdout }}
-        with:
-#          message: 'The draft URL is: ${{ steps.draftRelease.outputs.html_url }}'
+#
+#      - name: Comment On The Pull Request With The Draft URL
+#        uses: thollander/actions-comment-pull-request@v1
+#        with:
 #          message: 'The draft URL is: ${{ steps.latestVersion.outputs.version }}'
-          message: 'The draft URL is: ${{ env.LATEST_VERSION}}'
-          comment_includes: 'The draft URL is'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+##          message: 'The draft URL is: ${{ env.LATEST_VERSION}}'
+#          comment_includes: 'The draft URL is'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,15 +1,15 @@
-#name: TestBuildAndRelease
-#
-##on:
-##  push:
-##    branches:
-##      - master
-#
+name: TestBuildAndRelease
+
 #on:
-#  pull_request:
+#  push:
 #    branches:
 #      - master
-#
+
+on:
+  pull_request:
+    branches:
+      - master
+
 #env:
 #  CARGO_TERM_COLOR: always
 #  CARGO_HOME: "/usr/local/cargo/"

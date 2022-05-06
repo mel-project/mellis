@@ -4,7 +4,7 @@ runtime-version: "41"
 sdk: org.gnome.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
-  - org.freedesktop.Sdk.Extension.node14
+  - org.freedesktop.Sdk.Extension.node16
 command: "ginkou-loader-wrapper"
 modules:
   - name: ginkou
@@ -15,7 +15,7 @@ modules:
         branch: "${GINKOU_BRANCH}"
 
     build-commands:
-      - "npm install"
+      - "npm ci"
       - "npm run build"
       - "mv public /app/ginkou-files"
   ## uncomment these lines and comment the modules with that same name

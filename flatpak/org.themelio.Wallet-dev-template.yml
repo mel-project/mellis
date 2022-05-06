@@ -16,7 +16,8 @@ modules:
 
     build-commands:
       # - npm i -g npm@latest
-      - "npm ci"
+      - "rm package-lock.json"
+      - "npm i"
       - "npm run build"
       - "mv public /app/ginkou-files"
   ## uncomment these lines and comment the modules with that same name

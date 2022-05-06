@@ -602,10 +602,10 @@ jobs:
         shell: bash
         run: echo "LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])" >> $GITHUB_ENV
 
-      - name: Echo
-        env:
-          LATEST_VERSION: ${{ env.LATEST_VERSION}}
-        run: echo $LATEST_VERSION
+#      - name: Echo
+#        env:
+#          LATEST_VERSION: ${{ env.LATEST_VERSION}}
+#        run: echo $LATEST_VERSION
 
 #  It looks like the version commands are prefixing the version with a space: " v0.3.0"
 #  Run echo "::set-output version=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])"
@@ -642,13 +642,13 @@ jobs:
 #          tag: ${{ github.head_ref || github.ref_name }}
 #          token: ${{ secrets.GITHUB_TOKEN }}
 
-#      - name: Comment On The Pull Request With The Draft URL
-#        uses: thollander/actions-comment-pull-request@v1
+      - name: Comment On The Pull Request With The Draft URL
+        uses: thollander/actions-comment-pull-request@v1
 #        env:
 #          LATEST_VERSION: ${{ steps.latestVersion.outputs.stdout }}
-#        with:
-##          message: 'The draft URL is: ${{ steps.draftRelease.outputs.html_url }}'
-##          message: 'The draft URL is: ${{ steps.latestVersion.outputs.version }}'
-#          message: 'The draft URL is: $LATEST_VERSION'
-#          comment_includes: 'The draft URL is'
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+#          message: 'The draft URL is: ${{ steps.draftRelease.outputs.html_url }}'
+#          message: 'The draft URL is: ${{ steps.latestVersion.outputs.version }}'
+          message: 'The draft URL is: ${{ env.LATEST_VERSION}}'
+          comment_includes: 'The draft URL is'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

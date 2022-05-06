@@ -596,10 +596,10 @@ jobs:
         id: latestVersion
         run: echo "::set-output version=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])"
 
-      - name: Show Latest Version
-        env:
-          THINGY: ${{ steps.latestVersion.outputs.version }}
-        run: echo $THINGY
+#      - name: Show Latest Version
+#        env:
+#          THINGY: ${{ steps.latestVersion.outputs.version }}
+#        run: echo $THINGY
 
 #      - uses: actions/download-artifact@v3
 #        with:
@@ -623,10 +623,11 @@ jobs:
 #          draft: true
 #          tag: ${{ github.head_ref || github.ref_name }}
 #          token: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: Comment On The Pull Request With The Draft URL
-#        uses: thollander/actions-comment-pull-request@v1
-#        with:
+
+      - name: Comment On The Pull Request With The Draft URL
+        uses: thollander/actions-comment-pull-request@v1
+        with:
 #          message: 'The draft URL is: ${{ steps.draftRelease.outputs.html_url }}'
-#          comment_includes: 'The draft URL is'
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          message: 'The draft URL is: ${{ steps.latestVersion.outputs.version }}'
+          comment_includes: 'The draft URL is'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

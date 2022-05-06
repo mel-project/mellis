@@ -1,5 +1,0 @@
-#!/bin/sh
-
-echo "Running pre-commit hook"
-
-sh verify_release_markdown.sh

@@ -592,16 +592,20 @@ jobs:
       - name: Check That Markdown Files Are Up To Date
         run: ./verify_release_markdown.sh
 
-      - name: Set Latest Version Enviromnent Variable
-        id: latestVersion
-        run: head -1 LATEST_VERSION.md | tr -d ['#',:blank:]
+#      - name: Set Latest Version Enviromnent Variable
+#        id: latestVersion
+#        run: head -1 LATEST_VERSION.md | tr -d ['#',:blank:]
+#
+#
 
+      - name: Set Latest Version Enviromnent Variable
+        shell: bash
+        run: echo "LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])" >> $GITHUB_ENV
 
       - name: Echo
         env:
-          LATEST_VERSION: ${{ steps.latestVersion.outputs.stdout }}
+          LATEST_VERSION: ${{ env.LATEST_VERSION}}
         run: echo $LATEST_VERSION
-
 
 #  It looks like the version commands are prefixing the version with a space: " v0.3.0"
 #  Run echo "::set-output version=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])"

@@ -538,7 +538,7 @@ jobs:
 
       - name: Set Latest Version Enviromnent Variable
         shell: bash
-        run: echo "LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])" >> $GITHUB_ENV
+        run: echo "LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#'] | tr -d [:blank:])" >> $GITHUB_ENV
 
       - uses: actions/download-artifact@v3
         with:

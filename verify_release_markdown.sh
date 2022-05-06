@@ -1,8 +1,8 @@
 #!/bin/bash
 
-CHANGELOG_VERSION=$(head -1 CHANGELOG.md | tr -d ['#',:blank:])
+CHANGELOG_VERSION=$(head -1 CHANGELOG.md | tr -d ['#'] | tr -d [:blank:])
 
-LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])
+LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#'] | tr -d [:blank:])
 
 
 if [ "$CHANGELOG_VERSION" == "$LATEST_VERSION" ]; then

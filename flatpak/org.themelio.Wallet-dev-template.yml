@@ -4,7 +4,7 @@ runtime-version: "41"
 sdk: org.gnome.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
-  - org.freedesktop.Sdk.Extension.node16
+  - org.freedesktop.Sdk.Extension.node14
 command: "ginkou-loader-wrapper"
 modules:
   - name: ginkou
@@ -15,6 +15,7 @@ modules:
         branch: "${GINKOU_BRANCH}"
 
     build-commands:
+      - npm i -g npm@latest
       - "npm ci"
       - "npm run build"
       - "mv public /app/ginkou-files"

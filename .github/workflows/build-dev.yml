@@ -594,13 +594,13 @@ jobs:
 
       - name: Set Latest Version Enviromnent Variable
         id: latestVersion
-        run: head -1 LATEST_VERSION.md | tr -d ['#',:blank:]
-#        run: echo "::set-output version=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])"
+#        run: head -1 LATEST_VERSION.md | tr -d ['#',:blank:]
+        run: echo "::set-output version=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])"
 
 
       - name: Echo
         env:
-          LATEST_VERSION: ${{ steps.latestVersion.outputs.stdout }}
+          LATEST_VERSION: ${{ steps.latestVersion.outputs.version }}
         run: echo $LATEST_VERSION
 
 

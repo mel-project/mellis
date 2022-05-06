@@ -611,12 +611,6 @@ jobs:
         with:
           name: mellis-windows-installer-dev
 
-#      - name: Create Tag
-#        uses: anothrNick/github-tag-action@1.36.0
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          CUSTOM_TAG: ${{ github.head_ref || github.ref_name }}
-
       - name: Create Draft Release
         id: draftRelease
         uses: ncipollo/release-action@v1

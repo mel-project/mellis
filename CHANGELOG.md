@@ -1,3 +1,9 @@
+## v0.3.1
+
+### Fixes
+
+* Minor bugfixes
+
 ## v0.3.0
 
 ### New Features

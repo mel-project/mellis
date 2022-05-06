@@ -15,7 +15,7 @@ modules:
         branch: "${GINKOU_BRANCH}"
 
     build-commands:
-      - npm i -g npm@latest
+      # - npm i -g npm@latest
       - "npm ci"
       - "npm run build"
       - "mv public /app/ginkou-files"

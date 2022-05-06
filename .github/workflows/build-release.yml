@@ -54,7 +54,7 @@ jobs:
         run: mold --run cargo build --release --target=x86_64-unknown-linux-gnu --locked --manifest-path ginkou-loader/Cargo.toml
 
       - name: Create Ginkou-Loader Archive
-        run: tar -czvf /tmp/ginkou-loader.tar.gz -C ginkou-loader/target/x86_64-unknown-linux-gnu debug/ginkou-loader
+        run: tar -czvf /tmp/ginkou-loader.tar.gz -C ginkou-loader/target/x86_64-unknown-linux-gnu release/ginkou-loader
 
       - uses: actions/upload-artifact@v3
         with:
@@ -115,7 +115,7 @@ jobs:
         run: cargo build --release --locked --target x86_64-apple-darwin --manifest-path ginkou-loader/Cargo.toml --verbose
 
       - name: Create Ginkou-Loader Archive
-        run: tar -czvf ginkou-loader.tar.gz -C ginkou-loader/target/x86_64-apple-darwin debug/ginkou-loader
+        run: tar -czvf ginkou-loader.tar.gz -C ginkou-loader/target/x86_64-apple-darwin release/ginkou-loader
 
       - uses: actions/upload-artifact@v3
         with:
@@ -153,7 +153,7 @@ jobs:
         run: cargo build --release --locked --target=i686-pc-windows-gnu --manifest-path ginkou-loader/Cargo.toml
 
       - name: Create Ginkou-Loader Archive
-        run: tar -czvf /tmp/ginkou-loader.tar.gz -C ginkou-loader/target/i686-pc-windows-gnu debug/ginkou-loader.exe
+        run: tar -czvf /tmp/ginkou-loader.tar.gz -C ginkou-loader/target/i686-pc-windows-gnu release/ginkou-loader.exe
 
       - uses: actions/upload-artifact@v3
         with:
@@ -193,7 +193,7 @@ jobs:
         run: mold --run cargo build --release --target=x86_64-unknown-linux-gnu --locked --manifest-path melwalletd/Cargo.toml
 
       - name: Create MelwalletD Archive
-        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/x86_64-unknown-linux-gnu debug/melwalletd
+        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/x86_64-unknown-linux-gnu release/melwalletd
 
       - uses: actions/upload-artifact@v3
         with:
@@ -248,7 +248,7 @@ jobs:
         run: rm /usr/local/cargo/config
 
       - name: Create MelwalletD Archive
-        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/x86_64-apple-darwin debug/melwalletd
+        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/x86_64-apple-darwin release/melwalletd
 
       - uses: actions/upload-artifact@v3
         with:
@@ -286,7 +286,7 @@ jobs:
         run: cargo build --release --locked --target=i686-pc-windows-gnu --manifest-path melwalletd/Cargo.toml
 
       - name: Create MelwalletD Archive
-        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/i686-pc-windows-gnu debug/melwalletd.exe
+        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/i686-pc-windows-gnu release/melwalletd.exe
 
       - uses: actions/upload-artifact@v3
         with:

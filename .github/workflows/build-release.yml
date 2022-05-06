@@ -1,12 +1,7 @@
 name: TestBuildAndRelease
 
-#on:
-#  push:
-#    branches:
-#      - master
-
 on:
-  pull_request:
+  push:
     branches:
       - master
 
@@ -557,20 +552,11 @@ jobs:
         with:
           name: mellis-windows-installer-dev
 
-      - name: Create Draft Release
+      - name: Create Release
         id: draftRelease
         uses: ncipollo/release-action@v1
         with:
           artifacts: "mellis.flatpak,mellis.dmg,mellis-windows-setup.exe"
           bodyFile: "LATEST_VERSION.md"
           tag: '${{ env.LATEST_VERSION}}'
-          allowUpdates: true
-          draft: true
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Comment On The Pull Request With The Draft URL
-        uses: thollander/actions-comment-pull-request@v1
-        with:
-          message: 'The draft URL is: ${{ steps.draftRelease.outputs.html_url }}'
-          comment_includes: 'The draft URL is'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

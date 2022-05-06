@@ -583,7 +583,7 @@ jobs:
 #    needs:
 #      - mellis-create-flatpak
 #      - mellis-create-dmg-macos
-      - mellis-create-installer-windows
+#      - mellis-create-installer-windows
 
     steps:
       - name: Checkout repository

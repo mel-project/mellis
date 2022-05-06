@@ -597,7 +597,9 @@ jobs:
         run: echo "::set-output version=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])"
 
       - name: Show Latest Version
-        run: echo ${{ steps.latestVersion.outputs.version }}
+        env:
+          THINGY: ${{ steps.latestVersion.outputs.version }}
+        run: echo $THINGY
 
 #      - uses: actions/download-artifact@v3
 #        with:

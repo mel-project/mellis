@@ -594,7 +594,8 @@ jobs:
 
       - name: Set Latest Version Enviromnent Variable
         shell: bash
-        run: echo "LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#',:space:])" >> $GITHUB_ENV
+        run: echo "LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#'] | tr -d [:blank:])" >> $GITHUB_ENV
+#        run: echo "LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#',:space:])" >> $GITHUB_ENV
 
       - name: Check That Markdown Files Are Up To Date
         env:

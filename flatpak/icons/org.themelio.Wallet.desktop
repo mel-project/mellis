@@ -2,7 +2,7 @@
 Type=Application
 Name=Mellis
 Comment=Official Themelio wallet
-Exec=ginkou-loader-wrapper
+Exec=mellis.sh
 Terminal=false
 Icon=org.themelio.Wallet
 Categories=Application

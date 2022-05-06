@@ -5,7 +5,7 @@ sdk: org.gnome.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
   - org.freedesktop.Sdk.Extension.node14
-command: "ginkou-loader-wrapper"
+command: "mellis.sh"
 modules:
   - name: ginkou
     buildsystem: "simple"
@@ -67,12 +67,12 @@ modules:
   #   build-commands:
   #     - "install -D ginkou-loader -t /app/bin/ "
 
-  - name: ginkou-loader-wrapper
+  - name: mellis.sh
     buildsystem: "simple"
     build-commands:
-      - "echo '#!/bin/sh' >> /app/bin/ginkou-loader-wrapper"
-      - "echo 'ginkou-loader --html-path /app/ginkou-files --data-path $XDG_DATA_HOME/ginkou-storage --wallet-path $XDG_DATA_HOME/themelio-wallets;'  >> /app/bin/ginkou-loader-wrapper"
-      - "chmod +x /app/bin/ginkou-loader-wrapper"
+      - "echo '#!/bin/sh' >> /app/bin/mellis.sh"
+      - "echo 'ginkou-loader --html-path /app/ginkou-files --data-path $XDG_DATA_HOME/ginkou-storage --wallet-path $XDG_DATA_HOME/themelio-wallets;'  >> /app/bin/mellis.sh"
+      - "chmod +x /app/bin/mellis.sh"
   - name: icons
     buildsystem: "simple"
     sources:

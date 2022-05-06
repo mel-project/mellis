@@ -16,398 +16,342 @@ env:
   WINEPREFIX: "/usr/local/wine"
 
 jobs:
-  ginkou-loader-build-linux:
-    runs-on: self-hosted
-
-    container:
-      image: ghcr.io/themeliolabs/rust-gtk:latest
-      volumes:
-        - /var/lib/docker:/var/lib/docker
-        - /usr/local/cargo/git:/usr/local/cargo/git
-        - /usr/local/cargo/registry:/usr/local/cargo/registry
-        - /usr/local/sccache:/usr/local/sccache
-        - /usr/local/rustup:/usr/local/rustup
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Submodule Clone
-        run: git submodule update --init --recursive --remote ginkou-loader
-
-      - name: Install default toolchain
-        run: rustup default stable
-
-      - name: Update Rust
-        run: rustup update
-
-      - uses: themeliolabs/actions-sccache@v1
-
-      - uses: themeliolabs/actions-mold@v1
-
-      - name: Build Ginkou-Loader
-        run: mold --run cargo build --target=x86_64-unknown-linux-gnu --locked --manifest-path ginkou-loader/Cargo.toml
-
-      - name: Create Ginkou-Loader Archive
-        run: tar -czvf /tmp/ginkou-loader.tar.gz -C ginkou-loader/target/x86_64-unknown-linux-gnu debug/ginkou-loader
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ginkou-loader-linux-dev
-          path: /tmp/ginkou-loader.tar.gz
-
-  ginkou-loader-build-macos:
-    runs-on: macos-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Submodule Clone
-        run: git submodule update --init --recursive --remote ginkou-loader
-
-      - name: Create Cargo Home
-        run: sudo mkdir -p /usr/local/cargo
-
-      - name: Change Cargo Home Ownership
-        run: sudo chown $USER /usr/local/cargo
-
-      - name: Create Rustup Directory
-        run: sudo mkdir -p /usr/local/rustup
-
-      - name: Change Rustup Directory Ownership
-        run: sudo chown $USER /usr/local/rustup
-
-      - name: Create SCCache Directory
-        run: sudo mkdir -p /usr/local/sccache
-
-      - name: Change SCCache Directory Ownership
-        run: sudo chown $USER /usr/local/sccache
-
-      - name: Install SCCache
-        run: brew install sccache
-
-      - name: Cache Rust
-        uses: actions/cache@v3
-        with:
-          path: |
-            /usr/local/cargo/bin/
-            /usr/local/cargo/registry/index/
-            /usr/local/cargo/registry/cache/
-            /usr/local/sccache
-            /usr/local/rustup/toolchains/
-            /usr/local/rustup/update-hashes/
-            /usr/local/cargo/git/db/
-          key: ${{ runner.os }}-ginkou-loader
-
-      - name: Add Default Toolchain
-        run: rustup default stable
-
-      - name: Update Rust
-        run: rustup update
-
-      - name: Build Ginkou-Loader
-        run: cargo build --locked --target x86_64-apple-darwin --manifest-path ginkou-loader/Cargo.toml --verbose
-
-      - name: Create Ginkou-Loader Archive
-        run: tar -czvf ginkou-loader.tar.gz -C ginkou-loader/target/x86_64-apple-darwin debug/ginkou-loader
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ginkou-loader-macos-dev
-          path: ginkou-loader.tar.gz
-
-  ginkou-loader-build-windows:
-    runs-on: self-hosted
-
-    container:
-      image: ghcr.io/themeliolabs/windows-32-bit:latest
-      volumes:
-        - /var/lib/docker:/var/lib/docker
-        - /usr/local/cargo/git:/usr/local/cargo/git
-        - /usr/local/cargo/registry:/usr/local/cargo/registry
-        - /usr/local/sccache:/usr/local/sccache
-        - /usr/local/rustup:/usr/local/rustup
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Submodule Clone
-        run: git submodule update --init --recursive --remote ginkou-loader
-
-      - name: Add Default Toolchain
-        run: rustup default stable
-
-      - uses: themeliolabs/actions-sccache@v1
-
-      - name: Add Windows 32-Bit Toolchain
-        run: rustup target add i686-pc-windows-gnu
-
-      - name: Build Ginkou-Loader
-        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path ginkou-loader/Cargo.toml
-
-      - name: Create Ginkou-Loader Archive
-        run: tar -czvf /tmp/ginkou-loader.tar.gz -C ginkou-loader/target/i686-pc-windows-gnu debug/ginkou-loader.exe
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ginkou-loader-windows-dev
-          path: /tmp/ginkou-loader.tar.gz
-
-  melwalletd-build-linux:
-    runs-on: self-hosted
-
-    container:
-      image: rust:latest
-      volumes:
-        - /var/lib/docker:/var/lib/docker
-        - /usr/local/cargo/git:/usr/local/cargo/git
-        - /usr/local/cargo/registry:/usr/local/cargo/registry
-        - /usr/local/sccache:/usr/local/sccache
-        - /usr/local/rustup:/usr/local/rustup
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Submodule Clone
-        run: git submodule update --init --recursive --remote melwalletd
-
-      - name: Add Default Toolchain
-        run: rustup default stable
-
-      - name: Update Rust
-        run: rustup update
-
-      - uses: themeliolabs/actions-sccache@v1
-
-      - uses: themeliolabs/actions-mold@v1
-
-      - name: Build MelwalletD
-        run: mold --run cargo build --target=x86_64-unknown-linux-gnu --locked --manifest-path melwalletd/Cargo.toml
-
-      - name: Create MelwalletD Archive
-        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/x86_64-unknown-linux-gnu debug/melwalletd
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: melwalletd-linux-dev
-          path: /tmp/melwalletd.tar.gz
-
-  melwalletd-build-macos:
-    runs-on: self-hosted
-
-    container:
-      image: joseluisq/rust-linux-darwin-builder:latest
-      volumes:
-        - /var/lib/docker:/var/lib/docker
-        - /usr/local/cargo/git:/usr/local/cargo/git
-        - /usr/local/cargo/registry:/usr/local/cargo/registry
-        - /usr/local/sccache:/usr/local/sccache
-        - /usr/local/rustup:/usr/local/rustup
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Clone MelwalletD Submodule
-        run: git submodule update --init --recursive --remote melwalletd
-
-      - name: Add Default Toolchain
-        run: rustup default stable
-
-      - name: Add MacOS Toolchain
-        run: rustup target add x86_64-apple-darwin
-
-      - name: Copy Cargo Configuration
-        run: cp /root/.cargo/config /usr/local/cargo/config
-
-      - name: Update Apt
-        run: apt update
-
-      - name: Install Wget
-        run: apt install -y wget
-
-      - uses: themeliolabs/actions-sccache@v1
-
-      - uses: themeliolabs/actions-mold@v1
-
-      - name: Build MelwalletD
-        env:
-          CC: "o64-clang"
-          CXX: "o64-clang++"
-        run: mold --run cargo build --locked --target x86_64-apple-darwin --manifest-path melwalletd/Cargo.toml
-
-      - name: Remove Cargo Configuration
-        run: rm /usr/local/cargo/config
-
-      - name: Create MelwalletD Archive
-        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/x86_64-apple-darwin debug/melwalletd
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: melwalletd-macos-dev
-          path: /tmp/melwalletd.tar.gz
-
-  melwalletd-build-windows:
-    runs-on: self-hosted
-
-    container:
-      image: ghcr.io/themeliolabs/windows-32-bit:latest
-      volumes:
-        - /var/lib/docker:/var/lib/docker
-        - /usr/local/cargo/git:/usr/local/cargo/git
-        - /usr/local/cargo/registry:/usr/local/cargo/registry
-        - /usr/local/sccache:/usr/local/sccache
-        - /usr/local/rustup:/usr/local/rustup
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Submodule Clone
-        run: git submodule update --init --recursive --remote melwalletd
-
-      - name: Add Default Toolchain
-        run: rustup default stable
-
-      - name: Add Windows 32-Bit Toolchain
-        run: rustup target add i686-pc-windows-gnu
-
-      - uses: themeliolabs/actions-sccache@v1
-
-      - name: Build MelwalletD
-        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path melwalletd/Cargo.toml
-
-      - name: Create MelwalletD Archive
-        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/i686-pc-windows-gnu debug/melwalletd.exe
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: melwalletd-windows-dev
-          path: /tmp/melwalletd.tar.gz
-
-  ginkou-test:
-    runs-on: self-hosted
-
-    container:
-      image: node:latest
-      volumes:
-        - /var/lib/docker:/var/lib/docker
-        - /usr/local/npm-cache:/usr/local/npm-cache
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Clone Ginkou Submodule
-        run: git submodule update --init --recursive --remote ginkou
-
-      - name: Run Yarn Install
-        run: yarn install --prefer-offline --cwd ginkou
-
-      - name: Run NPM Test
-        run: npm run test --prefix ginkou
-
-  ginkou-build:
-    runs-on: self-hosted
-
-    container:
-      image: node:latest
-      volumes:
-        - /var/lib/docker:/var/lib/docker
-        - /usr/local/npm-cache:/usr/local/npm-cache
-
-    needs:
-      - ginkou-test
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Clone Ginkou Submodule
-        run: git submodule update --init --recursive --remote ginkou
-
-      - name: Run Yarn Install
-        run: yarn install --prefer-offline --cwd ginkou
-
-      - name: Run NPM Build
-        env:
-          BUILD: "development"
-        run: npm run build --prefix ginkou
-
-      - name: Create Ginkou-Public Archive
-        run: tar -czvf /tmp/public.tar.gz -C ginkou public
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ginkou-public-dev
-          path: /tmp/public.tar.gz
-
-  mellis-create-dmg-macos:
-    runs-on: self-hosted
-
-    container:
-      image: ghcr.io/themeliolabs/create-dmg:latest
-      volumes:
-        - /var/lib/docker:/var/lib/docker
-
-    needs:
-      - ginkou-loader-build-macos
-      - melwalletd-build-macos
-      - ginkou-build
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: ginkou-loader-macos-dev
-          path: ginkou-loader
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: melwalletd-macos-dev
-          path: melwalletd
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: ginkou-public-dev
-          path: ginkou-public
-
-      - name: Copy Template
-        run: cp -r mac/template.app mellis.app
-
-      - name: Create Resources Directory
-        run: mkdir mellis.app/Contents/MacOS/res
-
-      - name: Move Ginkou-Loader Into The Resources Directory
-        run: mv ginkou-loader mellis.app/Contents/MacOS/res/
-
-      - name: Move MelwalletD Into The Resources Directory
-        run: mv melwalletd mellis.app/Contents/MacOS/res/
-
-      - name: Move Ginkou-Public Into The Resources Directory
-        run: mv ginkou-public mellis.app/Contents/MacOS/res/
-
-      - name: Create User Symlink
-        run: ln -s /Applications mellis.app/
-
-      - name: Create Uncompressed Mellis DMG File
-        run: genisoimage -V mellis -D -R -apple -no-pad -o mellis-uncompressed.dmg mellis.app
-
-      - name: Create Mellis DMG File
-        run: dmg mellis-uncompressed.dmg mellis.dmg
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: mellis-dmg-dev
-          path: mellis.dmg
-
-#mellis-create-dmg-macos:
+#  ginkou-loader-build-linux:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: ghcr.io/themeliolabs/rust-gtk:latest
+#      volumes:
+#        - /var/lib/docker:/var/lib/docker
+#        - /usr/local/cargo/git:/usr/local/cargo/git
+#        - /usr/local/cargo/registry:/usr/local/cargo/registry
+#        - /usr/local/sccache:/usr/local/sccache
+#        - /usr/local/rustup:/usr/local/rustup
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Submodule Clone
+#        run: git submodule update --init --recursive --remote ginkou-loader
+#
+#      - name: Install default toolchain
+#        run: rustup default stable
+#
+#      - name: Update Rust
+#        run: rustup update
+#
+#      - uses: themeliolabs/actions-sccache@v1
+#
+#      - uses: themeliolabs/actions-mold@v1
+#
+#      - name: Build Ginkou-Loader
+#        run: mold --run cargo build --target=x86_64-unknown-linux-gnu --locked --manifest-path ginkou-loader/Cargo.toml
+#
+#      - name: Create Ginkou-Loader Archive
+#        run: tar -czvf /tmp/ginkou-loader.tar.gz -C ginkou-loader/target/x86_64-unknown-linux-gnu debug/ginkou-loader
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: ginkou-loader-linux-dev
+#          path: /tmp/ginkou-loader.tar.gz
+#
+#  ginkou-loader-build-macos:
 #    runs-on: macos-latest
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Submodule Clone
+#        run: git submodule update --init --recursive --remote ginkou-loader
+#
+#      - name: Create Cargo Home
+#        run: sudo mkdir -p /usr/local/cargo
+#
+#      - name: Change Cargo Home Ownership
+#        run: sudo chown $USER /usr/local/cargo
+#
+#      - name: Create Rustup Directory
+#        run: sudo mkdir -p /usr/local/rustup
+#
+#      - name: Change Rustup Directory Ownership
+#        run: sudo chown $USER /usr/local/rustup
+#
+#      - name: Create SCCache Directory
+#        run: sudo mkdir -p /usr/local/sccache
+#
+#      - name: Change SCCache Directory Ownership
+#        run: sudo chown $USER /usr/local/sccache
+#
+#      - name: Install SCCache
+#        run: brew install sccache
+#
+#      - name: Cache Rust
+#        uses: actions/cache@v3
+#        with:
+#          path: |
+#            /usr/local/cargo/bin/
+#            /usr/local/cargo/registry/index/
+#            /usr/local/cargo/registry/cache/
+#            /usr/local/sccache
+#            /usr/local/rustup/toolchains/
+#            /usr/local/rustup/update-hashes/
+#            /usr/local/cargo/git/db/
+#          key: ${{ runner.os }}-ginkou-loader
+#
+#      - name: Add Default Toolchain
+#        run: rustup default stable
+#
+#      - name: Update Rust
+#        run: rustup update
+#
+#      - name: Build Ginkou-Loader
+#        run: cargo build --locked --target x86_64-apple-darwin --manifest-path ginkou-loader/Cargo.toml --verbose
+#
+#      - name: Create Ginkou-Loader Archive
+#        run: tar -czvf ginkou-loader.tar.gz -C ginkou-loader/target/x86_64-apple-darwin debug/ginkou-loader
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: ginkou-loader-macos-dev
+#          path: ginkou-loader.tar.gz
+#
+#  ginkou-loader-build-windows:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: ghcr.io/themeliolabs/windows-32-bit:latest
+#      volumes:
+#        - /var/lib/docker:/var/lib/docker
+#        - /usr/local/cargo/git:/usr/local/cargo/git
+#        - /usr/local/cargo/registry:/usr/local/cargo/registry
+#        - /usr/local/sccache:/usr/local/sccache
+#        - /usr/local/rustup:/usr/local/rustup
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Submodule Clone
+#        run: git submodule update --init --recursive --remote ginkou-loader
+#
+#      - name: Add Default Toolchain
+#        run: rustup default stable
+#
+#      - uses: themeliolabs/actions-sccache@v1
+#
+#      - name: Add Windows 32-Bit Toolchain
+#        run: rustup target add i686-pc-windows-gnu
+#
+#      - name: Build Ginkou-Loader
+#        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path ginkou-loader/Cargo.toml
+#
+#      - name: Create Ginkou-Loader Archive
+#        run: tar -czvf /tmp/ginkou-loader.tar.gz -C ginkou-loader/target/i686-pc-windows-gnu debug/ginkou-loader.exe
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: ginkou-loader-windows-dev
+#          path: /tmp/ginkou-loader.tar.gz
+#
+#  melwalletd-build-linux:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: rust:latest
+#      volumes:
+#        - /var/lib/docker:/var/lib/docker
+#        - /usr/local/cargo/git:/usr/local/cargo/git
+#        - /usr/local/cargo/registry:/usr/local/cargo/registry
+#        - /usr/local/sccache:/usr/local/sccache
+#        - /usr/local/rustup:/usr/local/rustup
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Submodule Clone
+#        run: git submodule update --init --recursive --remote melwalletd
+#
+#      - name: Add Default Toolchain
+#        run: rustup default stable
+#
+#      - name: Update Rust
+#        run: rustup update
+#
+#      - uses: themeliolabs/actions-sccache@v1
+#
+#      - uses: themeliolabs/actions-mold@v1
+#
+#      - name: Build MelwalletD
+#        run: mold --run cargo build --target=x86_64-unknown-linux-gnu --locked --manifest-path melwalletd/Cargo.toml
+#
+#      - name: Create MelwalletD Archive
+#        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/x86_64-unknown-linux-gnu debug/melwalletd
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: melwalletd-linux-dev
+#          path: /tmp/melwalletd.tar.gz
+#
+#  melwalletd-build-macos:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: joseluisq/rust-linux-darwin-builder:latest
+#      volumes:
+#        - /var/lib/docker:/var/lib/docker
+#        - /usr/local/cargo/git:/usr/local/cargo/git
+#        - /usr/local/cargo/registry:/usr/local/cargo/registry
+#        - /usr/local/sccache:/usr/local/sccache
+#        - /usr/local/rustup:/usr/local/rustup
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Clone MelwalletD Submodule
+#        run: git submodule update --init --recursive --remote melwalletd
+#
+#      - name: Add Default Toolchain
+#        run: rustup default stable
+#
+#      - name: Add MacOS Toolchain
+#        run: rustup target add x86_64-apple-darwin
+#
+#      - name: Copy Cargo Configuration
+#        run: cp /root/.cargo/config /usr/local/cargo/config
+#
+#      - name: Update Apt
+#        run: apt update
+#
+#      - name: Install Wget
+#        run: apt install -y wget
+#
+#      - uses: themeliolabs/actions-sccache@v1
+#
+#      - uses: themeliolabs/actions-mold@v1
+#
+#      - name: Build MelwalletD
+#        env:
+#          CC: "o64-clang"
+#          CXX: "o64-clang++"
+#        run: mold --run cargo build --locked --target x86_64-apple-darwin --manifest-path melwalletd/Cargo.toml
+#
+#      - name: Remove Cargo Configuration
+#        run: rm /usr/local/cargo/config
+#
+#      - name: Create MelwalletD Archive
+#        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/x86_64-apple-darwin debug/melwalletd
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: melwalletd-macos-dev
+#          path: /tmp/melwalletd.tar.gz
+#
+#  melwalletd-build-windows:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: ghcr.io/themeliolabs/windows-32-bit:latest
+#      volumes:
+#        - /var/lib/docker:/var/lib/docker
+#        - /usr/local/cargo/git:/usr/local/cargo/git
+#        - /usr/local/cargo/registry:/usr/local/cargo/registry
+#        - /usr/local/sccache:/usr/local/sccache
+#        - /usr/local/rustup:/usr/local/rustup
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Submodule Clone
+#        run: git submodule update --init --recursive --remote melwalletd
+#
+#      - name: Add Default Toolchain
+#        run: rustup default stable
+#
+#      - name: Add Windows 32-Bit Toolchain
+#        run: rustup target add i686-pc-windows-gnu
+#
+#      - uses: themeliolabs/actions-sccache@v1
+#
+#      - name: Build MelwalletD
+#        run: cargo build --locked --target=i686-pc-windows-gnu --manifest-path melwalletd/Cargo.toml
+#
+#      - name: Create MelwalletD Archive
+#        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/i686-pc-windows-gnu debug/melwalletd.exe
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: melwalletd-windows-dev
+#          path: /tmp/melwalletd.tar.gz
+#
+#  ginkou-test:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: node:latest
+#      volumes:
+#        - /var/lib/docker:/var/lib/docker
+#        - /usr/local/npm-cache:/usr/local/npm-cache
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Clone Ginkou Submodule
+#        run: git submodule update --init --recursive --remote ginkou
+#
+#      - name: Run Yarn Install
+#        run: yarn install --prefer-offline --cwd ginkou
+#
+#      - name: Run NPM Test
+#        run: npm run test --prefix ginkou
+#
+#  ginkou-build:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: node:latest
+#      volumes:
+#        - /var/lib/docker:/var/lib/docker
+#        - /usr/local/npm-cache:/usr/local/npm-cache
+#
+#    needs:
+#      - ginkou-test
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Clone Ginkou Submodule
+#        run: git submodule update --init --recursive --remote ginkou
+#
+#      - name: Run Yarn Install
+#        run: yarn install --prefer-offline --cwd ginkou
+#
+#      - name: Run NPM Build
+#        env:
+#          BUILD: "development"
+#        run: npm run build --prefix ginkou
+#
+#      - name: Create Ginkou-Public Archive
+#        run: tar -czvf /tmp/public.tar.gz -C ginkou public
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: ginkou-public-dev
+#          path: /tmp/public.tar.gz
+#
+#  mellis-create-dmg-macos:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: ghcr.io/themeliolabs/create-dmg:latest
+#      volumes:
+#        - /var/lib/docker:/var/lib/docker
 #
 #    needs:
 #      - ginkou-loader-build-macos
@@ -433,9 +377,6 @@ jobs:
 #          name: ginkou-public-dev
 #          path: ginkou-public
 #
-#      - name: Install Create-DMG
-#        run: brew install create-dmg
-#
 #      - name: Copy Template
 #        run: cp -r mac/template.app mellis.app
 #
@@ -454,173 +395,242 @@ jobs:
 #      - name: Create User Symlink
 #        run: ln -s /Applications mellis.app/
 #
+#      - name: Create Uncompressed Mellis DMG File
+#        run: genisoimage -V mellis -D -R -apple -no-pad -o mellis-uncompressed.dmg mellis.app
+#
 #      - name: Create Mellis DMG File
-#        run: create-dmg mellis.dmg mellis.app
+#        run: dmg mellis-uncompressed.dmg mellis.dmg
 #
 #      - uses: actions/upload-artifact@v3
 #        with:
 #          name: mellis-dmg-dev
 #          path: mellis.dmg
-
-  mellis-create-installer-windows:
-    runs-on: self-hosted
-
-    container:
-      image: ghcr.io/themeliolabs/wine:latest
-      volumes:
-        - /var/lib/docker:/var/lib/docker
-        - /usr/local/wine-cache:/usr/local/wine-cache
-
-    needs:
-      - ginkou-loader-build-windows
-      - melwalletd-build-windows
-      - ginkou-build
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Create Artifacts Directory
-        run: mkdir -p windows/artifacts
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: ginkou-loader-windows-dev
-          path: ginkou-loader.exe
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: melwalletd-windows-dev
-          path: melwalletd.exe
-
-      - name: Move Ginkou-Loader Into The Artifacts Directory
-        run: mv ginkou-loader.exe windows/artifacts/
-
-      - name: Move MelwalletD Into The Artifacts Directory
-        run: mv melwalletd.exe windows/artifacts/
-
-      - name: Create Windows Installer
-        run: wine /usr/local/iscc/ISCC.exe windows/setup.iss
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: mellis-windows-installer-dev
-          path: windows/Output/mellis-windows-setup.exe
-
-  mellis-create-flatpak:
-    runs-on: self-hosted
-
-    container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-40
-      options: --privileged
-      volumes:
-        - /usr/local/flatpak-cache:/usr/local/flatpak-cache
-        - /var/lib/docker:/var/lib/docker
-        - /var/lib/flatpak:/var/lib/flatpak
-
-    needs:
-      - ginkou-loader-build-linux
-      - melwalletd-build-linux
-      - ginkou-build
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: ginkou-loader-linux-dev
-          path: /tmp
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: melwalletd-linux-dev
-          path: /tmp
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: ginkou-public-dev
-          path: /tmp
-
-      - name: Create Icons Archive
-        run: tar -czvf /tmp/icons.tar.gz -C flatpak icons
-
-      - name: List Current Flatpak-Builder PV Cache
-        run: ls -la /usr/local/flatpak-cache
-
-      - name: Create Empty Flatpak-Builder Directory
-        run: mkdir .flatpak-builder
-
-      - name: Copy Flatpak-Builder Cache To Current Job
-        run: cp -a /usr/local/flatpak-cache/. .flatpak-builder/ || echo "Flatpak-Builder cache does not exist."
-
-      - name: Add Flathub Repository
-        run: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
-      - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
-        with:
-          bundle: mellis.flatpak
-          cache: false
-          manifest-path: flatpak/org.themelio.Wallet-ci.yml
-
-      - name: List Current Flatpak-Builder Cache
-        run: ls -la .flatpak-builder
-
-      - name: Remove Current Flatpak-Builder Cache
-        run: rm -rf /usr/local/flatpak-cache/*
-
-      - name: Copy Flatpak-Builder Cache
-        run: cp -a .flatpak-builder/. /usr/local/flatpak-cache/
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: mellis-flatpak-dev
-          path: mellis.flatpak
+#
+##mellis-create-dmg-macos:
+##    runs-on: macos-latest
+##
+##    needs:
+##      - ginkou-loader-build-macos
+##      - melwalletd-build-macos
+##      - ginkou-build
+##
+##    steps:
+##      - name: Checkout repository
+##        uses: actions/checkout@v3
+##
+##      - uses: actions/download-artifact@v3
+##        with:
+##          name: ginkou-loader-macos-dev
+##          path: ginkou-loader
+##
+##      - uses: actions/download-artifact@v3
+##        with:
+##          name: melwalletd-macos-dev
+##          path: melwalletd
+##
+##      - uses: actions/download-artifact@v3
+##        with:
+##          name: ginkou-public-dev
+##          path: ginkou-public
+##
+##      - name: Install Create-DMG
+##        run: brew install create-dmg
+##
+##      - name: Copy Template
+##        run: cp -r mac/template.app mellis.app
+##
+##      - name: Create Resources Directory
+##        run: mkdir mellis.app/Contents/MacOS/res
+##
+##      - name: Move Ginkou-Loader Into The Resources Directory
+##        run: mv ginkou-loader mellis.app/Contents/MacOS/res/
+##
+##      - name: Move MelwalletD Into The Resources Directory
+##        run: mv melwalletd mellis.app/Contents/MacOS/res/
+##
+##      - name: Move Ginkou-Public Into The Resources Directory
+##        run: mv ginkou-public mellis.app/Contents/MacOS/res/
+##
+##      - name: Create User Symlink
+##        run: ln -s /Applications mellis.app/
+##
+##      - name: Create Mellis DMG File
+##        run: create-dmg mellis.dmg mellis.app
+##
+##      - uses: actions/upload-artifact@v3
+##        with:
+##          name: mellis-dmg-dev
+##          path: mellis.dmg
+#
+#  mellis-create-installer-windows:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: ghcr.io/themeliolabs/wine:latest
+#      volumes:
+#        - /var/lib/docker:/var/lib/docker
+#        - /usr/local/wine-cache:/usr/local/wine-cache
+#
+#    needs:
+#      - ginkou-loader-build-windows
+#      - melwalletd-build-windows
+#      - ginkou-build
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Create Artifacts Directory
+#        run: mkdir -p windows/artifacts
+#
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: ginkou-loader-windows-dev
+#          path: ginkou-loader.exe
+#
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: melwalletd-windows-dev
+#          path: melwalletd.exe
+#
+#      - name: Move Ginkou-Loader Into The Artifacts Directory
+#        run: mv ginkou-loader.exe windows/artifacts/
+#
+#      - name: Move MelwalletD Into The Artifacts Directory
+#        run: mv melwalletd.exe windows/artifacts/
+#
+#      - name: Create Windows Installer
+#        run: wine /usr/local/iscc/ISCC.exe windows/setup.iss
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: mellis-windows-installer-dev
+#          path: windows/Output/mellis-windows-setup.exe
+#
+#  mellis-create-flatpak:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: bilelmoussaoui/flatpak-github-actions:gnome-40
+#      options: --privileged
+#      volumes:
+#        - /usr/local/flatpak-cache:/usr/local/flatpak-cache
+#        - /var/lib/docker:/var/lib/docker
+#        - /var/lib/flatpak:/var/lib/flatpak
+#
+#    needs:
+#      - ginkou-loader-build-linux
+#      - melwalletd-build-linux
+#      - ginkou-build
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: ginkou-loader-linux-dev
+#          path: /tmp
+#
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: melwalletd-linux-dev
+#          path: /tmp
+#
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: ginkou-public-dev
+#          path: /tmp
+#
+#      - name: Create Icons Archive
+#        run: tar -czvf /tmp/icons.tar.gz -C flatpak icons
+#
+#      - name: List Current Flatpak-Builder PV Cache
+#        run: ls -la /usr/local/flatpak-cache
+#
+#      - name: Create Empty Flatpak-Builder Directory
+#        run: mkdir .flatpak-builder
+#
+#      - name: Copy Flatpak-Builder Cache To Current Job
+#        run: cp -a /usr/local/flatpak-cache/. .flatpak-builder/ || echo "Flatpak-Builder cache does not exist."
+#
+#      - name: Add Flathub Repository
+#        run: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+#
+#      - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+#        with:
+#          bundle: mellis.flatpak
+#          cache: false
+#          manifest-path: flatpak/org.themelio.Wallet-ci.yml
+#
+#      - name: List Current Flatpak-Builder Cache
+#        run: ls -la .flatpak-builder
+#
+#      - name: Remove Current Flatpak-Builder Cache
+#        run: rm -rf /usr/local/flatpak-cache/*
+#
+#      - name: Copy Flatpak-Builder Cache
+#        run: cp -a .flatpak-builder/. /usr/local/flatpak-cache/
+#
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: mellis-flatpak-dev
+#          path: mellis.flatpak
 
   create-draft-release:
     runs-on: self-hosted
 
-    needs:
-      - mellis-create-flatpak
-      - mellis-create-dmg-macos
-      - mellis-create-installer-windows
+#    needs:
+#      - mellis-create-flatpak
+#      - mellis-create-dmg-macos
+#      - mellis-create-installer-windows
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: mellis-flatpak-dev
+      - name: Check That Markdown Files Are Up To Date
+        run: ./verify_release_markdown.sh
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: mellis-dmg-dev
+      - name: Set Latest Version Enviromnent Variable
+        shell: bash
+        run: echo "LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])" >> $GITHUB_ENV
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: mellis-windows-installer-dev
+      - name: Show Latest Version
+        run: echo $LATEST_VERSION
 
-#      - name: Create Tag
-#        uses: anothrNick/github-tag-action@1.36.0
-#        env:
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: mellis-flatpak-dev
+#
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: mellis-dmg-dev
+#
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: mellis-windows-installer-dev
+#
+##      - name: Create Tag
+##        uses: anothrNick/github-tag-action@1.36.0
+##        env:
+##          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+##          CUSTOM_TAG: ${{ github.head_ref || github.ref_name }}
+#
+#      - name: Create Draft Release
+#        id: draftRelease
+#        uses: ncipollo/release-action@v1
+#        with:
+#          artifacts: "mellis.flatpak,mellis.dmg,mellis-windows-setup.exe"
+#          bodyFile: "LATEST_VERSION.md"
+#          allowUpdates: true
+#          draft: true
+#          tag: ${{ github.head_ref || github.ref_name }}
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: Comment On The Pull Request With The Draft URL
+#        uses: thollander/actions-comment-pull-request@v1
+#        with:
+#          message: 'The draft URL is: ${{ steps.draftRelease.outputs.html_url }}'
+#          comment_includes: 'The draft URL is'
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          CUSTOM_TAG: ${{ github.head_ref || github.ref_name }}
-
-      - name: Create Draft Release
-        id: draftRelease
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "mellis.flatpak,mellis.dmg,mellis-windows-setup.exe"
-          bodyFile: "CHANGELOG.md"
-          allowUpdates: true
-          draft: true
-          tag: ${{ github.head_ref || github.ref_name }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Comment On The Pull Request With The Draft URL
-        uses: thollander/actions-comment-pull-request@v1
-        with:
-          message: 'The draft URL is: ${{ steps.draftRelease.outputs.html_url }}'
-          comment_includes: 'The draft URL is'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

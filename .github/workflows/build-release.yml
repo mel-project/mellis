@@ -288,27 +288,27 @@ jobs:
           name: melwalletd-windows-dev
           path: /tmp/melwalletd.tar.gz
 
-  ginkou-test:
-    runs-on: self-hosted
-
-    container:
-      image: node:latest
-      volumes:
-        - /var/lib/docker:/var/lib/docker
-        - /usr/local/npm-cache:/usr/local/npm-cache
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Clone Ginkou Submodule
-        run: git submodule update --init --recursive --remote ginkou
-
-      - name: Run Yarn Install
-        run: yarn install --prefer-offline --cwd ginkou
-
-      - name: Run NPM Test
-        run: npm run test --prefix ginkou
+#  ginkou-test:
+#    runs-on: self-hosted
+#
+#    container:
+#      image: node:latest
+#      volumes:
+#        - /var/lib/docker:/var/lib/docker
+#        - /usr/local/npm-cache:/usr/local/npm-cache
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v3
+#
+#      - name: Clone Ginkou Submodule
+#        run: git submodule update --init --recursive --remote ginkou
+#
+#      - name: Run Yarn Install
+#        run: yarn install --prefer-offline --cwd ginkou
+#
+#      - name: Run NPM Test
+#        run: npm run test --prefix ginkou
 
   ginkou-build:
     runs-on: self-hosted
@@ -319,8 +319,8 @@ jobs:
         - /var/lib/docker:/var/lib/docker
         - /usr/local/npm-cache:/usr/local/npm-cache
 
-    needs:
-      - ginkou-test
+#    needs:
+#      - ginkou-test
 
     steps:
       - name: Checkout repository

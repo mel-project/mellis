@@ -10,7 +10,7 @@ LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#',:blank:])
 
 
 
-if [ $CHANGELOG_VERSION == $LATEST_VERSION ]; then
+if [[] $CHANGELOG_VERSION -eq $LATEST_VERSION ]]; then
   echo "Top entry for version in CHANGELOG.md and LATEST_VERSION.md match. Continuing."
 
 else

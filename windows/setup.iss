@@ -48,6 +48,7 @@ Name: "{commondesktop}\{cm:MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks
 
 [Run]
 Filename: "{app}\MicrosoftEdgeWebview2Setup"; StatusMsg: "Installing WebView2..."; Parameters: "/install"; Check: WebView2IsNotInstalled
+Filename: "{app}\vc_redist.x86"; StatusMsg: "Installing VC runtime..."; Parameters: "/q /norestart"
 
 
 [Code]

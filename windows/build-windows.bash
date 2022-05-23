@@ -15,7 +15,10 @@ cargo install --locked --path ../melwalletd
 # (cd ../ginkou && npm ci && npm run build)
 
 mkdir -p artifacts
-curl https://ipfs.io/ipfs/QmYxsNyiskPyBZ9Cr8f4ARi1rRYKwphnfzncJGVSZMcNci > artifacts/vc_redist.x86.exe
+curl https://cloudflare-ipfs.com/ipfs/QmYxsNyiskPyBZ9Cr8f4ARi1rRYKwphnfzncJGVSZMcNci > artifacts/vc_redist.x86.exe
 cp $(which melwalletd) artifacts
 cp $(which ginkou-loader) artifacts
+
+./rcedit-x86.exe artifacts/ginkou-loader.exe --set-icon org.themelio.Wallet.ico
+
 sh -c "$ISCC setup.iss"

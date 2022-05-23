@@ -6,3 +6,4 @@ ginkou-public
 .vscode/settings.json
 mac/artifacts
 mellis-android/app/src/main/jniLibs
+windows/artifacts

@@ -77,6 +77,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Horrible hack
+        run: git config --global --add safe.directory /__w/mellis/mellis
       - name: Submodule Clone
         run: git submodule update --init --recursive
       - uses: actions/download-artifact@v2

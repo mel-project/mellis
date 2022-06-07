@@ -1,0 +1,30 @@
+#!/bin/sh
+
+echo "Running pre-push hook"
+
+
+CURRENT_BRANCH=$(git branch --show-current)
+
+CHANGELOG_DIFFERENT=$(git diff --quiet HEAD origin/master -- CHANGELOG.md || echo true)
+
+LATEST_VERSION_DIFFERENT=$(git diff --quiet HEAD origin/master -- LATEST_VERSION.md || echo true)
+
+
+if [ "$CURRENT_BRANCH" == "master" ]; then
+  if [ "$CHANGELOG_DIFFERENT" == "true" ] && [ "$LATEST_VERSION_DIFFERENT" == "true" ]; then
+    echo "Changelog and latest version have been modified."
+    echo "Verifying that versions match."
+
+    sh verify_release_markdown.sh
+  else
+    if ! [ "$CHANGELOG_DIFFERENT" == "true" ]; then
+      echo "CHANGELOG.md needs to be updated."
+      exit 1
+    fi
+
+    if ! [ "$LATEST_VERSION_DIFFERENT" == "true" ]; then
+      echo "LATEST_VERSION.md needs to be updated."
+      exit 1
+    fi
+  fi
+fi

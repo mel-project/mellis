@@ -8,7 +8,7 @@ APP_NAME="mellis.app"
 MAC_ROOT=$( cd "$(dirname "$0")" ; pwd -P ) # The absolute path to this files parent
 PROJECT_ROOT=$( cd $MAC_ROOT/.. ; pwd -P ) # The absolute path to ginkou-flatpak
 TEMPLATE=$MAC_ROOT/template.app
-RES=$MAC_ROOT/$APP_NAME/Contents/MacOS/res # The absolue path to the (yet to be created) ginkou.app
+RES=$MAC_ROOT/${APP_NAME}/Contents/MacOS/res # The absolue path to the (yet to be created) ginkou.app
 ARTIFACTS=$MAC_ROOT/artifacts
 TMP=$MAC_ROOT/tmp
 # each of these functions depends on global state 
@@ -49,20 +49,28 @@ install_ginkou () {
 
 }
 
-# clean up any old app, clone the temp app, and copy the artifacts to $RES
+# clean up any old app, clone the temp app, and copy the artifacts to ${RESOURCE_DIRECTORY}
 build_app (){
+
+#  APP_NAME="mellis.app"
+#  MAC_ROOT=top level
+#  PROJECT_ROOT=up one from MAC_ROOT
+#  TEMPLATE=$MAC_ROOT/template.app
+#  RESOURCE_DIRECTORY=$MAC_ROOT/${APP_NAME}/Contents/MacOS/res # The absolute path to the (yet to be created) ginkou.app
+#  ARTIFACTS=$MAC_ROOT/artifacts
+#  TMP=$MAC_ROOT/tmp
     
     pushd $MAC_ROOT
 
-        rm -rf $APP_NAME
-        cp -r $TEMPLATE $APP_NAME
-        mkdir -p $RES
-        cp -r $ARTIFACTS/* $RES
+        rm -rf ${APP_NAME}
+        cp -r ${TEMPLATE} ${APP_NAME}
+        mkdir -p ${RESOURCE_DIRECTORY}
+        cp -r $ARTIFACTS/* ${RESOURCE_DIRECTORY}
         
         # build_dmg assumes this exists
         rm -rf dmg_setup
         mkdir dmg_setup
-        mv $APP_NAME dmg_setup
+        mv ${APP_NAME} dmg_setup
 
         # add a sym link to applications into which users may drag ginkou.app
         cd dmg_setup
@@ -81,7 +89,7 @@ build_dmg () {
 
         # delete artifacts
         rm -rf dmg_setup
-        rm -rf $RES/tmp
+        rm -rf ${RESOURCE_DIRECTORY}/tmp
     popd
 
 

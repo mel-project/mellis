@@ -1,5 +1,7 @@
-## v0.3.2
+## v0.3.6
 
 ### Fixes
 
-* Minor bugfixes
+* Added debug logs export for easier debugging
+* Added proper icons on all platforms
+* Fixed miscellaneous UI bugs

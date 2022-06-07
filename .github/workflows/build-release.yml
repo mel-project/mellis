@@ -16,8 +16,21 @@ env:
   WINEPREFIX: "/usr/local/wine"
 
 jobs:
+  verify-markdown:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Check That Markdown Files Are Up To Date
+        run: ./verify_release_markdown.sh
+
   ginkou-loader-build-linux:
     runs-on: self-hosted
+
+    needs:
+      - verify-markdown
 
     container:
       image: ghcr.io/themeliolabs/rust-gtk:latest
@@ -58,6 +71,9 @@ jobs:
 
   ginkou-loader-build-macos:
     runs-on: macos-latest
+
+    needs:
+      - verify-markdown
 
     steps:
       - name: Checkout repository
@@ -120,6 +136,9 @@ jobs:
   ginkou-loader-build-windows:
     runs-on: self-hosted
 
+    needs:
+      - verify-markdown
+
     container:
       image: ghcr.io/themeliolabs/windows-32-bit:latest
       volumes:
@@ -157,6 +176,9 @@ jobs:
 
   melwalletd-build-linux:
     runs-on: self-hosted
+
+    needs:
+      - verify-markdown
 
     container:
       image: rust:latest
@@ -197,6 +219,9 @@ jobs:
 
   melwalletd-build-macos:
     runs-on: self-hosted
+
+    needs:
+      - verify-markdown
 
     container:
       image: joseluisq/rust-linux-darwin-builder:latest
@@ -252,6 +277,9 @@ jobs:
 
   melwalletd-build-windows:
     runs-on: self-hosted
+
+    needs:
+      - verify-markdown
 
     container:
       image: ghcr.io/themeliolabs/windows-32-bit:latest
@@ -319,7 +347,8 @@ jobs:
         - /var/lib/docker:/var/lib/docker
         - /usr/local/npm-cache:/usr/local/npm-cache
 
-#    needs:
+    needs:
+      - verify-markdown
 #      - ginkou-test
 
     steps:
@@ -354,6 +383,7 @@ jobs:
         - /var/lib/docker:/var/lib/docker
 
     needs:
+      - verify-markdown
       - ginkou-loader-build-macos
       - melwalletd-build-macos
       - ginkou-build
@@ -416,6 +446,7 @@ jobs:
         - /usr/local/wine-cache:/usr/local/wine-cache
 
     needs:
+      - verify-markdown
       - ginkou-loader-build-windows
       - melwalletd-build-windows
       - ginkou-build
@@ -463,6 +494,7 @@ jobs:
         - /var/lib/flatpak:/var/lib/flatpak
 
     needs:
+      - verify-markdown
       - ginkou-loader-build-linux
       - melwalletd-build-linux
       - ginkou-build
@@ -525,6 +557,7 @@ jobs:
     runs-on: self-hosted
 
     needs:
+      - verify-markdown
       - mellis-create-flatpak
       - mellis-create-dmg-macos
       - mellis-create-installer-windows
@@ -532,9 +565,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Check That Markdown Files Are Up To Date
-        run: ./verify_release_markdown.sh
 
       - name: Set Latest Version Enviromnent Variable
         shell: bash

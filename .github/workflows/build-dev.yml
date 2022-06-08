@@ -429,11 +429,17 @@ jobs:
       - name: Move Ginkou-Public Into The Resources Directory
         run: mv public mellis.app/Contents/MacOS/res/ginkou-public
 
+      - name: Create Top-Level Directory
+        run: mkdir top-level
+
+      - name: Move Mellis Into The Top-Level Directory
+        run: mv mellis.app top-level/mellis.app
+
       - name: Create User Symlink
-        run: ln -s /Applications mellis.app/
+        run: ln -s /Applications top-level/
 
       - name: Create Uncompressed Mellis DMG File
-        run: genisoimage -V mellis -D -R -apple -no-pad -o mellis-uncompressed.dmg mellis.app
+        run: genisoimage -V mellis -D -R -apple -no-pad -o mellis-uncompressed.dmg top-level
 
       - name: Create Mellis DMG File
         run: dmg mellis-uncompressed.dmg mellis.dmg

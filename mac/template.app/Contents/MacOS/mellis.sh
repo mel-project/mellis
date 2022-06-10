@@ -4,6 +4,8 @@ ROOT_DIRECTORY="$(pwd $(dirname "$0"))"
 RESOURCE_DIRECTORY="${ROOT_DIRECTORY}/res"
 export PATH=${RESOURCE_DIRECTORY}:${PATH}
 
+export DEBUG=true
+
 if [ -n "${DEBUG}" ]; then
   set -x
 

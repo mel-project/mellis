@@ -359,14 +359,8 @@ jobs:
       - name: Clone Ginkou Submodule
         run: git submodule update --init --recursive --remote ginkou
 
-      - name: Install PNPM
-        run: npm install -g pnpm
-
-      - name: Run PNPM Install
-        run: pnpm install --dir ginkou
-
-#      - name: Run Yarn Install
-#        run: yarn install --prefer-offline --cwd ginkou
+      - name: Run Yarn Install
+        run: yarn install --prefer-offline --cwd ginkou
 
       - name: Run NPM Build
         env:

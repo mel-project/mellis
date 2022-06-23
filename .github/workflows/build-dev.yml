@@ -534,6 +534,9 @@ jobs:
       - name: Create Icons Archive
         run: tar -czvf /tmp/icons.tar.gz -C flatpak icons
 
+      - name: List Temporary Directory
+        run: ls -la /tmp
+
       - name: List Current Flatpak-Builder PV Cache
         run: ls -la /usr/local/flatpak-cache
 

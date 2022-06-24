@@ -210,8 +210,17 @@ jobs:
       - name: Build MelwalletD
         run: mold --run cargo build --target=x86_64-unknown-linux-gnu --locked --manifest-path melwalletd/Cargo.toml
 
+      - name: Create MelwalletD Directory
+        run: mkdir melwalletd-archive
+
+      - name: Move MelwalletD Binary
+        run: mv melwalletd/target/x86_64-unknown-linux-gnu/debug/melwalletd melwalletd-archive/melwalletd
+
       - name: Create MelwalletD Archive
-        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/x86_64-unknown-linux-gnu/debug melwalletd
+        run: tar -czvf /tmp/melwalletd.tar.gz melwalletd-archive
+
+#      - name: Create MelwalletD Archive
+#        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/x86_64-unknown-linux-gnu/debug melwalletd
 
       - uses: actions/upload-artifact@v3
         with:

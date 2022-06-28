@@ -443,7 +443,7 @@ jobs:
         run: mv melwalletd mellis.app/Contents/MacOS/res/
 
       - name: Move Ginkou-Public Into The Resources Directory
-        run: mv ginkou-public mellis.app/Contents/MacOS/res/
+        run: mv public mellis.app/Contents/MacOS/res/ginkou-public
 
       - name: Create Top-Level Directory
         run: mkdir top-level

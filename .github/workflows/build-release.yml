@@ -1,14 +1,9 @@
 name: TestBuildAndRelease
 
 on:
-  pull_request:
+  push:
     branches:
       - master
-
-#on:
-#  push:
-#    branches:
-#      - master
 
 env:
   CARGO_TERM_COLOR: always
@@ -582,40 +577,40 @@ jobs:
           name: mellis-flatpak-release
           path: mellis.flatpak
 
-#  create-release:
-#    runs-on: self-hosted
-#
-#    needs:
-#      - verify-markdown
-#      - mellis-create-flatpak
-#      - mellis-create-dmg-macos
-#      - mellis-create-installer-windows
-#
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#
-#      - name: Set Latest Version Enviromnent Variable
-#        shell: bash
-#        run: echo "LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#'] | tr -d [:blank:])" >> $GITHUB_ENV
-#
-#      - uses: actions/download-artifact@v3
-#        with:
-#          name: mellis-flatpak-release
-#
-#      - uses: actions/download-artifact@v3
-#        with:
-#          name: mellis-dmg-release
-#
-#      - uses: actions/download-artifact@v3
-#        with:
-#          name: mellis-windows-installer-release
-#
-#      - name: Create Release
-#        id: draftRelease
-#        uses: ncipollo/release-action@v1
-#        with:
-#          artifacts: "mellis.flatpak,mellis.dmg,mellis-windows-setup.exe"
-#          bodyFile: "LATEST_VERSION.md"
-#          tag: '${{ env.LATEST_VERSION}}'
-#          token: ${{ secrets.GITHUB_TOKEN }}
+  create-release:
+    runs-on: self-hosted
+
+    needs:
+      - verify-markdown
+      - mellis-create-flatpak
+      - mellis-create-dmg-macos
+      - mellis-create-installer-windows
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set Latest Version Enviromnent Variable
+        shell: bash
+        run: echo "LATEST_VERSION=$(head -1 LATEST_VERSION.md | tr -d ['#'] | tr -d [:blank:])" >> $GITHUB_ENV
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: mellis-flatpak-release
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: mellis-dmg-release
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: mellis-windows-installer-release
+
+      - name: Create Release
+        id: draftRelease
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "mellis.flatpak,mellis.dmg,mellis-windows-setup.exe"
+          bodyFile: "LATEST_VERSION.md"
+          tag: '${{ env.LATEST_VERSION}}'
+          token: ${{ secrets.GITHUB_TOKEN }}

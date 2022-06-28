@@ -61,8 +61,14 @@ jobs:
       - name: Build Ginkou-Loader
         run: mold --run cargo build --release --target=x86_64-unknown-linux-gnu --locked --manifest-path ginkou-loader/Cargo.toml
 
+      - name: Create Ginkou-Loader Directory
+        run: mkdir ginkou-loader-archive
+
+      - name: Move Ginkou-Loader Binary
+        run: mv ginkou-loader/target/x86_64-unknown-linux-gnu/release/ginkou-loader ginkou-loader-archive/ginkou-loader
+
       - name: Create Ginkou-Loader Archive
-        run: tar -czvf /tmp/ginkou-loader.tar.gz -C ginkou-loader/target/x86_64-unknown-linux-gnu/release ginkou-loader
+        run: tar -czvf /tmp/ginkou-loader.tar.gz ginkou-loader-archive
 
       - uses: actions/upload-artifact@v3
         with:
@@ -209,8 +215,14 @@ jobs:
       - name: Build MelwalletD
         run: mold --run cargo build --release --target=x86_64-unknown-linux-gnu --locked --manifest-path melwalletd/Cargo.toml
 
+      - name: Create MelwalletD Directory
+        run: mkdir melwalletd-archive
+
+      - name: Move MelwalletD Binary
+        run: mv melwalletd/target/x86_64-unknown-linux-gnu/release/melwalletd melwalletd-archive/melwalletd
+
       - name: Create MelwalletD Archive
-        run: tar -czvf /tmp/melwalletd.tar.gz -C melwalletd/target/x86_64-unknown-linux-gnu/release melwalletd
+        run: tar -czvf /tmp/melwalletd.tar.gz melwalletd-archive
 
       - uses: actions/upload-artifact@v3
         with:

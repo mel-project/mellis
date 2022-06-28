@@ -62,7 +62,7 @@ jobs:
       - name: Build Ginkou-Loader
         run: mold --run cargo build --target=x86_64-unknown-linux-gnu --locked --manifest-path ginkou-loader/Cargo.toml
 
-      - name: Create MelwalletD Directory
+      - name: Create Ginkou-Loader Directory
         run: mkdir ginkou-loader-archive
 
       - name: Move Ginkou-Loader Binary

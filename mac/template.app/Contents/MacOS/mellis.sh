@@ -1,17 +1,15 @@
 #!/bin/bash
-
 exec 3>&1 4>&2
 trap 'exec 2>&4 1>&3' 0 1 2 3
-exec 1>/tmp/mellis.log 2>&1
+exec 2>&1 | tee /tmp/mellis.log # output to a log file and to stdout
 
 ROOT_DIRECTORY=$( cd "$(dirname "$0")" ; pwd -P )
 RESOURCE_DIRECTORY="${ROOT_DIRECTORY}/res"
 
 export PATH=${RESOURCE_DIRECTORY}:${PATH}
+export DEBUG=${DEBUG:-0} # DEBUG with default value of 0
 
-export DEBUG=true
-
-if [ -n "${DEBUG}" ]; then
+if [ "${DEBUG}" -gt 0 ]; then
   set -x
 
   echo "Root directory is ${ROOT_DIRECTORY}
@@ -28,7 +26,7 @@ if [ -n "${DEBUG}" ]; then
   which ginkou-loader
 fi
 
-ginkou-loader --html-path ${RESOURCE_DIRECTORY}/ginkou-public
+ginkou-loader --html-path "${RESOURCE_DIRECTORY}/ginkou-public" #wrapped in quotes to prevent issues when RESOURCE_DIRECTORY contains a space
 
 
-read -p "Press Return to Close..."
+ [ "$DEBUG" -gt 0 ] && read -p "Press Return to Close..."

@@ -42,5 +42,3 @@ And if you testing for MacOS, run:
 ```bash
 env MELLIS_BUILD_DMG=true ./build-local.sh
 ```
-
-

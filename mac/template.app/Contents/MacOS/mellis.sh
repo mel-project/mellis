@@ -4,6 +4,14 @@ exec 3>&1 4>&2
 trap 'exec 2>&4 1>&3' 0 1 2 3
 exec 2>&1 | tee /tmp/mellis.log # output to a log file and to stdout
 
+function prompt() {
+  if [ "${MELLIS_DEBUG}" == "true" ]; then
+    read -p "Press Return to Close..."
+  else
+    exit 0
+  fi
+}
+
 ROOT_DIRECTORY=$( cd "$(dirname "$0")" ; pwd -P )
 RESOURCE_DIRECTORY="${ROOT_DIRECTORY}/res"
 
@@ -13,7 +21,7 @@ if [ "${MELLIS_DEBUG}" != "false" ]; then
   export MELLIS_DEBUG=true
 fi
 
-if [ -n "${MELLIS_DEBUG}" ]; then
+if [ "${MELLIS_DEBUG}" == "true" ]; then
   set -x
 
   echo "Root directory is ${ROOT_DIRECTORY}
@@ -28,8 +36,8 @@ if [ -n "${MELLIS_DEBUG}" ]; then
   which ginkou-loader
 fi
 
+
 ginkou-loader --html-path "${RESOURCE_DIRECTORY}/ginkou-public" #wrapped in quotes to prevent issues when RESOURCE_DIRECTORY contains a space
 
-if [ -n "${MELLIS_DEBUG}" ]; then
-   && read -p "Press Return to Close..."
-fi
+
+trap prompt EXIT SIGINT

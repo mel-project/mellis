@@ -7,3 +7,13 @@ ginkou-public
 mac/artifacts
 mellis-android/app/src/main/jniLibs
 windows/artifacts
+IS6.zip
+dmg
+ginkou-loader-archive/
+iscc/
+melwalletd-archive/
+top-level/
+.flatpak-builder/
+build/
+export/
+mellis.flatpak

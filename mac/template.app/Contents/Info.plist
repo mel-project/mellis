@@ -15,7 +15,7 @@
 	<key>CFBundleSignature</key>
 	<string>tlio</string>
 	<key>CFBundleExecutable</key>
-	<string>ginkou-loader-wrapper</string>
+	<string>mellis.sh</string>
 	<key>CFBundleIconFile</key>
 	<string>mel-coin.icns</string>
 	<key>CFBundleInfoDictionaryVersion</key>

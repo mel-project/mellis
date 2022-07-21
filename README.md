@@ -14,6 +14,12 @@ Once you're installed head over to our [Discord](https://discord.gg/kNeBHn2B) to
 
 ## Run flatpak on Linux
 
+If you have an old version of mellis installed, run:
+
+```bash
+flatpak uninstall Wallet
+```
+
 Assuming you have installed the latest flatpak from the releases on this GitHub repo, and you have [flatpak](https://flatpak.org/).
 
 ```bash
@@ -71,6 +77,10 @@ If you have a wallet on the test network, you have the ability to do what we cal
 Right now there isn't much to do in the settings page. However, if you're interested you can access this page clicking the far right tab in the on screen navigation. Let us know if you can think of any features to add!
 
 <img src="res/gifs/settings.gif" height="400"/>
+
+## Creating New Releases
+Read [here](Creating_New_Releases.md)
+
 
 ## Follow us
 
